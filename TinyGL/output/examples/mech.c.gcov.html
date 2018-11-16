@@ -1,0 +1,1836 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - examples/mech.c</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">examples</a> - mech.c<span style="font-size: 80%;"> (source / <a href="mech.c.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">604</td>
+            <td class="headerCovTableEntry">865</td>
+            <td class="headerCovTableEntryLo">69.8 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-11-16 18:05:40</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">22</td>
+            <td class="headerCovTableEntry">72</td>
+            <td class="headerCovTableEntryLo">30.6 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            : * program       : glutmech V1.1
+<span class="lineNum">       3 </span>            : * author        : Simon Parkinson-Bates.
+<span class="lineNum">       4 </span>            : * E-mail        : sapb@yallara.cs.rmit.edu.au
+<span class="lineNum">       5 </span>            : * Copyright Simon Parkinson-Bates.
+<span class="lineNum">       6 </span>            : * &quot;source if freely avaliable to anyone to copy as long as they
+<span class="lineNum">       7 </span>            : *  acknowledge me in their work.&quot;
+<span class="lineNum">       8 </span>            : *
+<span class="lineNum">       9 </span>            : * Funtional features 
+<span class="lineNum">      10 </span>            : * ------------------
+<span class="lineNum">      11 </span>            : * * online menu system avaliable by pressing left mouse button
+<span class="lineNum">      12 </span>            : * * online cascading help system avaliable, providing information on
+<span class="lineNum">      13 </span>            : *       the several  key strokes and what they do.
+<span class="lineNum">      14 </span>            : * * animation sequence coded which makes the mech walk through an
+<span class="lineNum">      15 </span>            : *       environment.  Shadows will soon be added to make it look
+<span class="lineNum">      16 </span>            : *       more realistic.
+<span class="lineNum">      17 </span>            : * * menu control to view mech in wireframe or sold mode.
+<span class="lineNum">      18 </span>            : * * various key strokes avaliable to control idependently the mechs
+<span class="lineNum">      19 </span>            : *       many joints.
+<span class="lineNum">      20 </span>            : * * various key strokes avaliable to view mech and environment from 
+<span class="lineNum">      21 </span>            : *       different angles
+<span class="lineNum">      22 </span>            : * * various key strokes avaliable to alter positioning of the single
+<span class="lineNum">      23 </span>            : *       light source.
+<span class="lineNum">      24 </span>            : *
+<span class="lineNum">      25 </span>            : *
+<span class="lineNum">      26 </span>            : * Program features
+<span class="lineNum">      27 </span>            : * ----------------
+<span class="lineNum">      28 </span>            : * * uses double buffering
+<span class="lineNum">      29 </span>            : * * uses display lists
+<span class="lineNum">      30 </span>            : * * uses glut to manage windows, callbacks, and online menu.
+<span class="lineNum">      31 </span>            : * * uses glpolygonfill() to maintain colors in wireframe and solid
+<span class="lineNum">      32 </span>            : *       mode.
+<span class="lineNum">      33 </span>            : *
+<span class="lineNum">      34 </span>            : **/
+<span class="lineNum">      35 </span>            : 
+<span class="lineNum">      36 </span>            : /* start of compilation conditions */
+<span class="lineNum">      37 </span>            : #define SPHERE
+<span class="lineNum">      38 </span>            : #define COLOR
+<span class="lineNum">      39 </span>            : #define LIGHT
+<span class="lineNum">      40 </span>            : #define TORSO
+<span class="lineNum">      41 </span>            : #define HIP
+<span class="lineNum">      42 </span>            : #define SHOULDER
+<span class="lineNum">      43 </span>            : #define UPPER_ARM
+<span class="lineNum">      44 </span>            : #define LOWER_ARM
+<span class="lineNum">      45 </span>            : #define ROCKET_POD
+<span class="lineNum">      46 </span>            : #define UPPER_LEG
+<span class="lineNum">      47 </span>            : #define LOWER_LEG
+<span class="lineNum">      48 </span>            : #define NO_NORM
+<span class="lineNum">      49 </span>            : #define ANIMATION
+<span class="lineNum">      50 </span>            : #define DRAW_MECH
+<span class="lineNum">      51 </span>            : #define DRAW_ENVIRO
+<span class="lineNum">      52 </span>            : #define MOVE_LIGHT
+<span class="lineNum">      53 </span>            : /* end of compilation conditions */
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span>            : /* start various header files needed */
+<span class="lineNum">      56 </span>            : #include &lt;stdlib.h&gt;
+<span class="lineNum">      57 </span>            : #include &lt;stdio.h&gt;
+<span class="lineNum">      58 </span>            : #include &lt;math.h&gt;
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : #define GLUT
+<span class="lineNum">      61 </span>            : #define GLUT_KEY
+<span class="lineNum">      62 </span>            : #define GLUT_SPEC
+<span class="lineNum">      63 </span>            : #include &lt;GL/gl.h&gt;
+<span class="lineNum">      64 </span>            : #include &lt;GL/glx.h&gt;
+<span class="lineNum">      65 </span>            : #include &quot;glu.h&quot;
+<span class="lineNum">      66 </span>            : #include &quot;ui.h&quot;
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            : /* end of header files */
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            : /* start of display list definitions */
+<span class="lineNum">      71 </span>            : #define SOLID_MECH_TORSO        1
+<span class="lineNum">      72 </span>            : #define SOLID_MECH_HIP          2
+<span class="lineNum">      73 </span>            : #define SOLID_MECH_SHOULDER     3
+<span class="lineNum">      74 </span>            : #define SOLID_MECH_UPPER_ARM    4
+<span class="lineNum">      75 </span>            : #define SOLID_MECH_FOREARM      5
+<span class="lineNum">      76 </span>            : #define SOLID_MECH_UPPER_LEG    6
+<span class="lineNum">      77 </span>            : #define SOLID_MECH_FOOT         7
+<span class="lineNum">      78 </span>            : #define SOLID_MECH_ROCKET       8
+<span class="lineNum">      79 </span>            : #define SOLID_MECH_VULCAN       9
+<span class="lineNum">      80 </span>            : #define SOLID_ENVIRO            10
+<span class="lineNum">      81 </span>            : /* end of display list definitions */
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            : /* start of motion rate variables */
+<span class="lineNum">      84 </span>            : #define ANKLE_RATE      3
+<span class="lineNum">      85 </span>            : #define HEEL_RATE       3
+<span class="lineNum">      86 </span>            : #define ROTATE_RATE     10
+<span class="lineNum">      87 </span>            : #define TILT_RATE       10
+<span class="lineNum">      88 </span>            : #define ELBOW_RATE      2
+<span class="lineNum">      89 </span>            : #define SHOULDER_RATE   5
+<span class="lineNum">      90 </span>            : #define LAT_RATE        5
+<span class="lineNum">      91 </span>            : #define CANNON_RATE     40
+<span class="lineNum">      92 </span>            : #define UPPER_LEG_RATE  3
+<span class="lineNum">      93 </span>            : #define UPPER_LEG_RATE_GROIN 10
+<span class="lineNum">      94 </span>            : #define LIGHT_TURN_RATE 10
+<span class="lineNum">      95 </span>            : #define VIEW_TURN_RATE  10
+<span class="lineNum">      96 </span>            : /* end of motion rate variables */
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span>            : /* start of motion  variables */
+<span class="lineNum">      99 </span>            : #ifndef PI
+<span class="lineNum">     100 </span>            : #define PI 3.141592654
+<span class="lineNum">     101 </span>            : #endif
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            : char leg = 0;
+<span class="lineNum">     104 </span>            : 
+<span class="lineNum">     105 </span>            : int shoulder1 = 0, shoulder2 = 0, shoulder3 = 0, shoulder4 = 0, lat1 = 20, lat2 = 20,
+<span class="lineNum">     106 </span>            :   elbow1 = 0, elbow2 = 0, pivot = 0, tilt = 10, ankle1 = 0, ankle2 = 0, heel1 = 0,
+<span class="lineNum">     107 </span>            :   heel2 = 0, hip11 = 0, hip12 = 10, hip21 = 0, hip22 = 10, fire = 0, solid_part = 0,
+<span class="lineNum">     108 </span>            :   anim = 0, turn = 0, turn1 = 0, lightturn = 0, lightturn1 = 0;
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span>            : float elevation = 0.0, distance = 0.0, frame = 3.0
+<span class="lineNum">     111 </span>            :  /* foot1v[] = {} foot2v[] = {} */ ;
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span>            :  int gcount = 0;
+<span class="lineNum">     114 </span>            : /* end of motion variables */
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span>            : /* start of material definitions */
+<span class="lineNum">     117 </span>            : #ifdef LIGHT
+<span class="lineNum">     118 </span>            : GLfloat mat_specular[] =
+<span class="lineNum">     119 </span>            : {0.628281, 0.555802, 0.366065, 1.0};
+<span class="lineNum">     120 </span>            : GLfloat mat_ambient[] =
+<span class="lineNum">     121 </span>            : {0.24725, 0.1995, 0.0745, 1.0};
+<span class="lineNum">     122 </span>            : GLfloat mat_diffuse[] =
+<span class="lineNum">     123 </span>            : {0.75164, 0.60648, 0.22648, 1.0};
+<span class="lineNum">     124 </span>            : GLfloat mat_shininess[] =
+<span class="lineNum">     125 </span>            : {128.0 * 0.4};
+<span class="lineNum">     126 </span>            : 
+<span class="lineNum">     127 </span>            : GLfloat mat_specular2[] =
+<span class="lineNum">     128 </span>            : {0.508273, 0.508273, 0.508373, 1.0};
+<span class="lineNum">     129 </span>            : GLfloat mat_ambient2[] =
+<span class="lineNum">     130 </span>            : {0.19225, 0.19225, 0.19225, 1.0};
+<span class="lineNum">     131 </span>            : GLfloat mat_diffuse2[] =
+<span class="lineNum">     132 </span>            : {0.50754, 0.50754, 0.50754, 1.0};
+<span class="lineNum">     133 </span>            : GLfloat mat_shininess2[] =
+<span class="lineNum">     134 </span>            : {128.0 * 0.6};
+<span class="lineNum">     135 </span>            : 
+<span class="lineNum">     136 </span>            : GLfloat mat_specular3[] =
+<span class="lineNum">     137 </span>            : {0.296648, 0.296648, 0.296648, 1.0};
+<span class="lineNum">     138 </span>            : GLfloat mat_ambient3[] =
+<span class="lineNum">     139 </span>            : {0.25, 0.20725, 0.20725, 1.0};
+<span class="lineNum">     140 </span>            : GLfloat mat_diffuse3[] =
+<span class="lineNum">     141 </span>            : {1, 0.829, 0.829, 1.0};
+<span class="lineNum">     142 </span>            : GLfloat mat_shininess3[] =
+<span class="lineNum">     143 </span>            : {128.0 * 0.088};
+<span class="lineNum">     144 </span>            : 
+<span class="lineNum">     145 </span>            : GLfloat mat_specular4[] =
+<span class="lineNum">     146 </span>            : {0.633, 0.727811, 0.633, 1.0};
+<span class="lineNum">     147 </span>            : GLfloat mat_ambient4[] =
+<span class="lineNum">     148 </span>            : {0.0215, 0.1745, 0.0215, 1.0};
+<span class="lineNum">     149 </span>            : GLfloat mat_diffuse4[] =
+<span class="lineNum">     150 </span>            : {0.07568, 0.61424, 0.07568, 1.0};
+<span class="lineNum">     151 </span>            : GLfloat mat_shininess4[] =
+<span class="lineNum">     152 </span>            : {128 * 0.6};
+<span class="lineNum">     153 </span>            : 
+<span class="lineNum">     154 </span>            : GLfloat mat_specular5[] =
+<span class="lineNum">     155 </span>            : {0.60, 0.60, 0.50, 1.0};
+<span class="lineNum">     156 </span>            : GLfloat mat_ambient5[] =
+<span class="lineNum">     157 </span>            : {0.0, 0.0, 0.0, 1.0};
+<span class="lineNum">     158 </span>            : GLfloat mat_diffuse5[] =
+<span class="lineNum">     159 </span>            : {0.5, 0.5, 0.0, 1.0};
+<span class="lineNum">     160 </span>            : GLfloat mat_shininess5[] =
+<span class="lineNum">     161 </span>            : {128.0 * 0.25};
+<span class="lineNum">     162 </span>            : 
+<span class="lineNum">     163 </span>            : #endif
+<span class="lineNum">     164 </span>            : /* end of material definitions */
+<span class="lineNum">     165 </span>            : 
+<a name="166"><span class="lineNum">     166 </span>            : /* start of the body motion functions */</a>
+<span class="lineNum">     167 </span>            : void
+<span class="lineNum">     168 </span><span class="lineNoCov">          0 : Heel1Add(void)</span>
+<span class="lineNum">     169 </span>            : {
+<span class="lineNum">     170 </span><span class="lineNoCov">          0 :   heel1 = (heel1 + HEEL_RATE) % 360;</span>
+<span class="lineNum">     171 </span><span class="lineNoCov">          0 : }</span>
+<a name="172"><span class="lineNum">     172 </span>            : </a>
+<span class="lineNum">     173 </span>            : void
+<span class="lineNum">     174 </span><span class="lineNoCov">          0 : Heel1Subtract(void)</span>
+<span class="lineNum">     175 </span>            : {
+<span class="lineNum">     176 </span><span class="lineNoCov">          0 :   heel1 = (heel1 - HEEL_RATE) % 360;</span>
+<span class="lineNum">     177 </span><span class="lineNoCov">          0 : }</span>
+<a name="178"><span class="lineNum">     178 </span>            : </a>
+<span class="lineNum">     179 </span>            : void
+<span class="lineNum">     180 </span><span class="lineNoCov">          0 : Heel2Add(void)</span>
+<span class="lineNum">     181 </span>            : {
+<span class="lineNum">     182 </span><span class="lineNoCov">          0 :   heel2 = (heel2 + HEEL_RATE) % 360;</span>
+<span class="lineNum">     183 </span><span class="lineNoCov">          0 : }</span>
+<a name="184"><span class="lineNum">     184 </span>            : </a>
+<span class="lineNum">     185 </span>            : void
+<span class="lineNum">     186 </span><span class="lineNoCov">          0 : Heel2Subtract(void)</span>
+<span class="lineNum">     187 </span>            : {
+<span class="lineNum">     188 </span><span class="lineNoCov">          0 :   heel2 = (heel2 - HEEL_RATE) % 360;</span>
+<span class="lineNum">     189 </span><span class="lineNoCov">          0 : }</span>
+<a name="190"><span class="lineNum">     190 </span>            : </a>
+<span class="lineNum">     191 </span>            : void
+<span class="lineNum">     192 </span><span class="lineNoCov">          0 : Ankle1Add(void)</span>
+<span class="lineNum">     193 </span>            : {
+<span class="lineNum">     194 </span><span class="lineNoCov">          0 :   ankle1 = (ankle1 + ANKLE_RATE) % 360;</span>
+<span class="lineNum">     195 </span><span class="lineNoCov">          0 : }</span>
+<a name="196"><span class="lineNum">     196 </span>            : </a>
+<span class="lineNum">     197 </span>            : void
+<span class="lineNum">     198 </span><span class="lineNoCov">          0 : Ankle1Subtract(void)</span>
+<span class="lineNum">     199 </span>            : {
+<span class="lineNum">     200 </span><span class="lineNoCov">          0 :   ankle1 = (ankle1 - ANKLE_RATE) % 360;</span>
+<span class="lineNum">     201 </span><span class="lineNoCov">          0 : }</span>
+<a name="202"><span class="lineNum">     202 </span>            : </a>
+<span class="lineNum">     203 </span>            : void
+<span class="lineNum">     204 </span><span class="lineNoCov">          0 : Ankle2Add(void)</span>
+<span class="lineNum">     205 </span>            : {
+<span class="lineNum">     206 </span><span class="lineNoCov">          0 :   ankle2 = (ankle2 + ANKLE_RATE) % 360;</span>
+<span class="lineNum">     207 </span><span class="lineNoCov">          0 : }</span>
+<a name="208"><span class="lineNum">     208 </span>            : </a>
+<span class="lineNum">     209 </span>            : void
+<span class="lineNum">     210 </span><span class="lineNoCov">          0 : Ankle2Subtract(void)</span>
+<span class="lineNum">     211 </span>            : {
+<span class="lineNum">     212 </span><span class="lineNoCov">          0 :   ankle2 = (ankle2 - ANKLE_RATE) % 360;</span>
+<span class="lineNum">     213 </span><span class="lineNoCov">          0 : }</span>
+<a name="214"><span class="lineNum">     214 </span>            : </a>
+<span class="lineNum">     215 </span>            : void
+<span class="lineNum">     216 </span><span class="lineNoCov">          0 : RotateAdd(void)</span>
+<span class="lineNum">     217 </span>            : {
+<span class="lineNum">     218 </span><span class="lineNoCov">          0 :   pivot = (pivot + ROTATE_RATE) % 360;</span>
+<span class="lineNum">     219 </span><span class="lineNoCov">          0 : }</span>
+<a name="220"><span class="lineNum">     220 </span>            : </a>
+<span class="lineNum">     221 </span>            : void
+<span class="lineNum">     222 </span><span class="lineNoCov">          0 : RotateSubtract(void)</span>
+<span class="lineNum">     223 </span>            : {
+<span class="lineNum">     224 </span><span class="lineNoCov">          0 :   pivot = (pivot - ROTATE_RATE) % 360;</span>
+<span class="lineNum">     225 </span><span class="lineNoCov">          0 : }</span>
+<a name="226"><span class="lineNum">     226 </span>            : </a>
+<span class="lineNum">     227 </span>            : void
+<span class="lineNum">     228 </span><span class="lineNoCov">          0 : MechTiltSubtract(void)</span>
+<span class="lineNum">     229 </span>            : {
+<span class="lineNum">     230 </span><span class="lineNoCov">          0 :   tilt = (tilt - TILT_RATE) % 360;</span>
+<span class="lineNum">     231 </span><span class="lineNoCov">          0 : }</span>
+<a name="232"><span class="lineNum">     232 </span>            : </a>
+<span class="lineNum">     233 </span>            : void
+<span class="lineNum">     234 </span><span class="lineNoCov">          0 : MechTiltAdd(void)</span>
+<span class="lineNum">     235 </span>            : {
+<span class="lineNum">     236 </span><span class="lineNoCov">          0 :   tilt = (tilt + TILT_RATE) % 360;</span>
+<span class="lineNum">     237 </span><span class="lineNoCov">          0 : }</span>
+<a name="238"><span class="lineNum">     238 </span>            : </a>
+<span class="lineNum">     239 </span>            : void
+<span class="lineNum">     240 </span><span class="lineNoCov">          0 : elbow1Add(void)</span>
+<span class="lineNum">     241 </span>            : {
+<span class="lineNum">     242 </span><span class="lineNoCov">          0 :   elbow1 = (elbow1 + ELBOW_RATE) % 360;</span>
+<span class="lineNum">     243 </span><span class="lineNoCov">          0 : }</span>
+<a name="244"><span class="lineNum">     244 </span>            : </a>
+<span class="lineNum">     245 </span>            : void
+<span class="lineNum">     246 </span><span class="lineNoCov">          0 : elbow1Subtract(void)</span>
+<span class="lineNum">     247 </span>            : {
+<span class="lineNum">     248 </span><span class="lineNoCov">          0 :   elbow1 = (elbow1 - ELBOW_RATE) % 360;</span>
+<span class="lineNum">     249 </span><span class="lineNoCov">          0 : }</span>
+<a name="250"><span class="lineNum">     250 </span>            : </a>
+<span class="lineNum">     251 </span>            : void
+<span class="lineNum">     252 </span><span class="lineNoCov">          0 : elbow2Add(void)</span>
+<span class="lineNum">     253 </span>            : {
+<span class="lineNum">     254 </span><span class="lineNoCov">          0 :   elbow2 = (elbow2 + ELBOW_RATE) % 360;</span>
+<span class="lineNum">     255 </span><span class="lineNoCov">          0 : }</span>
+<a name="256"><span class="lineNum">     256 </span>            : </a>
+<span class="lineNum">     257 </span>            : void
+<span class="lineNum">     258 </span><span class="lineNoCov">          0 : elbow2Subtract(void)</span>
+<span class="lineNum">     259 </span>            : {
+<span class="lineNum">     260 </span><span class="lineNoCov">          0 :   elbow2 = (elbow2 - ELBOW_RATE) % 360;</span>
+<span class="lineNum">     261 </span><span class="lineNoCov">          0 : }</span>
+<a name="262"><span class="lineNum">     262 </span>            : </a>
+<span class="lineNum">     263 </span>            : void
+<span class="lineNum">     264 </span><span class="lineNoCov">          0 : shoulder1Add(void)</span>
+<span class="lineNum">     265 </span>            : {
+<span class="lineNum">     266 </span><span class="lineNoCov">          0 :   shoulder1 = (shoulder1 + SHOULDER_RATE) % 360;</span>
+<span class="lineNum">     267 </span><span class="lineNoCov">          0 : }</span>
+<a name="268"><span class="lineNum">     268 </span>            : </a>
+<span class="lineNum">     269 </span>            : void
+<span class="lineNum">     270 </span><span class="lineNoCov">          0 : shoulder1Subtract(void)</span>
+<span class="lineNum">     271 </span>            : {
+<span class="lineNum">     272 </span><span class="lineNoCov">          0 :   shoulder1 = (shoulder1 - SHOULDER_RATE) % 360;</span>
+<span class="lineNum">     273 </span><span class="lineNoCov">          0 : }</span>
+<a name="274"><span class="lineNum">     274 </span>            : </a>
+<span class="lineNum">     275 </span>            : void
+<span class="lineNum">     276 </span><span class="lineNoCov">          0 : shoulder2Add(void)</span>
+<span class="lineNum">     277 </span>            : {
+<span class="lineNum">     278 </span><span class="lineNoCov">          0 :   shoulder2 = (shoulder2 + SHOULDER_RATE) % 360;</span>
+<span class="lineNum">     279 </span><span class="lineNoCov">          0 : }</span>
+<a name="280"><span class="lineNum">     280 </span>            : </a>
+<span class="lineNum">     281 </span>            : void
+<span class="lineNum">     282 </span><span class="lineNoCov">          0 : shoulder2Subtract(void)</span>
+<span class="lineNum">     283 </span>            : {
+<span class="lineNum">     284 </span><span class="lineNoCov">          0 :   shoulder2 = (shoulder2 - SHOULDER_RATE) % 360;</span>
+<span class="lineNum">     285 </span><span class="lineNoCov">          0 : }</span>
+<a name="286"><span class="lineNum">     286 </span>            : </a>
+<span class="lineNum">     287 </span>            : void
+<span class="lineNum">     288 </span><span class="lineNoCov">          0 : shoulder3Add(void)</span>
+<span class="lineNum">     289 </span>            : {
+<span class="lineNum">     290 </span><span class="lineNoCov">          0 :   shoulder3 = (shoulder3 + SHOULDER_RATE) % 360;</span>
+<span class="lineNum">     291 </span><span class="lineNoCov">          0 : }</span>
+<a name="292"><span class="lineNum">     292 </span>            : </a>
+<span class="lineNum">     293 </span>            : void
+<span class="lineNum">     294 </span><span class="lineNoCov">          0 : shoulder3Subtract(void)</span>
+<span class="lineNum">     295 </span>            : {
+<span class="lineNum">     296 </span><span class="lineNoCov">          0 :   shoulder3 = (shoulder3 - SHOULDER_RATE) % 360;</span>
+<span class="lineNum">     297 </span><span class="lineNoCov">          0 : }</span>
+<a name="298"><span class="lineNum">     298 </span>            : </a>
+<span class="lineNum">     299 </span>            : void
+<span class="lineNum">     300 </span><span class="lineNoCov">          0 : shoulder4Add(void)</span>
+<span class="lineNum">     301 </span>            : {
+<span class="lineNum">     302 </span><span class="lineNoCov">          0 :   shoulder4 = (shoulder4 + SHOULDER_RATE) % 360;</span>
+<span class="lineNum">     303 </span><span class="lineNoCov">          0 : }</span>
+<a name="304"><span class="lineNum">     304 </span>            : </a>
+<span class="lineNum">     305 </span>            : void
+<span class="lineNum">     306 </span><span class="lineNoCov">          0 : shoulder4Subtract(void)</span>
+<span class="lineNum">     307 </span>            : {
+<span class="lineNum">     308 </span><span class="lineNoCov">          0 :   shoulder4 = (shoulder4 - SHOULDER_RATE) % 360;</span>
+<span class="lineNum">     309 </span><span class="lineNoCov">          0 : }</span>
+<a name="310"><span class="lineNum">     310 </span>            : </a>
+<span class="lineNum">     311 </span>            : void
+<span class="lineNum">     312 </span><span class="lineNoCov">          0 : lat1Raise(void)</span>
+<span class="lineNum">     313 </span>            : {
+<span class="lineNum">     314 </span><span class="lineNoCov">          0 :   lat1 = (lat1 + LAT_RATE) % 360;</span>
+<span class="lineNum">     315 </span><span class="lineNoCov">          0 : }</span>
+<a name="316"><span class="lineNum">     316 </span>            : </a>
+<span class="lineNum">     317 </span>            : void
+<span class="lineNum">     318 </span><span class="lineNoCov">          0 : lat1Lower(void)</span>
+<span class="lineNum">     319 </span>            : {
+<span class="lineNum">     320 </span><span class="lineNoCov">          0 :   lat1 = (lat1 - LAT_RATE) % 360;</span>
+<span class="lineNum">     321 </span><span class="lineNoCov">          0 : }</span>
+<a name="322"><span class="lineNum">     322 </span>            : </a>
+<span class="lineNum">     323 </span>            : void
+<span class="lineNum">     324 </span><span class="lineNoCov">          0 : lat2Raise(void)</span>
+<span class="lineNum">     325 </span>            : {
+<span class="lineNum">     326 </span><span class="lineNoCov">          0 :   lat2 = (lat2 + LAT_RATE) % 360;</span>
+<span class="lineNum">     327 </span><span class="lineNoCov">          0 : }</span>
+<a name="328"><span class="lineNum">     328 </span>            : </a>
+<span class="lineNum">     329 </span>            : void
+<span class="lineNum">     330 </span><span class="lineNoCov">          0 : lat2Lower(void)</span>
+<span class="lineNum">     331 </span>            : {
+<span class="lineNum">     332 </span><span class="lineNoCov">          0 :   lat2 = (lat2 - LAT_RATE) % 360;</span>
+<span class="lineNum">     333 </span><span class="lineNoCov">          0 : }</span>
+<a name="334"><span class="lineNum">     334 </span>            : </a>
+<span class="lineNum">     335 </span>            : void
+<span class="lineNum">     336 </span><span class="lineNoCov">          0 : FireCannon(void)</span>
+<span class="lineNum">     337 </span>            : {
+<span class="lineNum">     338 </span><span class="lineNoCov">          0 :   fire = (fire + CANNON_RATE) % 360;</span>
+<span class="lineNum">     339 </span><span class="lineNoCov">          0 : }</span>
+<a name="340"><span class="lineNum">     340 </span>            : </a>
+<span class="lineNum">     341 </span>            : void
+<span class="lineNum">     342 </span><span class="lineNoCov">          0 : RaiseLeg1Forward(void)</span>
+<span class="lineNum">     343 </span>            : {
+<span class="lineNum">     344 </span><span class="lineNoCov">          0 :   hip11 = (hip11 + UPPER_LEG_RATE) % 360;</span>
+<span class="lineNum">     345 </span><span class="lineNoCov">          0 : }</span>
+<a name="346"><span class="lineNum">     346 </span>            : </a>
+<span class="lineNum">     347 </span>            : void
+<span class="lineNum">     348 </span><span class="lineNoCov">          0 : LowerLeg1Backwards(void)</span>
+<span class="lineNum">     349 </span>            : {
+<span class="lineNum">     350 </span><span class="lineNoCov">          0 :   hip11 = (hip11 - UPPER_LEG_RATE) % 360;</span>
+<span class="lineNum">     351 </span><span class="lineNoCov">          0 : }</span>
+<a name="352"><span class="lineNum">     352 </span>            : </a>
+<span class="lineNum">     353 </span>            : void
+<span class="lineNum">     354 </span><span class="lineNoCov">          0 : RaiseLeg1Outwards(void)</span>
+<span class="lineNum">     355 </span>            : {
+<span class="lineNum">     356 </span><span class="lineNoCov">          0 :   hip12 = (hip12 + UPPER_LEG_RATE_GROIN) % 360;</span>
+<span class="lineNum">     357 </span><span class="lineNoCov">          0 : }</span>
+<a name="358"><span class="lineNum">     358 </span>            : </a>
+<span class="lineNum">     359 </span>            : void
+<span class="lineNum">     360 </span><span class="lineNoCov">          0 : LowerLeg1Inwards(void)</span>
+<span class="lineNum">     361 </span>            : {
+<span class="lineNum">     362 </span><span class="lineNoCov">          0 :   hip12 = (hip12 - UPPER_LEG_RATE_GROIN) % 360;</span>
+<span class="lineNum">     363 </span><span class="lineNoCov">          0 : }</span>
+<a name="364"><span class="lineNum">     364 </span>            : </a>
+<span class="lineNum">     365 </span>            : void
+<span class="lineNum">     366 </span><span class="lineNoCov">          0 : RaiseLeg2Forward(void)</span>
+<span class="lineNum">     367 </span>            : {
+<span class="lineNum">     368 </span><span class="lineNoCov">          0 :   hip21 = (hip21 + UPPER_LEG_RATE) % 360;</span>
+<span class="lineNum">     369 </span><span class="lineNoCov">          0 : }</span>
+<a name="370"><span class="lineNum">     370 </span>            : </a>
+<span class="lineNum">     371 </span>            : void
+<span class="lineNum">     372 </span><span class="lineNoCov">          0 : LowerLeg2Backwards(void)</span>
+<span class="lineNum">     373 </span>            : {
+<span class="lineNum">     374 </span><span class="lineNoCov">          0 :   hip21 = (hip21 - UPPER_LEG_RATE) % 360;</span>
+<span class="lineNum">     375 </span><span class="lineNoCov">          0 : }</span>
+<a name="376"><span class="lineNum">     376 </span>            : </a>
+<span class="lineNum">     377 </span>            : void
+<span class="lineNum">     378 </span><span class="lineNoCov">          0 : RaiseLeg2Outwards(void)</span>
+<span class="lineNum">     379 </span>            : {
+<span class="lineNum">     380 </span><span class="lineNoCov">          0 :   hip22 = (hip22 + UPPER_LEG_RATE_GROIN) % 360;</span>
+<span class="lineNum">     381 </span><span class="lineNoCov">          0 : }</span>
+<a name="382"><span class="lineNum">     382 </span>            : </a>
+<span class="lineNum">     383 </span>            : void
+<span class="lineNum">     384 </span><span class="lineNoCov">          0 : LowerLeg2Inwards(void)</span>
+<span class="lineNum">     385 </span>            : {
+<span class="lineNum">     386 </span><span class="lineNoCov">          0 :   hip22 = (hip22 - UPPER_LEG_RATE_GROIN) % 360;</span>
+<span class="lineNum">     387 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     388 </span>            : 
+<span class="lineNum">     389 </span>            : /* end of body motion functions */
+<span class="lineNum">     390 </span>            : 
+<a name="391"><span class="lineNum">     391 </span>            : /* start of light source position functions */</a>
+<span class="lineNum">     392 </span>            : void
+<span class="lineNum">     393 </span><span class="lineNoCov">          0 : TurnRight(void)</span>
+<span class="lineNum">     394 </span>            : {
+<span class="lineNum">     395 </span><span class="lineNoCov">          0 :   turn = (turn - VIEW_TURN_RATE) % 360;</span>
+<span class="lineNum">     396 </span><span class="lineNoCov">          0 : }</span>
+<a name="397"><span class="lineNum">     397 </span>            : </a>
+<span class="lineNum">     398 </span>            : void
+<span class="lineNum">     399 </span><span class="lineNoCov">          0 : TurnLeft(void)</span>
+<span class="lineNum">     400 </span>            : {
+<span class="lineNum">     401 </span><span class="lineNoCov">          0 :   turn = (turn + VIEW_TURN_RATE) % 360;</span>
+<span class="lineNum">     402 </span><span class="lineNoCov">          0 : }</span>
+<a name="403"><span class="lineNum">     403 </span>            : </a>
+<span class="lineNum">     404 </span>            : void
+<span class="lineNum">     405 </span><span class="lineNoCov">          0 : TurnForwards(void)</span>
+<span class="lineNum">     406 </span>            : {
+<span class="lineNum">     407 </span><span class="lineNoCov">          0 :   turn1 = (turn1 - VIEW_TURN_RATE) % 360;</span>
+<span class="lineNum">     408 </span><span class="lineNoCov">          0 : }</span>
+<a name="409"><span class="lineNum">     409 </span>            : </a>
+<span class="lineNum">     410 </span>            : void
+<span class="lineNum">     411 </span><span class="lineNoCov">          0 : TurnBackwards(void)</span>
+<span class="lineNum">     412 </span>            : {
+<span class="lineNum">     413 </span><span class="lineNoCov">          0 :   turn1 = (turn1 + VIEW_TURN_RATE) % 360;</span>
+<span class="lineNum">     414 </span><span class="lineNoCov">          0 : }</span>
+<a name="415"><span class="lineNum">     415 </span>            : </a>
+<span class="lineNum">     416 </span>            : void
+<span class="lineNum">     417 </span><span class="lineNoCov">          0 : LightTurnRight(void)</span>
+<span class="lineNum">     418 </span>            : {
+<span class="lineNum">     419 </span><span class="lineNoCov">          0 :   lightturn = (lightturn + LIGHT_TURN_RATE) % 360;</span>
+<span class="lineNum">     420 </span><span class="lineNoCov">          0 : }</span>
+<a name="421"><span class="lineNum">     421 </span>            : </a>
+<span class="lineNum">     422 </span>            : void
+<span class="lineNum">     423 </span><span class="lineNoCov">          0 : LightTurnLeft(void)</span>
+<span class="lineNum">     424 </span>            : {
+<span class="lineNum">     425 </span><span class="lineNoCov">          0 :   lightturn = (lightturn - LIGHT_TURN_RATE) % 360;</span>
+<span class="lineNum">     426 </span><span class="lineNoCov">          0 : }</span>
+<a name="427"><span class="lineNum">     427 </span>            : </a>
+<span class="lineNum">     428 </span>            : void
+<span class="lineNum">     429 </span><span class="lineNoCov">          0 : LightForwards(void)</span>
+<span class="lineNum">     430 </span>            : {
+<span class="lineNum">     431 </span><span class="lineNoCov">          0 :   lightturn1 = (lightturn1 + LIGHT_TURN_RATE) % 360;</span>
+<span class="lineNum">     432 </span><span class="lineNoCov">          0 : }</span>
+<a name="433"><span class="lineNum">     433 </span>            : </a>
+<span class="lineNum">     434 </span>            : void
+<span class="lineNum">     435 </span><span class="lineNoCov">          0 : LightBackwards(void)</span>
+<span class="lineNum">     436 </span>            : {
+<span class="lineNum">     437 </span><span class="lineNoCov">          0 :   lightturn1 = (lightturn1 - LIGHT_TURN_RATE) % 360;</span>
+<span class="lineNum">     438 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     439 </span>            : 
+<span class="lineNum">     440 </span>            : /* end of light source position functions */
+<span class="lineNum">     441 </span>            : 
+<a name="442"><span class="lineNum">     442 </span>            : /* start of geometric shape functions */</a>
+<span class="lineNum">     443 </span>            : void
+<span class="lineNum">     444 </span><span class="lineCov">       7583 : Box(float width, float height, float depth, char solid)</span>
+<span class="lineNum">     445 </span>            : {
+<span class="lineNum">     446 </span><span class="lineCov">       7583 :   char i, j = 0;</span>
+<span class="lineNum">     447 </span><span class="lineCov">       7583 :   float x = width / 2.0, y = height / 2.0, z = depth / 2.0;</span>
+<span class="lineNum">     448 </span>            : 
+<span class="lineNum">     449 </span><span class="lineCov">      37915 :   for (i = 0; i &lt; 4; i++) {</span>
+<span class="lineNum">     450 </span><span class="lineCov">      30332 :     glRotatef(90.0, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">     451 </span><span class="lineCov">      30332 :     if (j) {</span>
+<span class="lineNum">     452 </span><span class="lineCov">      15166 :       if (!solid)</span>
+<span class="lineNum">     453 </span><span class="lineCov">        602 :         glBegin(GL_LINE_LOOP);</span>
+<span class="lineNum">     454 </span>            :       else
+<span class="lineNum">     455 </span><span class="lineCov">      14564 :         glBegin(GL_QUADS);</span>
+<span class="lineNum">     456 </span><span class="lineCov">      15166 :       glNormal3f(-1.0, 0.0, 0.0);</span>
+<span class="lineNum">     457 </span><span class="lineCov">      15166 :       glVertex3f(-x, y, z);</span>
+<span class="lineNum">     458 </span><span class="lineCov">      15166 :       glVertex3f(-x, -y, z);</span>
+<span class="lineNum">     459 </span><span class="lineCov">      15166 :       glVertex3f(-x, -y, -z);</span>
+<span class="lineNum">     460 </span><span class="lineCov">      15166 :       glVertex3f(-x, y, -z);</span>
+<span class="lineNum">     461 </span><span class="lineCov">      15166 :       glEnd();</span>
+<span class="lineNum">     462 </span><span class="lineCov">      15166 :       if (solid) {</span>
+<span class="lineNum">     463 </span><span class="lineCov">      14564 :         glBegin(GL_TRIANGLES);</span>
+<span class="lineNum">     464 </span><span class="lineCov">      14564 :         glNormal3f(0.0, 0.0, 1.0);</span>
+<span class="lineNum">     465 </span><span class="lineCov">      14564 :         glVertex3f(0.0, 0.0, z);</span>
+<span class="lineNum">     466 </span><span class="lineCov">      14564 :         glVertex3f(-x, y, z);</span>
+<span class="lineNum">     467 </span><span class="lineCov">      14564 :         glVertex3f(-x, -y, z);</span>
+<span class="lineNum">     468 </span><span class="lineCov">      14564 :         glNormal3f(0.0, 0.0, -1.0);</span>
+<span class="lineNum">     469 </span><span class="lineCov">      14564 :         glVertex3f(0.0, 0.0, -z);</span>
+<span class="lineNum">     470 </span><span class="lineCov">      14564 :         glVertex3f(-x, -y, -z);</span>
+<span class="lineNum">     471 </span><span class="lineCov">      14564 :         glVertex3f(-x, y, -z);</span>
+<span class="lineNum">     472 </span><span class="lineCov">      14564 :         glEnd();</span>
+<span class="lineNum">     473 </span>            :       }
+<span class="lineNum">     474 </span>            :       j = 0;
+<span class="lineNum">     475 </span>            :     } else {
+<span class="lineNum">     476 </span><span class="lineCov">      15166 :       if (!solid)</span>
+<span class="lineNum">     477 </span><span class="lineCov">        602 :         glBegin(GL_LINE_LOOP);</span>
+<span class="lineNum">     478 </span>            :       else
+<span class="lineNum">     479 </span><span class="lineCov">      14564 :         glBegin(GL_QUADS);</span>
+<span class="lineNum">     480 </span><span class="lineCov">      15166 :       glNormal3f(-1.0, 0.0, 0.0);</span>
+<span class="lineNum">     481 </span><span class="lineCov">      15166 :       glVertex3f(-y, x, z);</span>
+<span class="lineNum">     482 </span><span class="lineCov">      15166 :       glVertex3f(-y, -x, z);</span>
+<span class="lineNum">     483 </span><span class="lineCov">      15166 :       glVertex3f(-y, -x, -z);</span>
+<span class="lineNum">     484 </span><span class="lineCov">      15166 :       glVertex3f(-y, x, -z);</span>
+<span class="lineNum">     485 </span><span class="lineCov">      15166 :       glEnd();</span>
+<span class="lineNum">     486 </span><span class="lineCov">      15166 :       if (solid) {</span>
+<span class="lineNum">     487 </span><span class="lineCov">      14564 :         glBegin(GL_TRIANGLES);</span>
+<span class="lineNum">     488 </span><span class="lineCov">      14564 :         glNormal3f(0.0, 0.0, 1.0);</span>
+<span class="lineNum">     489 </span><span class="lineCov">      14564 :         glVertex3f(0.0, 0.0, z);</span>
+<span class="lineNum">     490 </span><span class="lineCov">      14564 :         glVertex3f(-y, x, z);</span>
+<span class="lineNum">     491 </span><span class="lineCov">      14564 :         glVertex3f(-y, -x, z);</span>
+<span class="lineNum">     492 </span><span class="lineCov">      14564 :         glNormal3f(0.0, 0.0, -1.0);</span>
+<span class="lineNum">     493 </span><span class="lineCov">      14564 :         glVertex3f(0.0, 0.0, -z);</span>
+<span class="lineNum">     494 </span><span class="lineCov">      14564 :         glVertex3f(-y, -x, -z);</span>
+<span class="lineNum">     495 </span><span class="lineCov">      14564 :         glVertex3f(-y, x, -z);</span>
+<span class="lineNum">     496 </span><span class="lineCov">      14564 :         glEnd();</span>
+<span class="lineNum">     497 </span>            :       }
+<span class="lineNum">     498 </span>            :       j = 1;
+<span class="lineNum">     499 </span>            :     }
+<span class="lineNum">     500 </span>            :   }
+<span class="lineNum">     501 </span><span class="lineCov">       7583 : }</span>
+<a name="502"><span class="lineNum">     502 </span>            : </a>
+<span class="lineNum">     503 </span>            : void
+<span class="lineNum">     504 </span><span class="lineCov">          2 : Octagon(float side, float height, char solid)</span>
+<span class="lineNum">     505 </span>            : {
+<span class="lineNum">     506 </span>            :   char j;
+<span class="lineNum">     507 </span><span class="lineCov">          2 :   float x = sin(0.785398163) * side, y = side / 2.0, z = height / 2.0, c;</span>
+<span class="lineNum">     508 </span>            : 
+<span class="lineNum">     509 </span><span class="lineCov">          2 :   c = x + y;</span>
+<span class="lineNum">     510 </span><span class="lineCov">         18 :   for (j = 0; j &lt; 8; j++) {</span>
+<span class="lineNum">     511 </span><span class="lineCov">         16 :     glTranslatef(-c, 0.0, 0.0);</span>
+<span class="lineNum">     512 </span><span class="lineCov">         16 :     if (!solid)</span>
+<span class="lineNum">     513 </span><span class="lineNoCov">          0 :       glBegin(GL_LINE_LOOP);</span>
+<span class="lineNum">     514 </span>            :     else
+<span class="lineNum">     515 </span><span class="lineCov">         16 :       glBegin(GL_QUADS);</span>
+<span class="lineNum">     516 </span><span class="lineCov">         16 :     glNormal3f(-1.0, 0.0, 0.0);</span>
+<span class="lineNum">     517 </span><span class="lineCov">         16 :     glVertex3f(0.0, -y, z);</span>
+<span class="lineNum">     518 </span><span class="lineCov">         16 :     glVertex3f(0.0, y, z);</span>
+<span class="lineNum">     519 </span><span class="lineCov">         16 :     glVertex3f(0.0, y, -z);</span>
+<span class="lineNum">     520 </span><span class="lineCov">         16 :     glVertex3f(0.0, -y, -z);</span>
+<span class="lineNum">     521 </span><span class="lineCov">         16 :     glEnd();</span>
+<span class="lineNum">     522 </span><span class="lineCov">         16 :     glTranslatef(c, 0.0, 0.0);</span>
+<span class="lineNum">     523 </span><span class="lineCov">         16 :     if (solid) {</span>
+<span class="lineNum">     524 </span><span class="lineCov">         16 :       glBegin(GL_TRIANGLES);</span>
+<span class="lineNum">     525 </span><span class="lineCov">         16 :       glNormal3f(0.0, 0.0, 1.0);</span>
+<span class="lineNum">     526 </span><span class="lineCov">         16 :       glVertex3f(0.0, 0.0, z);</span>
+<span class="lineNum">     527 </span><span class="lineCov">         16 :       glVertex3f(-c, -y, z);</span>
+<span class="lineNum">     528 </span><span class="lineCov">         16 :       glVertex3f(-c, y, z);</span>
+<span class="lineNum">     529 </span><span class="lineCov">         16 :       glNormal3f(0.0, 0.0, -1.0);</span>
+<span class="lineNum">     530 </span><span class="lineCov">         16 :       glVertex3f(0.0, 0.0, -z);</span>
+<span class="lineNum">     531 </span><span class="lineCov">         16 :       glVertex3f(-c, y, -z);</span>
+<span class="lineNum">     532 </span><span class="lineCov">         16 :       glVertex3f(-c, -y, -z);</span>
+<span class="lineNum">     533 </span><span class="lineCov">         16 :       glEnd();</span>
+<span class="lineNum">     534 </span>            :     }
+<span class="lineNum">     535 </span><span class="lineCov">         16 :     glRotatef(45.0, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">     536 </span>            :   }
+<span class="lineNum">     537 </span><span class="lineCov">          2 : }</span>
+<span class="lineNum">     538 </span>            : 
+<span class="lineNum">     539 </span>            : /* end of geometric shape functions */
+<span class="lineNum">     540 </span>            : #ifdef NORM
+<span class="lineNum">     541 </span>            : void
+<span class="lineNum">     542 </span>            : Normalize(float v[3])
+<span class="lineNum">     543 </span>            : {
+<span class="lineNum">     544 </span>            :   GLfloat d = sqrt(v[1] * v[1] + v[2] * v[2] + v[3] * v[3]);
+<span class="lineNum">     545 </span>            : 
+<span class="lineNum">     546 </span>            :   if (d == 0.0) {
+<span class="lineNum">     547 </span>            :     printf(&quot;zero length vector&quot;);
+<span class="lineNum">     548 </span>            :     return;
+<span class="lineNum">     549 </span>            :   }
+<span class="lineNum">     550 </span>            :   v[1] /= d;
+<span class="lineNum">     551 </span>            :   v[2] /= d;
+<span class="lineNum">     552 </span>            :   v[3] /= d;
+<span class="lineNum">     553 </span>            : }
+<span class="lineNum">     554 </span>            : 
+<span class="lineNum">     555 </span>            : void
+<span class="lineNum">     556 </span>            : NormXprod(float v1[3], float v2[3], float v[3], float out[3])
+<span class="lineNum">     557 </span>            : {
+<span class="lineNum">     558 </span>            :   GLint i, j;
+<span class="lineNum">     559 </span>            :   GLfloat length;
+<span class="lineNum">     560 </span>            : 
+<span class="lineNum">     561 </span>            :   out[0] = v1[1] * v2[2] - v1[2] * v2[1];
+<span class="lineNum">     562 </span>            :   out[1] = v1[2] * v2[0] - v1[0] * v2[2];
+<span class="lineNum">     563 </span>            :   out[2] = v1[0] * v2[1] - v1[1] * v2[0];
+<span class="lineNum">     564 </span>            :   Normalize(out);
+<span class="lineNum">     565 </span>            : }
+<span class="lineNum">     566 </span>            : 
+<span class="lineNum">     567 </span>            : #endif
+<a name="568"><span class="lineNum">     568 </span>            : </a>
+<span class="lineNum">     569 </span>            : void
+<span class="lineNum">     570 </span><span class="lineCov">      12676 : SetMaterial(GLfloat spec[], GLfloat amb[], GLfloat diff[], GLfloat shin[])</span>
+<span class="lineNum">     571 </span>            : {
+<span class="lineNum">     572 </span>            : 
+<span class="lineNum">     573 </span><span class="lineCov">      12676 :   glMaterialfv(GL_FRONT, GL_SPECULAR, spec);</span>
+<span class="lineNum">     574 </span><span class="lineCov">      12676 :   glMaterialfv(GL_FRONT, GL_SHININESS, shin);</span>
+<span class="lineNum">     575 </span><span class="lineCov">      12676 :   glMaterialfv(GL_FRONT, GL_AMBIENT, amb);</span>
+<span class="lineNum">     576 </span><span class="lineCov">      12676 :   glMaterialfv(GL_FRONT, GL_DIFFUSE, diff);</span>
+<span class="lineNum">     577 </span><span class="lineCov">      12676 : }</span>
+<a name="578"><span class="lineNum">     578 </span>            : </a>
+<span class="lineNum">     579 </span>            : void
+<span class="lineNum">     580 </span><span class="lineCov">          1 : MechTorso(char solid)</span>
+<span class="lineNum">     581 </span>            : {
+<span class="lineNum">     582 </span><span class="lineCov">          1 :   glNewList(SOLID_MECH_TORSO, GL_COMPILE);</span>
+<span class="lineNum">     583 </span>            : #ifdef LIGHT
+<span class="lineNum">     584 </span><span class="lineCov">          1 :   SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     585 </span>            : #endif
+<span class="lineNum">     586 </span><span class="lineCov">          1 :   glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     587 </span><span class="lineCov">          1 :   Box(1.0, 1.0, 3.0, solid);</span>
+<span class="lineNum">     588 </span><span class="lineCov">          1 :   glTranslatef(0.75, 0.0, 0.0);</span>
+<span class="lineNum">     589 </span>            : #ifdef LIGHT
+<span class="lineNum">     590 </span><span class="lineCov">          1 :   SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     591 </span>            : #endif
+<span class="lineNum">     592 </span><span class="lineCov">          1 :   glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     593 </span><span class="lineCov">          1 :   Box(0.5, 0.6, 2.0, solid);</span>
+<span class="lineNum">     594 </span><span class="lineCov">          1 :   glTranslatef(-1.5, 0.0, 0.0);</span>
+<span class="lineNum">     595 </span><span class="lineCov">          1 :   Box(0.5, 0.6, 2.0, solid);</span>
+<span class="lineNum">     596 </span><span class="lineCov">          1 :   glTranslatef(0.75, 0.0, 0.0);</span>
+<span class="lineNum">     597 </span><span class="lineCov">          1 :   glEndList();</span>
+<span class="lineNum">     598 </span><span class="lineCov">          1 : }</span>
+<a name="599"><span class="lineNum">     599 </span>            : </a>
+<span class="lineNum">     600 </span>            : void
+<span class="lineNum">     601 </span><span class="lineCov">          1 : MechHip(char solid)</span>
+<span class="lineNum">     602 </span>            : {
+<span class="lineNum">     603 </span>            :   int i;
+<span class="lineNum">     604 </span>            :   GLUquadricObj *hip[2];
+<span class="lineNum">     605 </span>            : 
+<span class="lineNum">     606 </span><span class="lineCov">          1 :   glNewList(SOLID_MECH_HIP, GL_COMPILE);</span>
+<span class="lineNum">     607 </span>            : #ifdef LIGHT
+<span class="lineNum">     608 </span><span class="lineCov">          1 :   SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     609 </span>            : #endif
+<span class="lineNum">     610 </span><span class="lineCov">          1 :   glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     611 </span><span class="lineCov">          1 :   Octagon(0.7, 0.5, solid);</span>
+<span class="lineNum">     612 </span>            : #ifdef SPHERE
+<span class="lineNum">     613 </span><span class="lineCov">          3 :   for (i = 0; i &lt; 2; i++) {</span>
+<span class="lineNum">     614 </span><span class="lineCov">          2 :     if (i)</span>
+<span class="lineNum">     615 </span><span class="lineCov">          1 :       glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">     616 </span><span class="lineCov">          2 :     glTranslatef(1.0, 0.0, 0.0);</span>
+<span class="lineNum">     617 </span><span class="lineCov">          2 :     hip[i] = gluNewQuadric();</span>
+<span class="lineNum">     618 </span>            : #ifdef LIGHT
+<span class="lineNum">     619 </span><span class="lineCov">          2 :     SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     620 </span>            : #endif
+<span class="lineNum">     621 </span><span class="lineCov">          2 :     glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     622 </span><span class="lineCov">          2 :     if (!solid)</span>
+<span class="lineNum">     623 </span><span class="lineNoCov">          0 :       gluQuadricDrawStyle(hip[i], GLU_LINE);</span>
+<span class="lineNum">     624 </span><span class="lineCov">          2 :     gluSphere(hip[0], 0.2, 16, 16);</span>
+<span class="lineNum">     625 </span><span class="lineCov">          2 :     glTranslatef(-1.0, 0.0, 0.0);</span>
+<span class="lineNum">     626 </span>            :   }
+<span class="lineNum">     627 </span><span class="lineCov">          1 :   glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">     628 </span>            : #endif
+<span class="lineNum">     629 </span><span class="lineCov">          1 :   glEndList();</span>
+<span class="lineNum">     630 </span><span class="lineCov">          1 : }</span>
+<a name="631"><span class="lineNum">     631 </span>            : </a>
+<span class="lineNum">     632 </span>            : void
+<span class="lineNum">     633 </span><span class="lineCov">          1 : Shoulder(char solid)</span>
+<span class="lineNum">     634 </span>            : {
+<span class="lineNum">     635 </span><span class="lineCov">          1 :   GLUquadricObj *deltoid = gluNewQuadric();</span>
+<span class="lineNum">     636 </span>            : 
+<span class="lineNum">     637 </span><span class="lineCov">          1 :   glNewList(SOLID_MECH_SHOULDER, GL_COMPILE);</span>
+<span class="lineNum">     638 </span>            : #ifdef LIGHT
+<span class="lineNum">     639 </span><span class="lineCov">          1 :   SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     640 </span>            : #endif
+<span class="lineNum">     641 </span><span class="lineCov">          1 :   glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     642 </span><span class="lineCov">          1 :   Box(1.0, 0.5, 0.5, solid);</span>
+<span class="lineNum">     643 </span><span class="lineCov">          1 :   glTranslatef(0.9, 0.0, 0.0);</span>
+<span class="lineNum">     644 </span>            : #ifdef LIGHT
+<span class="lineNum">     645 </span><span class="lineCov">          1 :   SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     646 </span>            : #endif
+<span class="lineNum">     647 </span><span class="lineCov">          1 :   glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     648 </span>            : #ifdef SPHERE
+<span class="lineNum">     649 </span><span class="lineCov">          1 :   if (!solid)</span>
+<span class="lineNum">     650 </span><span class="lineNoCov">          0 :     gluQuadricDrawStyle(deltoid, GLU_LINE);</span>
+<span class="lineNum">     651 </span><span class="lineCov">          1 :   gluSphere(deltoid, 0.6, 16, 16);</span>
+<span class="lineNum">     652 </span>            : #endif
+<span class="lineNum">     653 </span><span class="lineCov">          1 :   glTranslatef(-0.9, 0.0, 0.0);</span>
+<span class="lineNum">     654 </span><span class="lineCov">          1 :   glEndList();</span>
+<span class="lineNum">     655 </span><span class="lineCov">          1 : }</span>
+<a name="656"><span class="lineNum">     656 </span>            : </a>
+<span class="lineNum">     657 </span>            : void
+<span class="lineNum">     658 </span><span class="lineCov">          1 : UpperArm(char solid)</span>
+<span class="lineNum">     659 </span>            : {
+<span class="lineNum">     660 </span>            :  
+<span class="lineNum">     661 </span><span class="lineCov">          1 :   GLUquadricObj *upper = gluNewQuadric();</span>
+<span class="lineNum">     662 </span>            :   GLUquadricObj *joint[2];
+<span class="lineNum">     663 </span>            :   GLUquadricObj *joint1[2];
+<span class="lineNum">     664 </span>            :   int i;
+<span class="lineNum">     665 </span>            : 
+<span class="lineNum">     666 </span><span class="lineCov">          1 :   glNewList(SOLID_MECH_UPPER_ARM, GL_COMPILE);</span>
+<span class="lineNum">     667 </span>            : #ifdef LIGHT
+<span class="lineNum">     668 </span><span class="lineCov">          1 :   SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     669 </span>            : #endif
+<span class="lineNum">     670 </span><span class="lineCov">          1 :   glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     671 </span><span class="lineCov">          1 :   Box(1.0, 2.0, 1.0, solid);</span>
+<span class="lineNum">     672 </span><span class="lineCov">          1 :   glTranslatef(0.0, -0.95, 0.0);</span>
+<span class="lineNum">     673 </span><span class="lineCov">          1 :   glRotatef(90.0, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     674 </span>            : #ifdef LIGHT
+<span class="lineNum">     675 </span><span class="lineCov">          1 :   SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     676 </span>            : #endif
+<span class="lineNum">     677 </span><span class="lineCov">          1 :   glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     678 </span><span class="lineCov">          1 :   if (!solid)</span>
+<span class="lineNum">     679 </span><span class="lineNoCov">          0 :     gluQuadricDrawStyle(upper, GLU_LINE);</span>
+<span class="lineNum">     680 </span><span class="lineCov">          1 :   gluCylinder(upper, 0.4, 0.4, 1.5, 16, 10);</span>
+<span class="lineNum">     681 </span>            : #ifdef LIGHT
+<span class="lineNum">     682 </span><span class="lineCov">          1 :   SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     683 </span>            : #endif
+<span class="lineNum">     684 </span><span class="lineCov">          1 :   glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     685 </span><span class="lineCov">          1 :   glRotatef(-90.0, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     686 </span><span class="lineCov">          1 :   glTranslatef(-0.4, -1.85, 0.0);</span>
+<span class="lineNum">     687 </span><span class="lineCov">          1 :   glRotatef(90.0, 0.0, 1.0, 0.0);</span>
+<span class="lineNum">     688 </span><span class="lineCov">          3 :   for (i = 0; i &lt; 2; i++) {</span>
+<span class="lineNum">     689 </span><span class="lineCov">          2 :     joint[i] = gluNewQuadric();</span>
+<span class="lineNum">     690 </span><span class="lineCov">          2 :     if (!solid)</span>
+<span class="lineNum">     691 </span><span class="lineNoCov">          0 :       gluQuadricDrawStyle(joint[i], GLU_LINE);</span>
+<span class="lineNum">     692 </span><span class="lineCov">          2 :     if (i)</span>
+<span class="lineNum">     693 </span><span class="lineCov">          1 :       gluCylinder(joint[i], 0.5, 0.5, 0.8, 16, 10);</span>
+<span class="lineNum">     694 </span>            :     else
+<span class="lineNum">     695 </span><span class="lineCov">          1 :       gluCylinder(joint[i], 0.2, 0.2, 0.8, 16, 10);</span>
+<span class="lineNum">     696 </span>            :   }
+<span class="lineNum">     697 </span><span class="lineCov">          2 :   for (i = 0; i &lt; 2; i++) {</span>
+<span class="lineNum">     698 </span><span class="lineCov">          2 :     if (i)</span>
+<span class="lineNum">     699 </span><span class="lineCov">          1 :       glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">     700 </span><span class="lineCov">          2 :     joint1[i] = gluNewQuadric();</span>
+<span class="lineNum">     701 </span><span class="lineCov">          2 :     if (!solid)</span>
+<span class="lineNum">     702 </span><span class="lineNoCov">          0 :       gluQuadricDrawStyle(joint1[i], GLU_LINE);</span>
+<span class="lineNum">     703 </span><span class="lineCov">          2 :     if (i)</span>
+<span class="lineNum">     704 </span><span class="lineCov">          1 :       glTranslatef(0.0, 0.0, 0.8);</span>
+<span class="lineNum">     705 </span><span class="lineCov">          2 :     gluDisk(joint1[i], 0.2, 0.5, 16, 10);</span>
+<span class="lineNum">     706 </span><span class="lineCov">          2 :     if (i)</span>
+<span class="lineNum">     707 </span><span class="lineCov">          1 :       glTranslatef(0.0, 0.0, -0.8);</span>
+<span class="lineNum">     708 </span>            :   }
+<span class="lineNum">     709 </span><span class="lineCov">          1 :   glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">     710 </span><span class="lineCov">          1 :   glRotatef(-90.0, 0.0, 1.0, 0.0);</span>
+<span class="lineNum">     711 </span><span class="lineCov">          1 :   glTranslatef(0.4, 2.9, 0.0);</span>
+<span class="lineNum">     712 </span><span class="lineCov">          1 :   glEndList();</span>
+<span class="lineNum">     713 </span><span class="lineCov">          1 : }</span>
+<a name="714"><span class="lineNum">     714 </span>            : </a>
+<span class="lineNum">     715 </span>            : void
+<span class="lineNum">     716 </span><span class="lineCov">          1 : VulcanGun(char solid)</span>
+<span class="lineNum">     717 </span>            : {
+<span class="lineNum">     718 </span>            :   int i;
+<span class="lineNum">     719 </span>            :   GLUquadricObj *Barrel[5];
+<span class="lineNum">     720 </span>            :   GLUquadricObj *BarrelFace[5];
+<span class="lineNum">     721 </span>            :   GLUquadricObj *Barrel2[5];
+<span class="lineNum">     722 </span>            :   GLUquadricObj *Barrel3[5];
+<span class="lineNum">     723 </span>            :   GLUquadricObj *BarrelFace2[5];
+<span class="lineNum">     724 </span><span class="lineCov">          1 :   GLUquadricObj *Mount = gluNewQuadric();</span>
+<span class="lineNum">     725 </span><span class="lineCov">          1 :   GLUquadricObj *Mount_face = gluNewQuadric();</span>
+<span class="lineNum">     726 </span>            : 
+<span class="lineNum">     727 </span><span class="lineCov">          1 :   glNewList(SOLID_MECH_VULCAN, GL_COMPILE);</span>
+<span class="lineNum">     728 </span>            : 
+<span class="lineNum">     729 </span>            : #ifdef LIGHT
+<span class="lineNum">     730 </span><span class="lineCov">          1 :   SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     731 </span>            : #endif
+<span class="lineNum">     732 </span><span class="lineCov">          1 :   glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     733 </span>            : 
+<span class="lineNum">     734 </span><span class="lineCov">          1 :   if (!solid) {</span>
+<span class="lineNum">     735 </span><span class="lineNoCov">          0 :     gluQuadricDrawStyle(Mount, GLU_LINE);</span>
+<span class="lineNum">     736 </span><span class="lineNoCov">          0 :     gluQuadricDrawStyle(Mount_face, GLU_LINE);</span>
+<span class="lineNum">     737 </span>            :   }
+<span class="lineNum">     738 </span><span class="lineCov">          1 :   gluCylinder(Mount, 0.5, 0.5, 0.5, 16, 10);</span>
+<span class="lineNum">     739 </span><span class="lineCov">          1 :   glTranslatef(0.0, 0.0, 0.5);</span>
+<span class="lineNum">     740 </span><span class="lineCov">          1 :   gluDisk(Mount_face, 0.0, 0.5, 16, 10);</span>
+<span class="lineNum">     741 </span>            : 
+<span class="lineNum">     742 </span><span class="lineCov">          6 :   for (i = 0; i &lt; 5; i++) {</span>
+<span class="lineNum">     743 </span><span class="lineCov">          5 :     Barrel[i] = gluNewQuadric();</span>
+<span class="lineNum">     744 </span><span class="lineCov">          5 :     BarrelFace[i] = gluNewQuadric();</span>
+<span class="lineNum">     745 </span><span class="lineCov">          5 :     BarrelFace2[i] = gluNewQuadric();</span>
+<span class="lineNum">     746 </span><span class="lineCov">          5 :     Barrel2[i] = gluNewQuadric();</span>
+<span class="lineNum">     747 </span><span class="lineCov">          5 :     Barrel3[i] = gluNewQuadric();</span>
+<span class="lineNum">     748 </span><span class="lineCov">          5 :     glRotatef(72.0, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">     749 </span><span class="lineCov">          5 :     glTranslatef(0.0, 0.3, 0.0);</span>
+<span class="lineNum">     750 </span><span class="lineCov">          5 :     if (!solid) {</span>
+<span class="lineNum">     751 </span><span class="lineNoCov">          0 :       gluQuadricDrawStyle(Barrel[i], GLU_LINE);</span>
+<span class="lineNum">     752 </span><span class="lineNoCov">          0 :       gluQuadricDrawStyle(BarrelFace[i], GLU_LINE);</span>
+<span class="lineNum">     753 </span><span class="lineNoCov">          0 :       gluQuadricDrawStyle(BarrelFace2[i], GLU_LINE);</span>
+<span class="lineNum">     754 </span><span class="lineNoCov">          0 :       gluQuadricDrawStyle(Barrel2[i], GLU_LINE);</span>
+<span class="lineNum">     755 </span><span class="lineNoCov">          0 :       gluQuadricDrawStyle(Barrel3[i], GLU_LINE);</span>
+<span class="lineNum">     756 </span>            :     }
+<span class="lineNum">     757 </span><span class="lineCov">          5 :     gluCylinder(Barrel[i], 0.15, 0.15, 2.0, 16, 10);</span>
+<span class="lineNum">     758 </span><span class="lineCov">          5 :     gluCylinder(Barrel3[i], 0.06, 0.06, 2.0, 16, 10);</span>
+<span class="lineNum">     759 </span><span class="lineCov">          5 :     glTranslatef(0.0, 0.0, 2.0);</span>
+<span class="lineNum">     760 </span><span class="lineCov">          5 :     gluDisk(BarrelFace[i], 0.1, 0.15, 16, 10);</span>
+<span class="lineNum">     761 </span><span class="lineCov">          5 :     gluCylinder(Barrel2[i], 0.1, 0.1, 0.1, 16, 5);</span>
+<span class="lineNum">     762 </span><span class="lineCov">          5 :     glTranslatef(0.0, 0.0, 0.1);</span>
+<span class="lineNum">     763 </span><span class="lineCov">          5 :     gluDisk(BarrelFace2[i], 0.06, 0.1, 16, 5);</span>
+<span class="lineNum">     764 </span><span class="lineCov">          5 :     glTranslatef(0.0, -0.3, -2.1);</span>
+<span class="lineNum">     765 </span>            :   }
+<span class="lineNum">     766 </span><span class="lineCov">          1 :   glEndList();</span>
+<span class="lineNum">     767 </span><span class="lineCov">          1 : }</span>
+<a name="768"><span class="lineNum">     768 </span>            : </a>
+<span class="lineNum">     769 </span>            : void
+<span class="lineNum">     770 </span><span class="lineCov">          1 : ForeArm(char solid)</span>
+<span class="lineNum">     771 </span>            : {
+<span class="lineNum">     772 </span>            :   char i;
+<span class="lineNum">     773 </span>            : 
+<span class="lineNum">     774 </span><span class="lineCov">          1 :   glNewList(SOLID_MECH_FOREARM, GL_COMPILE);</span>
+<span class="lineNum">     775 </span>            : #ifdef LIGHT
+<span class="lineNum">     776 </span><span class="lineCov">          1 :   SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     777 </span>            : #endif
+<span class="lineNum">     778 </span><span class="lineCov">          1 :   glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     779 </span><span class="lineCov">          6 :   for (i = 0; i &lt; 5; i++) {</span>
+<span class="lineNum">     780 </span><span class="lineCov">          5 :     glTranslatef(0.0, -0.1, -0.15);</span>
+<span class="lineNum">     781 </span><span class="lineCov">          5 :     Box(0.6, 0.8, 0.2, solid);</span>
+<span class="lineNum">     782 </span><span class="lineCov">          5 :     glTranslatef(0.0, 0.1, -0.15);</span>
+<span class="lineNum">     783 </span><span class="lineCov">          5 :     Box(0.4, 0.6, 0.1, solid);</span>
+<span class="lineNum">     784 </span>            :   }
+<span class="lineNum">     785 </span><span class="lineCov">          1 :   glTranslatef(0.0, 0.0, 2.45);</span>
+<span class="lineNum">     786 </span><span class="lineCov">          1 :   Box(1.0, 1.0, 2.0, solid);</span>
+<span class="lineNum">     787 </span><span class="lineCov">          1 :   glTranslatef(0.0, 0.0, -1.0);</span>
+<span class="lineNum">     788 </span><span class="lineCov">          1 :   glEndList();</span>
+<span class="lineNum">     789 </span><span class="lineCov">          1 : }</span>
+<a name="790"><span class="lineNum">     790 </span>            : </a>
+<span class="lineNum">     791 </span>            : void
+<span class="lineNum">     792 </span><span class="lineCov">          1 : UpperLeg(char solid)</span>
+<span class="lineNum">     793 </span>            : {
+<span class="lineNum">     794 </span>            :   int i;
+<span class="lineNum">     795 </span><span class="lineCov">          1 :   GLUquadricObj *Hamstring = gluNewQuadric();</span>
+<span class="lineNum">     796 </span><span class="lineCov">          1 :   GLUquadricObj *Knee = gluNewQuadric();</span>
+<span class="lineNum">     797 </span>            :   GLUquadricObj *joint[2];
+<span class="lineNum">     798 </span>            : 
+<span class="lineNum">     799 </span><span class="lineCov">          1 :   glNewList(SOLID_MECH_UPPER_LEG, GL_COMPILE);</span>
+<span class="lineNum">     800 </span>            : #ifdef LIGHT
+<span class="lineNum">     801 </span><span class="lineCov">          1 :   SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     802 </span>            : #endif
+<span class="lineNum">     803 </span><span class="lineCov">          1 :   glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     804 </span><span class="lineCov">          1 :   if (!solid) {</span>
+<span class="lineNum">     805 </span><span class="lineNoCov">          0 :     gluQuadricDrawStyle(Hamstring, GLU_LINE);</span>
+<span class="lineNum">     806 </span><span class="lineNoCov">          0 :     gluQuadricDrawStyle(Knee, GLU_LINE);</span>
+<span class="lineNum">     807 </span>            :   }
+<span class="lineNum">     808 </span><span class="lineCov">          1 :   glTranslatef(0.0, -1.0, 0.0);</span>
+<span class="lineNum">     809 </span><span class="lineCov">          1 :   Box(0.4, 1.0, 0.7, solid);</span>
+<span class="lineNum">     810 </span><span class="lineCov">          1 :   glTranslatef(0.0, -0.65, 0.0);</span>
+<span class="lineNum">     811 </span><span class="lineCov">          6 :   for (i = 0; i &lt; 5; i++) {</span>
+<span class="lineNum">     812 </span><span class="lineCov">          5 :     Box(1.2, 0.3, 1.2, solid);</span>
+<span class="lineNum">     813 </span><span class="lineCov">          5 :     glTranslatef(0.0, -0.2, 0.0);</span>
+<span class="lineNum">     814 </span><span class="lineCov">          5 :     Box(1.0, 0.1, 1.0, solid);</span>
+<span class="lineNum">     815 </span><span class="lineCov">          5 :     glTranslatef(0.0, -0.2, 0.0);</span>
+<span class="lineNum">     816 </span>            :   }
+<span class="lineNum">     817 </span><span class="lineCov">          1 :   glTranslatef(0.0, -0.15, -0.4);</span>
+<span class="lineNum">     818 </span><span class="lineCov">          1 :   Box(2.0, 0.5, 2.0, solid);</span>
+<span class="lineNum">     819 </span><span class="lineCov">          1 :   glTranslatef(0.0, -0.3, -0.2);</span>
+<span class="lineNum">     820 </span><span class="lineCov">          1 :   glRotatef(90.0, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     821 </span>            : #ifdef LIGHT
+<span class="lineNum">     822 </span><span class="lineCov">          1 :   SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     823 </span>            : #endif
+<span class="lineNum">     824 </span><span class="lineCov">          1 :   glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     825 </span><span class="lineCov">          1 :   gluCylinder(Hamstring, 0.6, 0.6, 3.0, 16, 10);</span>
+<span class="lineNum">     826 </span>            : #ifdef LIGHT
+<span class="lineNum">     827 </span><span class="lineCov">          1 :   SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     828 </span>            : #endif
+<span class="lineNum">     829 </span><span class="lineCov">          1 :   glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     830 </span><span class="lineCov">          1 :   glRotatef(-90.0, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     831 </span><span class="lineCov">          1 :   glTranslatef(0.0, -1.5, 1.0);</span>
+<span class="lineNum">     832 </span><span class="lineCov">          1 :   Box(1.5, 3.0, 0.5, solid);</span>
+<span class="lineNum">     833 </span><span class="lineCov">          1 :   glTranslatef(0.0, -1.75, -0.8);</span>
+<span class="lineNum">     834 </span><span class="lineCov">          1 :   Box(2.0, 0.5, 2.0, solid);</span>
+<span class="lineNum">     835 </span><span class="lineCov">          1 :   glTranslatef(0.0, -0.9, -0.85);</span>
+<span class="lineNum">     836 </span>            : #ifdef LIGHT
+<span class="lineNum">     837 </span><span class="lineCov">          1 :   SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     838 </span>            : #endif
+<span class="lineNum">     839 </span><span class="lineCov">          1 :   glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     840 </span><span class="lineCov">          1 :   gluCylinder(Knee, 0.8, 0.8, 1.8, 16, 10);</span>
+<span class="lineNum">     841 </span><span class="lineCov">          3 :   for (i = 0; i &lt; 2; i++) {</span>
+<span class="lineNum">     842 </span><span class="lineCov">          2 :     if (i)</span>
+<span class="lineNum">     843 </span><span class="lineCov">          1 :       glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">     844 </span><span class="lineCov">          2 :     joint[i] = gluNewQuadric();</span>
+<span class="lineNum">     845 </span><span class="lineCov">          2 :     if (!solid)</span>
+<span class="lineNum">     846 </span><span class="lineNoCov">          0 :       gluQuadricDrawStyle(joint[i], GLU_LINE);</span>
+<span class="lineNum">     847 </span><span class="lineCov">          2 :     if (i)</span>
+<span class="lineNum">     848 </span><span class="lineCov">          1 :       glTranslatef(0.0, 0.0, 1.8);</span>
+<span class="lineNum">     849 </span><span class="lineCov">          2 :     gluDisk(joint[i], 0.0, 0.8, 16, 10);</span>
+<span class="lineNum">     850 </span><span class="lineCov">          2 :     if (i)</span>
+<span class="lineNum">     851 </span><span class="lineCov">          1 :       glTranslatef(0.0, 0.0, -1.8);</span>
+<span class="lineNum">     852 </span>            :   }
+<span class="lineNum">     853 </span><span class="lineCov">          1 :   glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">     854 </span><span class="lineCov">          1 :   glEndList();</span>
+<span class="lineNum">     855 </span><span class="lineCov">          1 : }</span>
+<a name="856"><span class="lineNum">     856 </span>            : </a>
+<span class="lineNum">     857 </span>            : void
+<span class="lineNum">     858 </span><span class="lineCov">          1 : Foot(char solid)</span>
+<span class="lineNum">     859 </span>            : {
+<span class="lineNum">     860 </span>            : 
+<span class="lineNum">     861 </span><span class="lineCov">          1 :   glNewList(SOLID_MECH_FOOT, GL_COMPILE);</span>
+<span class="lineNum">     862 </span>            : #ifdef LIGHT
+<span class="lineNum">     863 </span><span class="lineCov">          1 :   SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     864 </span>            : #endif
+<span class="lineNum">     865 </span><span class="lineCov">          1 :   glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     866 </span><span class="lineCov">          1 :   glRotatef(90.0, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     867 </span><span class="lineCov">          1 :   Octagon(1.5, 0.6, solid);</span>
+<span class="lineNum">     868 </span><span class="lineCov">          1 :   glRotatef(-90.0, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     869 </span><span class="lineCov">          1 :   glEndList();</span>
+<span class="lineNum">     870 </span><span class="lineCov">          1 : }</span>
+<a name="871"><span class="lineNum">     871 </span>            : </a>
+<span class="lineNum">     872 </span>            : void
+<span class="lineNum">     873 </span><span class="lineCov">        602 : LowerLeg(char solid)</span>
+<span class="lineNum">     874 </span>            : {
+<span class="lineNum">     875 </span>            :   float k, l;
+<span class="lineNum">     876 </span><span class="lineCov">        602 :   GLUquadricObj *ankle = gluNewQuadric();</span>
+<span class="lineNum">     877 </span>            :   GLUquadricObj *ankle_face[2],*joints;
+<span class="lineNum">     878 </span>            : 
+<span class="lineNum">     879 </span>            : #ifdef LIGHT
+<span class="lineNum">     880 </span><span class="lineCov">        602 :   SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     881 </span>            : #endif
+<span class="lineNum">     882 </span><span class="lineCov">        602 :   glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     883 </span><span class="lineCov">       1806 :   for (k = 0.0; k &lt; 2.0; k++) {</span>
+<span class="lineNum">     884 </span><span class="lineCov">       2408 :     for (l = 0.0; l &lt; 2.0; l++) {</span>
+<span class="lineNum">     885 </span><span class="lineCov">       2408 :       glPushMatrix();</span>
+<span class="lineNum">     886 </span><span class="lineCov">       2408 :       glTranslatef(k, 0.0, l);</span>
+<span class="lineNum">     887 </span>            : #ifdef LIGHT
+<span class="lineNum">     888 </span><span class="lineCov">       2408 :       SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     889 </span>            : #endif
+<span class="lineNum">     890 </span><span class="lineCov">       2408 :       glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     891 </span><span class="lineCov">       2408 :       Box(1.0, 0.5, 1.0, solid);</span>
+<span class="lineNum">     892 </span><span class="lineCov">       2408 :       glTranslatef(0.0, -0.45, 0.0);</span>
+<span class="lineNum">     893 </span>            : #ifdef LIGHT
+<span class="lineNum">     894 </span><span class="lineCov">       2408 :       SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     895 </span>            : #endif
+<span class="lineNum">     896 </span><span class="lineCov">       2408 :       glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     897 </span>            : #ifdef SPHERE
+<span class="lineNum">     898 </span><span class="lineCov">       2408 :       joints = gluNewQuadric();</span>
+<span class="lineNum">     899 </span><span class="lineCov">       2408 :       if(!solid)gluQuadricDrawStyle(joints, GLU_LINE);</span>
+<span class="lineNum">     900 </span><span class="lineCov">       2408 :       gluSphere(joints,0.2, 16, 16); </span>
+<span class="lineNum">     901 </span><span class="lineCov">       2408 :       free(joints);</span>
+<span class="lineNum">     902 </span>            : #endif
+<span class="lineNum">     903 </span><span class="lineCov">       2408 :       if (leg)</span>
+<span class="lineNum">     904 </span><span class="lineCov">       1204 :         glRotatef((GLfloat) heel1, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     905 </span>            :       else
+<span class="lineNum">     906 </span><span class="lineCov">       1204 :         glRotatef((GLfloat) heel2, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     907 </span>            :       /* glTranslatef(0.0, -0.2, 0.0); */
+<span class="lineNum">     908 </span><span class="lineCov">       2408 :       glTranslatef(0.0, -1.7, 0.0);</span>
+<span class="lineNum">     909 </span>            : #ifdef LIGHT
+<span class="lineNum">     910 </span><span class="lineCov">       2408 :       SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     911 </span>            : #endif
+<span class="lineNum">     912 </span><span class="lineCov">       2408 :       glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     913 </span><span class="lineCov">       2408 :       Box(0.25, 3.0, 0.25, solid);</span>
+<span class="lineNum">     914 </span><span class="lineCov">       2408 :       glTranslatef(0.0, -1.7, 0.0);</span>
+<span class="lineNum">     915 </span>            : #ifdef LIGHT
+<span class="lineNum">     916 </span><span class="lineCov">       2408 :       SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     917 </span>            : #endif
+<span class="lineNum">     918 </span><span class="lineCov">       2408 :       glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     919 </span>            : #ifdef SPHERE
+<span class="lineNum">     920 </span><span class="lineCov">       2408 :       joints = gluNewQuadric();</span>
+<span class="lineNum">     921 </span><span class="lineCov">       2408 :       if(!solid)gluQuadricDrawStyle(joints, GLU_LINE);</span>
+<span class="lineNum">     922 </span><span class="lineCov">       2408 :       gluSphere(joints, 0.2, 16, 16);</span>
+<span class="lineNum">     923 </span>            : #endif
+<span class="lineNum">     924 </span><span class="lineCov">       2408 :       if (leg)</span>
+<span class="lineNum">     925 </span><span class="lineCov">       1204 :         glRotatef((GLfloat) - heel1, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     926 </span>            :       else
+<span class="lineNum">     927 </span><span class="lineCov">       1204 :         glRotatef((GLfloat) - heel2, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     928 </span><span class="lineCov">       2408 :       glTranslatef(0.0, -0.45, 0.0);</span>
+<span class="lineNum">     929 </span>            : #ifdef LIGHT
+<span class="lineNum">     930 </span><span class="lineCov">       2408 :       SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     931 </span>            : #endif
+<span class="lineNum">     932 </span><span class="lineCov">       2408 :       glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     933 </span><span class="lineCov">       2408 :       Box(1.0, 0.5, 1.0, solid);</span>
+<span class="lineNum">     934 </span><span class="lineCov">       2408 :       if (!k &amp;&amp; !l) {</span>
+<span class="lineNum">     935 </span>            :         int j;
+<span class="lineNum">     936 </span>            : 
+<span class="lineNum">     937 </span><span class="lineCov">        602 :         glTranslatef(-0.4, -0.8, 0.5);</span>
+<span class="lineNum">     938 </span><span class="lineCov">        602 :         if (leg)</span>
+<span class="lineNum">     939 </span><span class="lineCov">        301 :           glRotatef((GLfloat) ankle1, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     940 </span>            :         else
+<span class="lineNum">     941 </span><span class="lineCov">        301 :           glRotatef((GLfloat) ankle2, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">     942 </span><span class="lineCov">        602 :         glRotatef(90.0, 0.0, 1.0, 0.0);</span>
+<span class="lineNum">     943 </span><span class="lineCov">        602 :         if (!solid)</span>
+<span class="lineNum">     944 </span><span class="lineNoCov">          0 :           gluQuadricDrawStyle(ankle, GLU_LINE);</span>
+<span class="lineNum">     945 </span><span class="lineCov">        602 :         gluCylinder(ankle, 0.8, 0.8, 1.8, 16, 10);</span>
+<span class="lineNum">     946 </span><span class="lineCov">       1806 :         for (j = 0; j &lt; 2; j++) {</span>
+<span class="lineNum">     947 </span><span class="lineCov">       1204 :           ankle_face[j] = gluNewQuadric();</span>
+<span class="lineNum">     948 </span><span class="lineCov">       1204 :           if (!solid)</span>
+<span class="lineNum">     949 </span><span class="lineNoCov">          0 :             gluQuadricDrawStyle(ankle_face[j], GLU_LINE);</span>
+<span class="lineNum">     950 </span><span class="lineCov">       1204 :           if (j) {</span>
+<span class="lineNum">     951 </span><span class="lineCov">        602 :             glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">     952 </span><span class="lineCov">        602 :             glTranslatef(0.0, 0.0, 1.8);</span>
+<span class="lineNum">     953 </span>            :           }
+<span class="lineNum">     954 </span><span class="lineCov">       1204 :           gluDisk(ankle_face[j], 0.0, 0.8, 16, 10);</span>
+<span class="lineNum">     955 </span><span class="lineCov">       1204 :           if (j)</span>
+<span class="lineNum">     956 </span><span class="lineCov">        602 :             glTranslatef(0.0, 0.0, -1.8);</span>
+<span class="lineNum">     957 </span>            :         }
+<span class="lineNum">     958 </span><span class="lineCov">        602 :         glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">     959 </span><span class="lineCov">        602 :         glRotatef(-90.0, 0.0, 1.0, 0.0);</span>
+<span class="lineNum">     960 </span><span class="lineCov">        602 :         glTranslatef(0.95, -0.8, 0.0);</span>
+<span class="lineNum">     961 </span><span class="lineCov">        602 :         glCallList(SOLID_MECH_FOOT);</span>
+<span class="lineNum">     962 </span>            :       }
+<span class="lineNum">     963 </span><span class="lineCov">       2408 :       glPopMatrix();</span>
+<span class="lineNum">     964 </span>            :     }
+<span class="lineNum">     965 </span>            :   }
+<span class="lineNum">     966 </span><span class="lineCov">        602 : }</span>
+<a name="967"><span class="lineNum">     967 </span>            : </a>
+<span class="lineNum">     968 </span>            : void
+<span class="lineNum">     969 </span><span class="lineCov">          1 : RocketPod(char solid)</span>
+<span class="lineNum">     970 </span>            : {
+<span class="lineNum">     971 </span>            : 
+<span class="lineNum">     972 </span><span class="lineCov">          1 :   int i, j, k = 0;</span>
+<span class="lineNum">     973 </span>            :   GLUquadricObj *rocket[6];
+<span class="lineNum">     974 </span>            :   GLUquadricObj *rocket1[6];
+<span class="lineNum">     975 </span>            : 
+<span class="lineNum">     976 </span><span class="lineCov">          1 :   glNewList(SOLID_MECH_ROCKET, GL_COMPILE);</span>
+<span class="lineNum">     977 </span>            : #ifdef LIGHT
+<span class="lineNum">     978 </span><span class="lineCov">          1 :   SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">     979 </span>            : #endif
+<span class="lineNum">     980 </span><span class="lineCov">          1 :   glColor3f(0.5, 0.5, 0.5);</span>
+<span class="lineNum">     981 </span><span class="lineCov">          1 :   glScalef(0.4, 0.4, 0.4);</span>
+<span class="lineNum">     982 </span><span class="lineCov">          1 :   glRotatef(45.0, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">     983 </span><span class="lineCov">          1 :   glTranslatef(1.0, 0.0, 0.0);</span>
+<span class="lineNum">     984 </span><span class="lineCov">          1 :   Box(2.0, 0.5, 3.0, solid);</span>
+<span class="lineNum">     985 </span><span class="lineCov">          1 :   glTranslatef(1.0, 0.0, 0.0);</span>
+<span class="lineNum">     986 </span><span class="lineCov">          1 :   glRotatef(45.0, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">     987 </span><span class="lineCov">          1 :   glTranslatef(0.5, 0.0, 0.0);</span>
+<span class="lineNum">     988 </span><span class="lineCov">          1 :   Box(1.2, 0.5, 3.0, solid);</span>
+<span class="lineNum">     989 </span><span class="lineCov">          1 :   glTranslatef(2.1, 0.0, 0.0);</span>
+<span class="lineNum">     990 </span><span class="lineCov">          1 :   glRotatef(-90.0, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">     991 </span>            : #ifdef LIGHT
+<span class="lineNum">     992 </span><span class="lineCov">          1 :   SetMaterial(mat_specular, mat_ambient, mat_diffuse, mat_shininess);</span>
+<span class="lineNum">     993 </span>            : #endif
+<span class="lineNum">     994 </span><span class="lineCov">          1 :   glColor3f(1.0, 1.0, 0.0);</span>
+<span class="lineNum">     995 </span><span class="lineCov">          1 :   Box(2.0, 3.0, 4.0, solid);</span>
+<span class="lineNum">     996 </span><span class="lineCov">          1 :   glTranslatef(-0.5, -1.0, 1.3);</span>
+<span class="lineNum">     997 </span><span class="lineCov">          3 :   for (i = 0; i &lt; 2; i++) {</span>
+<span class="lineNum">     998 </span><span class="lineCov">          6 :     for (j = 0; j &lt; 3; j++) {</span>
+<span class="lineNum">     999 </span><span class="lineCov">          6 :       rocket[k] = gluNewQuadric();</span>
+<span class="lineNum">    1000 </span><span class="lineCov">          6 :       rocket1[k] = gluNewQuadric();</span>
+<span class="lineNum">    1001 </span><span class="lineCov">          6 :       if (!solid) {</span>
+<span class="lineNum">    1002 </span><span class="lineNoCov">          0 :         gluQuadricDrawStyle(rocket[k], GLU_LINE);</span>
+<span class="lineNum">    1003 </span><span class="lineNoCov">          0 :         gluQuadricDrawStyle(rocket1[k], GLU_LINE);</span>
+<span class="lineNum">    1004 </span>            :       }
+<span class="lineNum">    1005 </span><span class="lineCov">          6 :       glTranslatef(i, j, 0.6);</span>
+<span class="lineNum">    1006 </span>            : #ifdef LIGHT
+<span class="lineNum">    1007 </span><span class="lineCov">          6 :       SetMaterial(mat_specular3, mat_ambient3, mat_diffuse3, mat_shininess3);</span>
+<span class="lineNum">    1008 </span>            : #endif
+<span class="lineNum">    1009 </span><span class="lineCov">          6 :       glColor3f(1.0, 1.0, 1.0);</span>
+<span class="lineNum">    1010 </span><span class="lineCov">          6 :       gluCylinder(rocket[k], 0.4, 0.4, 0.3, 16, 10);</span>
+<span class="lineNum">    1011 </span><span class="lineCov">          6 :       glTranslatef(0.0, 0.0, 0.3);</span>
+<span class="lineNum">    1012 </span>            : #ifdef LIGHT
+<span class="lineNum">    1013 </span><span class="lineCov">          6 :       SetMaterial(mat_specular4, mat_ambient4, mat_diffuse4, mat_shininess4);</span>
+<span class="lineNum">    1014 </span>            : #endif
+<span class="lineNum">    1015 </span><span class="lineCov">          6 :       glColor3f(0.0, 1.0, 0.0);</span>
+<span class="lineNum">    1016 </span><span class="lineCov">          6 :       gluCylinder(rocket1[k], 0.4, 0.0, 0.5, 16, 10);</span>
+<span class="lineNum">    1017 </span><span class="lineCov">          6 :       k++;</span>
+<span class="lineNum">    1018 </span><span class="lineCov">          6 :       glTranslatef(-i, -j, -0.9);</span>
+<span class="lineNum">    1019 </span>            :     }
+<span class="lineNum">    1020 </span>            :   }
+<span class="lineNum">    1021 </span><span class="lineCov">          1 :   glEndList();</span>
+<span class="lineNum">    1022 </span><span class="lineCov">          1 : }</span>
+<a name="1023"><span class="lineNum">    1023 </span>            : </a>
+<span class="lineNum">    1024 </span>            : void
+<span class="lineNum">    1025 </span><span class="lineCov">          1 : Enviro(char solid)</span>
+<span class="lineNum">    1026 </span>            : {
+<span class="lineNum">    1027 </span>            : 
+<span class="lineNum">    1028 </span>            :   int i, j;
+<span class="lineNum">    1029 </span>            : 
+<span class="lineNum">    1030 </span><span class="lineCov">          1 :   glNewList(SOLID_ENVIRO, GL_COMPILE);</span>
+<span class="lineNum">    1031 </span><span class="lineCov">          1 :   SetMaterial(mat_specular4, mat_ambient4, mat_diffuse4, mat_shininess4);</span>
+<span class="lineNum">    1032 </span><span class="lineCov">          1 :   glColor3f(0.0, 1.0, 0.0);</span>
+<span class="lineNum">    1033 </span><span class="lineCov">          1 :   Box(20.0, 0.5, 30.0, solid);</span>
+<span class="lineNum">    1034 </span>            : 
+<span class="lineNum">    1035 </span><span class="lineCov">          1 :   SetMaterial(mat_specular4, mat_ambient3, mat_diffuse2, mat_shininess);</span>
+<span class="lineNum">    1036 </span><span class="lineCov">          1 :   glColor3f(0.6, 0.6, 0.6);</span>
+<span class="lineNum">    1037 </span><span class="lineCov">          1 :   glTranslatef(0.0, 0.0, -10.0);</span>
+<span class="lineNum">    1038 </span><span class="lineCov">          7 :   for (j = 0; j &lt; 6; j++) {</span>
+<span class="lineNum">    1039 </span><span class="lineCov">         12 :     for (i = 0; i &lt; 2; i++) {</span>
+<span class="lineNum">    1040 </span><span class="lineCov">         12 :       if (i)</span>
+<span class="lineNum">    1041 </span><span class="lineCov">          6 :         glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">    1042 </span><span class="lineCov">         12 :       glTranslatef(10.0, 4.0, 0.0);</span>
+<span class="lineNum">    1043 </span><span class="lineCov">         12 :       Box(4.0, 8.0, 2.0, solid);</span>
+<span class="lineNum">    1044 </span><span class="lineCov">         12 :       glTranslatef(0.0, -1.0, -3.0);</span>
+<span class="lineNum">    1045 </span><span class="lineCov">         12 :       Box(4.0, 6.0, 2.0, solid);</span>
+<span class="lineNum">    1046 </span><span class="lineCov">         12 :       glTranslatef(-10.0, -3.0, 3.0);</span>
+<span class="lineNum">    1047 </span>            :     }
+<span class="lineNum">    1048 </span><span class="lineCov">          6 :     glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">    1049 </span><span class="lineCov">          6 :     glTranslatef(0.0, 0.0, 5.0);</span>
+<span class="lineNum">    1050 </span>            :   }
+<span class="lineNum">    1051 </span>            : 
+<span class="lineNum">    1052 </span><span class="lineCov">          1 :   glEndList();</span>
+<span class="lineNum">    1053 </span><span class="lineCov">          1 : }</span>
+<a name="1054"><span class="lineNum">    1054 </span>            : </a>
+<span class="lineNum">    1055 </span>            : void
+<span class="lineNum">    1056 </span><span class="lineNoCov">          0 : Toggle(void)</span>
+<span class="lineNum">    1057 </span>            : {
+<span class="lineNum">    1058 </span><span class="lineCov">          1 :   if (solid_part)</span>
+<span class="lineNum">    1059 </span><span class="lineNoCov">          0 :     solid_part = 0;</span>
+<span class="lineNum">    1060 </span>            :   else
+<span class="lineNum">    1061 </span><span class="lineCov">          1 :     solid_part = 1;</span>
+<span class="lineNum">    1062 </span><span class="lineNoCov">          0 : }</span>
+<a name="1063"><span class="lineNum">    1063 </span>            : </a>
+<span class="lineNum">    1064 </span>            : void
+<span class="lineNum">    1065 </span><span class="lineNoCov">          0 : disable(void)</span>
+<span class="lineNum">    1066 </span>            : {
+<span class="lineNum">    1067 </span><span class="lineNoCov">          0 :   glDisable(GL_LIGHTING);</span>
+<span class="lineNum">    1068 </span><span class="lineNoCov">          0 :   glDisable(GL_DEPTH_TEST);</span>
+<span class="lineNum">    1069 </span><span class="lineNoCov">          0 :   glDisable(GL_NORMALIZE);</span>
+<span class="lineNum">    1070 </span><span class="lineNoCov">          0 :   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);</span>
+<span class="lineNum">    1071 </span><span class="lineNoCov">          0 : }</span>
+<a name="1072"><span class="lineNum">    1072 </span>            : </a>
+<span class="lineNum">    1073 </span>            : void
+<span class="lineNum">    1074 </span><span class="lineCov">        301 : lighting(void)</span>
+<span class="lineNum">    1075 </span>            : {
+<span class="lineNum">    1076 </span>            : 
+<span class="lineNum">    1077 </span><span class="lineCov">        301 :   GLfloat position[] =</span>
+<span class="lineNum">    1078 </span>            :   {0.0, 0.0, 2.0, 1.0};
+<span class="lineNum">    1079 </span>            : 
+<span class="lineNum">    1080 </span>            : #ifdef MOVE_LIGHT
+<span class="lineNum">    1081 </span><span class="lineCov">        301 :   glRotatef((GLfloat) lightturn1, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1082 </span><span class="lineCov">        301 :   glRotatef((GLfloat) lightturn, 0.0, 1.0, 0.0);</span>
+<span class="lineNum">    1083 </span><span class="lineCov">        301 :   glRotatef(0.0, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1084 </span>            : #endif
+<span class="lineNum">    1085 </span><span class="lineCov">        301 :   glEnable(GL_LIGHTING);</span>
+<span class="lineNum">    1086 </span><span class="lineCov">        301 :   glEnable(GL_LIGHT0);</span>
+<span class="lineNum">    1087 </span><span class="lineCov">        301 :   glEnable(GL_NORMALIZE);</span>
+<span class="lineNum">    1088 </span>            :   /* glEnable(GL_FLAT); */
+<span class="lineNum">    1089 </span>            :   /*  glDepthFunc(GL_LESS); */
+<span class="lineNum">    1090 </span><span class="lineCov">        301 :   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);</span>
+<span class="lineNum">    1091 </span>            : 
+<span class="lineNum">    1092 </span><span class="lineCov">        301 :   glLightfv(GL_LIGHT0, GL_POSITION, position);</span>
+<span class="lineNum">    1093 </span><span class="lineCov">        301 :   glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 80.0);</span>
+<span class="lineNum">    1094 </span>            : 
+<span class="lineNum">    1095 </span><span class="lineCov">        301 :   glTranslatef(0.0, 0.0, 2.0);</span>
+<span class="lineNum">    1096 </span><span class="lineCov">        301 :   glDisable(GL_LIGHTING);</span>
+<span class="lineNum">    1097 </span><span class="lineCov">        301 :   Box(0.1, 0.1, 0.1, 0);</span>
+<span class="lineNum">    1098 </span><span class="lineCov">        301 :   glEnable(GL_LIGHTING);</span>
+<span class="lineNum">    1099 </span>            :   /* glEnable(GL_CULL_FACE); */
+<span class="lineNum">    1100 </span><span class="lineCov">        301 : }</span>
+<a name="1101"><span class="lineNum">    1101 </span>            : </a>
+<span class="lineNum">    1102 </span>            : void
+<span class="lineNum">    1103 </span><span class="lineCov">        301 : DrawMech(void)</span>
+<span class="lineNum">    1104 </span>            : {
+<span class="lineNum">    1105 </span>            :   int i, j;
+<span class="lineNum">    1106 </span>            : 
+<span class="lineNum">    1107 </span><span class="lineCov">        301 :   glScalef(0.5, 0.5, 0.5);</span>
+<span class="lineNum">    1108 </span><span class="lineCov">        301 :   glPushMatrix();</span>
+<span class="lineNum">    1109 </span><span class="lineCov">        301 :   glTranslatef(0.0, -0.75, 0.0);</span>
+<span class="lineNum">    1110 </span><span class="lineCov">        301 :   glRotatef((GLfloat) tilt, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1111 </span>            : 
+<span class="lineNum">    1112 </span><span class="lineCov">        301 :   glRotatef(90.0, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1113 </span>            : #ifdef HIP
+<span class="lineNum">    1114 </span><span class="lineCov">        301 :   glCallList(SOLID_MECH_HIP);</span>
+<span class="lineNum">    1115 </span>            : #endif
+<span class="lineNum">    1116 </span><span class="lineCov">        301 :   glRotatef(-90.0, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1117 </span>            : 
+<span class="lineNum">    1118 </span><span class="lineCov">        301 :   glTranslatef(0.0, 0.75, 0.0);</span>
+<span class="lineNum">    1119 </span><span class="lineCov">        301 :   glPushMatrix();</span>
+<span class="lineNum">    1120 </span><span class="lineCov">        301 :   glRotatef((GLfloat) pivot, 0.0, 1.0, 0.0);</span>
+<span class="lineNum">    1121 </span><span class="lineCov">        301 :   glPushMatrix();</span>
+<span class="lineNum">    1122 </span>            : #ifdef TORSO
+<span class="lineNum">    1123 </span><span class="lineCov">        301 :   glCallList(SOLID_MECH_TORSO);</span>
+<span class="lineNum">    1124 </span>            : #endif
+<span class="lineNum">    1125 </span><span class="lineCov">        301 :   glPopMatrix();</span>
+<span class="lineNum">    1126 </span><span class="lineCov">        301 :   glPushMatrix();</span>
+<span class="lineNum">    1127 </span><span class="lineCov">        301 :   glTranslatef(0.5, 0.5, 0.0);</span>
+<span class="lineNum">    1128 </span>            : #ifdef ROCKET_POD
+<span class="lineNum">    1129 </span><span class="lineCov">        301 :   glCallList(SOLID_MECH_ROCKET);</span>
+<span class="lineNum">    1130 </span>            : #endif
+<span class="lineNum">    1131 </span><span class="lineCov">        301 :   glPopMatrix();</span>
+<span class="lineNum">    1132 </span><span class="lineCov">        903 :   for (i = 0; i &lt; 2; i++) {</span>
+<span class="lineNum">    1133 </span><span class="lineCov">        602 :     glPushMatrix();</span>
+<span class="lineNum">    1134 </span><span class="lineCov">        602 :     if (i)</span>
+<span class="lineNum">    1135 </span><span class="lineCov">        301 :       glScalef(-1.0, 1.0, 1.0);</span>
+<span class="lineNum">    1136 </span><span class="lineCov">        602 :     glTranslatef(1.5, 0.0, 0.0);</span>
+<span class="lineNum">    1137 </span>            : #ifdef SHOULDER
+<span class="lineNum">    1138 </span><span class="lineCov">        602 :     glCallList(SOLID_MECH_SHOULDER);</span>
+<span class="lineNum">    1139 </span>            : #endif
+<span class="lineNum">    1140 </span><span class="lineCov">        602 :     glTranslatef(0.9, 0.0, 0.0);</span>
+<span class="lineNum">    1141 </span><span class="lineCov">        602 :     if (i) {</span>
+<span class="lineNum">    1142 </span><span class="lineCov">        301 :       glRotatef((GLfloat) lat1, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">    1143 </span><span class="lineCov">        301 :       glRotatef((GLfloat) shoulder1, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1144 </span><span class="lineCov">        301 :       glRotatef((GLfloat) shoulder3, 0.0, 1.0, 0.0);</span>
+<span class="lineNum">    1145 </span>            :     } else {
+<span class="lineNum">    1146 </span><span class="lineCov">        301 :       glRotatef((GLfloat) lat2, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">    1147 </span><span class="lineCov">        301 :       glRotatef((GLfloat) shoulder2, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1148 </span><span class="lineCov">        301 :       glRotatef((GLfloat) shoulder4, 0.0, 1.0, 0.0);</span>
+<span class="lineNum">    1149 </span>            :     }
+<span class="lineNum">    1150 </span><span class="lineCov">        602 :     glTranslatef(0.0, -1.4, 0.0);</span>
+<span class="lineNum">    1151 </span>            : #ifdef UPPER_ARM
+<span class="lineNum">    1152 </span><span class="lineCov">        602 :     glCallList(SOLID_MECH_UPPER_ARM);</span>
+<span class="lineNum">    1153 </span>            : #endif
+<span class="lineNum">    1154 </span><span class="lineCov">        602 :     glTranslatef(0.0, -2.9, 0.0);</span>
+<span class="lineNum">    1155 </span><span class="lineCov">        602 :     if (i)</span>
+<span class="lineNum">    1156 </span><span class="lineCov">        301 :       glRotatef((GLfloat) elbow1, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1157 </span>            :     else
+<span class="lineNum">    1158 </span><span class="lineCov">        301 :       glRotatef((GLfloat) elbow2, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1159 </span><span class="lineCov">        602 :     glTranslatef(0.0, -0.9, -0.2);</span>
+<span class="lineNum">    1160 </span>            : #ifdef LOWER_ARM
+<span class="lineNum">    1161 </span><span class="lineCov">        602 :     glCallList(SOLID_MECH_FOREARM);</span>
+<span class="lineNum">    1162 </span><span class="lineCov">        602 :     glPushMatrix();</span>
+<span class="lineNum">    1163 </span><span class="lineCov">        602 :     glTranslatef(0.0, 0.0, 2.0);</span>
+<span class="lineNum">    1164 </span><span class="lineCov">        602 :     glRotatef((GLfloat) fire, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">    1165 </span><span class="lineCov">        602 :     glCallList(SOLID_MECH_VULCAN);</span>
+<span class="lineNum">    1166 </span><span class="lineCov">        602 :     glPopMatrix();</span>
+<span class="lineNum">    1167 </span>            : #endif
+<span class="lineNum">    1168 </span><span class="lineCov">        602 :     glPopMatrix();</span>
+<span class="lineNum">    1169 </span>            :   }
+<span class="lineNum">    1170 </span><span class="lineCov">        301 :   glPopMatrix();</span>
+<span class="lineNum">    1171 </span>            : 
+<span class="lineNum">    1172 </span><span class="lineCov">        301 :   glPopMatrix();</span>
+<span class="lineNum">    1173 </span>            : 
+<span class="lineNum">    1174 </span><span class="lineCov">        903 :   for (j = 0; j &lt; 2; j++) {</span>
+<span class="lineNum">    1175 </span><span class="lineCov">        602 :     glPushMatrix();</span>
+<span class="lineNum">    1176 </span><span class="lineCov">        602 :     if (j) {</span>
+<span class="lineNum">    1177 </span><span class="lineCov">        301 :       glScalef(-0.5, 0.5, 0.5);</span>
+<span class="lineNum">    1178 </span><span class="lineCov">        301 :       leg = 1;</span>
+<span class="lineNum">    1179 </span>            :     } else {
+<span class="lineNum">    1180 </span><span class="lineCov">        301 :       glScalef(0.5, 0.5, 0.5);</span>
+<span class="lineNum">    1181 </span><span class="lineCov">        301 :       leg = 0;</span>
+<span class="lineNum">    1182 </span>            :     }
+<span class="lineNum">    1183 </span><span class="lineCov">        602 :     glTranslatef(2.0, -1.5, 0.0);</span>
+<span class="lineNum">    1184 </span><span class="lineCov">        602 :     if (j) {</span>
+<span class="lineNum">    1185 </span><span class="lineCov">        301 :       glRotatef((GLfloat) hip11, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1186 </span><span class="lineCov">        301 :       glRotatef((GLfloat) hip12, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">    1187 </span>            :     } else {
+<span class="lineNum">    1188 </span><span class="lineCov">        301 :       glRotatef((GLfloat) hip21, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1189 </span><span class="lineCov">        301 :       glRotatef((GLfloat) hip22, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">    1190 </span>            :     }
+<span class="lineNum">    1191 </span><span class="lineCov">        602 :     glTranslatef(0.0, 0.3, 0.0);</span>
+<span class="lineNum">    1192 </span>            : #ifdef UPPER_LEG
+<span class="lineNum">    1193 </span><span class="lineCov">        602 :     glPushMatrix();</span>
+<span class="lineNum">    1194 </span><span class="lineCov">        602 :     glCallList(SOLID_MECH_UPPER_LEG);</span>
+<span class="lineNum">    1195 </span><span class="lineCov">        602 :     glPopMatrix();</span>
+<span class="lineNum">    1196 </span>            : #endif
+<span class="lineNum">    1197 </span><span class="lineCov">        602 :     glTranslatef(0.0, -8.3, -0.4);</span>
+<span class="lineNum">    1198 </span><span class="lineCov">        602 :     if (j)</span>
+<span class="lineNum">    1199 </span><span class="lineCov">        301 :       glRotatef((GLfloat) - hip12, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">    1200 </span>            :     else
+<span class="lineNum">    1201 </span><span class="lineCov">        301 :       glRotatef((GLfloat) - hip22, 0.0, 0.0, 1.0);</span>
+<span class="lineNum">    1202 </span><span class="lineCov">        602 :     glTranslatef(-0.5, -0.85, -0.5);</span>
+<span class="lineNum">    1203 </span>            : #ifdef LOWER_LEG
+<span class="lineNum">    1204 </span><span class="lineCov">        602 :     LowerLeg(1);</span>
+<span class="lineNum">    1205 </span>            : #endif
+<span class="lineNum">    1206 </span><span class="lineCov">        602 :     glPopMatrix();</span>
+<span class="lineNum">    1207 </span>            :   }
+<span class="lineNum">    1208 </span>            :   
+<span class="lineNum">    1209 </span><span class="lineCov">        301 :   gcount+=1;</span>
+<span class="lineNum">    1210 </span><span class="lineCov">        602 :   printf(&quot;gcount:%i\n&quot;,gcount);</span>
+<span class="lineNum">    1211 </span><span class="lineCov">        301 :   if(gcount&gt;300)</span>
+<span class="lineNum">    1212 </span><span class="lineCov">          1 :      exit(0);    </span>
+<span class="lineNum">    1213 </span><span class="lineCov">        300 : }</span>
+<a name="1214"><span class="lineNum">    1214 </span>            : </a>
+<span class="lineNum">    1215 </span>            : void
+<span class="lineNum">    1216 </span><span class="lineCov">        301 : display(void)</span>
+<span class="lineNum">    1217 </span>            : {
+<span class="lineNum">    1218 </span><span class="lineCov">        301 :   glClearColor(0.0, 0.0, 0.0, 0.0);</span>
+<span class="lineNum">    1219 </span><span class="lineCov">        301 :   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</span>
+<span class="lineNum">    1220 </span><span class="lineCov">        301 :   glEnable(GL_DEPTH_TEST);</span>
+<span class="lineNum">    1221 </span>            : 
+<span class="lineNum">    1222 </span><span class="lineCov">        301 :   glPushMatrix();</span>
+<span class="lineNum">    1223 </span><span class="lineCov">        301 :   glRotatef((GLfloat) turn, 0.0, 1.0, 0.0);</span>
+<span class="lineNum">    1224 </span><span class="lineCov">        301 :   glRotatef((GLfloat) turn1, 1.0, 0.0, 0.0);</span>
+<span class="lineNum">    1225 </span>            : #ifdef LIGHT
+<span class="lineNum">    1226 </span><span class="lineCov">        301 :   if (solid_part) {</span>
+<span class="lineNum">    1227 </span><span class="lineCov">        301 :     glPushMatrix();</span>
+<span class="lineNum">    1228 </span><span class="lineCov">        301 :     lighting();</span>
+<span class="lineNum">    1229 </span><span class="lineCov">        301 :     glPopMatrix();</span>
+<span class="lineNum">    1230 </span>            :   } else
+<span class="lineNum">    1231 </span><span class="lineNoCov">          0 :     disable();</span>
+<span class="lineNum">    1232 </span>            : #endif
+<span class="lineNum">    1233 </span>            : #ifdef DRAW_MECH
+<span class="lineNum">    1234 </span><span class="lineCov">        301 :   glPushMatrix();</span>
+<span class="lineNum">    1235 </span><span class="lineCov">        301 :   glTranslatef(0.0, elevation, 0.0);</span>
+<span class="lineNum">    1236 </span><span class="lineCov">        301 :   DrawMech();</span>
+<span class="lineNum">    1237 </span><span class="lineCov">        300 :   glPopMatrix();</span>
+<span class="lineNum">    1238 </span>            : #endif
+<span class="lineNum">    1239 </span>            : #ifdef DRAW_ENVIRO
+<span class="lineNum">    1240 </span><span class="lineCov">        300 :   glPushMatrix();</span>
+<span class="lineNum">    1241 </span><span class="lineCov">        300 :   if (distance &gt;= 20.136)</span>
+<span class="lineNum">    1242 </span><span class="lineCov">          2 :     distance = 0.0;</span>
+<span class="lineNum">    1243 </span><span class="lineCov">        300 :   glTranslatef(0.0, -5.0, -distance);</span>
+<span class="lineNum">    1244 </span><span class="lineCov">        300 :   glCallList(SOLID_ENVIRO);</span>
+<span class="lineNum">    1245 </span><span class="lineCov">        300 :   glTranslatef(0.0, 0.0, 10.0);</span>
+<span class="lineNum">    1246 </span><span class="lineCov">        300 :   glCallList(SOLID_ENVIRO);</span>
+<span class="lineNum">    1247 </span><span class="lineCov">        300 :   glPopMatrix();</span>
+<span class="lineNum">    1248 </span>            : #endif
+<span class="lineNum">    1249 </span><span class="lineCov">        300 :   glPopMatrix();</span>
+<span class="lineNum">    1250 </span><span class="lineCov">        300 :   glFlush();</span>
+<span class="lineNum">    1251 </span><span class="lineCov">        300 :   tkSwapBuffers();</span>
+<span class="lineNum">    1252 </span><span class="lineCov">        300 : }</span>
+<a name="1253"><span class="lineNum">    1253 </span>            : </a>
+<span class="lineNum">    1254 </span>            : void
+<span class="lineNum">    1255 </span><span class="lineCov">          1 : init(void)</span>
+<span class="lineNum">    1256 </span>            : {
+<span class="lineNum">    1257 </span><span class="lineCov">          1 :   char i = 1;</span>
+<span class="lineNum">    1258 </span>            : 
+<span class="lineNum">    1259 </span>            : #ifdef LIGHT
+<span class="lineNum">    1260 </span><span class="lineCov">          1 :   SetMaterial(mat_specular2, mat_ambient2, mat_diffuse2, mat_shininess2);</span>
+<span class="lineNum">    1261 </span>            : #endif
+<span class="lineNum">    1262 </span><span class="lineCov">          1 :   glEnable(GL_DEPTH_TEST);</span>
+<span class="lineNum">    1263 </span><span class="lineCov">          1 :   MechTorso(i);</span>
+<span class="lineNum">    1264 </span><span class="lineCov">          1 :   MechHip(i);</span>
+<span class="lineNum">    1265 </span><span class="lineCov">          1 :   Shoulder(i);</span>
+<span class="lineNum">    1266 </span><span class="lineCov">          1 :   RocketPod(i);</span>
+<span class="lineNum">    1267 </span><span class="lineCov">          1 :   UpperArm(i);</span>
+<span class="lineNum">    1268 </span><span class="lineCov">          1 :   ForeArm(i);</span>
+<span class="lineNum">    1269 </span><span class="lineCov">          1 :   UpperLeg(i);</span>
+<span class="lineNum">    1270 </span><span class="lineCov">          1 :   Foot(i);</span>
+<span class="lineNum">    1271 </span><span class="lineCov">          1 :   VulcanGun(i);</span>
+<span class="lineNum">    1272 </span><span class="lineCov">          1 :   Enviro(i);</span>
+<span class="lineNum">    1273 </span><span class="lineCov">          1 : }</span>
+<a name="1274"><span class="lineNum">    1274 </span>            : </a>
+<span class="lineNum">    1275 </span>            : void
+<span class="lineNum">    1276 </span><span class="lineCov">          4 : reshape(int w, int h)</span>
+<span class="lineNum">    1277 </span>            : {
+<span class="lineNum">    1278 </span><span class="lineCov">          4 :   glViewport(0, 0, w, h);</span>
+<span class="lineNum">    1279 </span><span class="lineCov">          4 :   glMatrixMode(GL_PROJECTION);</span>
+<span class="lineNum">    1280 </span><span class="lineCov">          4 :   glLoadIdentity();</span>
+<span class="lineNum">    1281 </span><span class="lineCov">          4 :   gluPerspective(65.0, (GLfloat) w / (GLfloat) h, 1.0, 20.0);</span>
+<span class="lineNum">    1282 </span><span class="lineCov">          4 :   glMatrixMode(GL_MODELVIEW);</span>
+<span class="lineNum">    1283 </span><span class="lineCov">          4 :   glLoadIdentity();</span>
+<span class="lineNum">    1284 </span><span class="lineCov">          4 :   glTranslatef(0.0, 1.2, -5.5);  /* viewing transform  */</span>
+<span class="lineNum">    1285 </span><span class="lineCov">          4 : }</span>
+<span class="lineNum">    1286 </span>            : 
+<a name="1287"><span class="lineNum">    1287 </span>            : #ifdef ANIMATION</a>
+<span class="lineNum">    1288 </span>            : void
+<span class="lineNum">    1289 </span><span class="lineCov">        301 : animation_walk(void)</span>
+<span class="lineNum">    1290 </span>            : {
+<span class="lineNum">    1291 </span>            :   float angle;
+<span class="lineNum">    1292 </span>            :   static int step;
+<span class="lineNum">    1293 </span>            : 
+<span class="lineNum">    1294 </span><span class="lineCov">        301 :   if (step == 0 || step == 2) {</span>
+<span class="lineNum">    1295 </span>            :     /* for(frame=3.0; frame&lt;=21.0; frame=frame+3.0){ */
+<span class="lineNum">    1296 </span><span class="lineCov">        154 :     if (frame &gt;= 0.0 &amp;&amp; frame &lt;= 21.0) {</span>
+<span class="lineNum">    1297 </span><span class="lineCov">        154 :       if (frame == 0.0)</span>
+<span class="lineNum">    1298 </span><span class="lineCov">         21 :         frame = 3.0;</span>
+<span class="lineNum">    1299 </span><span class="lineCov">        154 :       angle = (180 / PI) * (acos(((cos((PI / 180) * frame) * 2.043) + 1.1625) / 3.2059));</span>
+<span class="lineNum">    1300 </span><span class="lineCov">        154 :       if (frame &gt; 0) {</span>
+<span class="lineNum">    1301 </span><span class="lineCov">        154 :         elevation = -(3.2055 - (cos((PI / 180) * angle) * 3.2055));</span>
+<span class="lineNum">    1302 </span>            :       } else
+<span class="lineNum">    1303 </span><span class="lineNoCov">          0 :         elevation = 0.0;</span>
+<span class="lineNum">    1304 </span><span class="lineCov">        154 :       if (step == 0) {</span>
+<span class="lineNum">    1305 </span><span class="lineCov">         77 :         hip11 = -(frame * 1.7);</span>
+<span class="lineNum">    1306 </span><span class="lineCov">         77 :         if (1.7 * frame &gt; 15)</span>
+<span class="lineNum">    1307 </span><span class="lineCov">         55 :           heel1 = frame * 1.7;</span>
+<span class="lineNum">    1308 </span><span class="lineCov">         77 :         heel2 = 0;</span>
+<span class="lineNum">    1309 </span><span class="lineCov">         77 :         ankle1 = frame * 1.7;</span>
+<span class="lineNum">    1310 </span><span class="lineCov">         77 :         if (frame &gt; 0)</span>
+<span class="lineNum">    1311 </span><span class="lineCov">         77 :           hip21 = angle;</span>
+<span class="lineNum">    1312 </span>            :         else
+<span class="lineNum">    1313 </span><span class="lineNoCov">          0 :           hip21 = 0;</span>
+<span class="lineNum">    1314 </span><span class="lineCov">         77 :         ankle2 = -hip21;</span>
+<span class="lineNum">    1315 </span><span class="lineCov">         77 :         shoulder1 = frame * 1.5;</span>
+<span class="lineNum">    1316 </span><span class="lineCov">         77 :         shoulder2 = -frame * 1.5;</span>
+<span class="lineNum">    1317 </span><span class="lineCov">         77 :         elbow1 = frame;</span>
+<span class="lineNum">    1318 </span><span class="lineCov">         77 :         elbow2 = -frame;</span>
+<span class="lineNum">    1319 </span>            :       } else {
+<span class="lineNum">    1320 </span><span class="lineCov">         77 :         hip21 = -(frame * 1.7);</span>
+<span class="lineNum">    1321 </span><span class="lineCov">         77 :         if (1.7 * frame &gt; 15)</span>
+<span class="lineNum">    1322 </span><span class="lineCov">         55 :           heel2 = frame * 1.7;</span>
+<span class="lineNum">    1323 </span><span class="lineCov">         77 :         heel1 = 0;</span>
+<span class="lineNum">    1324 </span><span class="lineCov">         77 :         ankle2 = frame * 1.7;</span>
+<span class="lineNum">    1325 </span><span class="lineCov">         77 :         if (frame &gt; 0)</span>
+<span class="lineNum">    1326 </span><span class="lineCov">         77 :           hip11 = angle;</span>
+<span class="lineNum">    1327 </span>            :         else
+<span class="lineNum">    1328 </span><span class="lineNoCov">          0 :           hip11 = 0;</span>
+<span class="lineNum">    1329 </span><span class="lineCov">         77 :         ankle1 = -hip11;</span>
+<span class="lineNum">    1330 </span><span class="lineCov">         77 :         shoulder1 = -frame * 1.5;</span>
+<span class="lineNum">    1331 </span><span class="lineCov">         77 :         shoulder2 = frame * 1.5;</span>
+<span class="lineNum">    1332 </span><span class="lineCov">         77 :         elbow1 = -frame;</span>
+<span class="lineNum">    1333 </span><span class="lineCov">         77 :         elbow2 = frame;</span>
+<span class="lineNum">    1334 </span>            :       }
+<span class="lineNum">    1335 </span><span class="lineCov">        154 :       if (frame == 21)</span>
+<span class="lineNum">    1336 </span><span class="lineCov">         22 :         step++;</span>
+<span class="lineNum">    1337 </span><span class="lineCov">        154 :       if (frame &lt; 21)</span>
+<span class="lineNum">    1338 </span><span class="lineCov">        132 :         frame = frame + 3.0;</span>
+<span class="lineNum">    1339 </span>            :     }
+<span class="lineNum">    1340 </span>            :   }
+<span class="lineNum">    1341 </span><span class="lineCov">        301 :   if (step == 1 || step == 3) {</span>
+<span class="lineNum">    1342 </span>            :     /* for(x=21.0; x&gt;=0.0; x=x-3.0){ */
+<span class="lineNum">    1343 </span><span class="lineCov">        169 :     if (frame &lt;= 21.0 &amp;&amp; frame &gt;= 0.0) {</span>
+<span class="lineNum">    1344 </span><span class="lineCov">        169 :       angle = (180 / PI) * (acos(((cos((PI / 180) * frame) * 2.043) + 1.1625) / 3.2029));</span>
+<span class="lineNum">    1345 </span><span class="lineCov">        169 :       if (frame &gt; 0)</span>
+<span class="lineNum">    1346 </span><span class="lineCov">        148 :         elevation = -(3.2055 - (cos((PI / 180) * angle) * 3.2055));</span>
+<span class="lineNum">    1347 </span>            :       else
+<span class="lineNum">    1348 </span><span class="lineCov">         21 :         elevation = 0.0;</span>
+<span class="lineNum">    1349 </span><span class="lineCov">        169 :       if (step == 1) {</span>
+<span class="lineNum">    1350 </span><span class="lineCov">         88 :         elbow2 = hip11 = -frame;</span>
+<span class="lineNum">    1351 </span><span class="lineCov">         88 :         elbow1 = heel1 = frame;</span>
+<span class="lineNum">    1352 </span><span class="lineCov">         88 :         heel2 = 15;</span>
+<span class="lineNum">    1353 </span><span class="lineCov">         88 :         ankle1 = frame;</span>
+<span class="lineNum">    1354 </span><span class="lineCov">         88 :         if (frame &gt; 0)</span>
+<span class="lineNum">    1355 </span><span class="lineCov">         77 :           hip21 = angle;</span>
+<span class="lineNum">    1356 </span>            :         else
+<span class="lineNum">    1357 </span><span class="lineCov">         11 :           hip21 = 0;</span>
+<span class="lineNum">    1358 </span><span class="lineCov">         88 :         ankle2 = -hip21;</span>
+<span class="lineNum">    1359 </span><span class="lineCov">         88 :         shoulder1 = 1.5 * frame;</span>
+<span class="lineNum">    1360 </span><span class="lineCov">         88 :         shoulder2 = -frame * 1.5;</span>
+<span class="lineNum">    1361 </span>            :       } else {
+<span class="lineNum">    1362 </span><span class="lineCov">         81 :         elbow1 = hip21 = -frame;</span>
+<span class="lineNum">    1363 </span><span class="lineCov">         81 :         elbow2 = heel2 = frame;</span>
+<span class="lineNum">    1364 </span><span class="lineCov">         81 :         heel1 = 15;</span>
+<span class="lineNum">    1365 </span><span class="lineCov">         81 :         ankle2 = frame;</span>
+<span class="lineNum">    1366 </span><span class="lineCov">         81 :         if (frame &gt; 0)</span>
+<span class="lineNum">    1367 </span><span class="lineCov">         71 :           hip11 = angle;</span>
+<span class="lineNum">    1368 </span>            :         else
+<span class="lineNum">    1369 </span><span class="lineCov">         10 :           hip11 = 0;</span>
+<span class="lineNum">    1370 </span><span class="lineCov">         81 :         ankle1 = -hip11;</span>
+<span class="lineNum">    1371 </span><span class="lineCov">         81 :         shoulder1 = -frame * 1.5;</span>
+<span class="lineNum">    1372 </span><span class="lineCov">         81 :         shoulder2 = frame * 1.5;</span>
+<span class="lineNum">    1373 </span>            :       }
+<span class="lineNum">    1374 </span><span class="lineCov">        169 :       if (frame == 0.0)</span>
+<span class="lineNum">    1375 </span><span class="lineCov">         21 :         step++;</span>
+<span class="lineNum">    1376 </span><span class="lineCov">        169 :       if (frame &gt; 0)</span>
+<span class="lineNum">    1377 </span><span class="lineCov">        148 :         frame = frame - 3.0;</span>
+<span class="lineNum">    1378 </span>            :     }
+<span class="lineNum">    1379 </span>            :   }
+<span class="lineNum">    1380 </span><span class="lineCov">        301 :   if (step == 4)</span>
+<span class="lineNum">    1381 </span><span class="lineCov">         10 :     step = 0;</span>
+<span class="lineNum">    1382 </span><span class="lineCov">        301 :   distance += 0.1678;</span>
+<span class="lineNum">    1383 </span><span class="lineCov">        301 : }</span>
+<a name="1384"><span class="lineNum">    1384 </span>            : </a>
+<span class="lineNum">    1385 </span>            : void
+<span class="lineNum">    1386 </span><span class="lineNoCov">          0 : animation(void)</span>
+<span class="lineNum">    1387 </span>            : {
+<span class="lineNum">    1388 </span><span class="lineCov">        301 :   animation_walk();</span>
+<span class="lineNum">    1389 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">    1390 </span>            : 
+<a name="1391"><span class="lineNum">    1391 </span>            : #endif</a>
+<span class="lineNum">    1392 </span>            : 
+<span class="lineNum">    1393 </span><span class="lineNoCov">          0 : GLenum key(int key, GLenum mask)</span>
+<span class="lineNum">    1394 </span>            : {
+<span class="lineNum">    1395 </span>            : 
+<span class="lineNum">    1396 </span><span class="lineNoCov">          0 :   int i = 0;</span>
+<span class="lineNum">    1397 </span>            : 
+<span class="lineNum">    1398 </span><span class="lineNoCov">          0 :   switch (key) {</span>
+<span class="lineNum">    1399 </span>            :     /* start arm control functions */
+<span class="lineNum">    1400 </span>            :   case 'q':{
+<span class="lineNum">    1401 </span>            :       shoulder2Subtract();
+<span class="lineNum">    1402 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1403 </span>            :     }
+<span class="lineNum">    1404 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1405 </span>            :   case 'a':{
+<span class="lineNum">    1406 </span>            :       shoulder2Add();
+<span class="lineNum">    1407 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1408 </span>            :     }
+<span class="lineNum">    1409 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1410 </span>            :   case 'w':{
+<span class="lineNum">    1411 </span>            :       shoulder1Subtract();
+<span class="lineNum">    1412 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1413 </span>            :     }
+<span class="lineNum">    1414 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1415 </span>            :   case 's':{
+<span class="lineNum">    1416 </span>            :       shoulder1Add();
+<span class="lineNum">    1417 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1418 </span>            :     }
+<span class="lineNum">    1419 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1420 </span>            :   case '2':{
+<span class="lineNum">    1421 </span>            :       shoulder3Add();
+<span class="lineNum">    1422 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1423 </span>            :     }
+<span class="lineNum">    1424 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1425 </span>            :   case '1':{
+<span class="lineNum">    1426 </span>            :       shoulder4Add();
+<span class="lineNum">    1427 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1428 </span>            :     }
+<span class="lineNum">    1429 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1430 </span>            :   case '4':{
+<span class="lineNum">    1431 </span>            :       shoulder3Subtract();
+<span class="lineNum">    1432 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1433 </span>            :     }
+<span class="lineNum">    1434 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1435 </span>            :   case '3':{
+<span class="lineNum">    1436 </span>            :       shoulder4Subtract();
+<span class="lineNum">    1437 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1438 </span>            :     }
+<span class="lineNum">    1439 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1440 </span>            : 
+<span class="lineNum">    1441 </span>            :   case 'z':{
+<span class="lineNum">    1442 </span>            :       lat2Raise();
+<span class="lineNum">    1443 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1444 </span>            :     }
+<span class="lineNum">    1445 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1446 </span>            :   case 'Z':{
+<span class="lineNum">    1447 </span>            :       lat2Lower();
+<span class="lineNum">    1448 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1449 </span>            :     }
+<span class="lineNum">    1450 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1451 </span>            :   case 'x':{
+<span class="lineNum">    1452 </span>            :       lat1Raise();
+<span class="lineNum">    1453 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1454 </span>            :     }
+<span class="lineNum">    1455 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1456 </span>            :   case 'X':{
+<span class="lineNum">    1457 </span>            :       lat1Lower();
+<span class="lineNum">    1458 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1459 </span>            :     }
+<span class="lineNum">    1460 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1461 </span>            : 
+<span class="lineNum">    1462 </span>            :   case 'A':{
+<span class="lineNum">    1463 </span>            :       elbow2Add();
+<span class="lineNum">    1464 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1465 </span>            :     }
+<span class="lineNum">    1466 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1467 </span>            :   case 'Q':{
+<span class="lineNum">    1468 </span>            :       elbow2Subtract();
+<span class="lineNum">    1469 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1470 </span>            :     }
+<span class="lineNum">    1471 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1472 </span>            :   case 'S':{
+<span class="lineNum">    1473 </span>            :       elbow1Add();
+<span class="lineNum">    1474 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1475 </span>            :     }
+<span class="lineNum">    1476 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1477 </span>            :   case 'W':{
+<span class="lineNum">    1478 </span>            :       elbow1Subtract();
+<span class="lineNum">    1479 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1480 </span>            :     }
+<span class="lineNum">    1481 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1482 </span>            :     /* end of arm control functions */
+<span class="lineNum">    1483 </span>            : 
+<span class="lineNum">    1484 </span>            :     /* start of torso control functions */
+<span class="lineNum">    1485 </span>            :   case 'd':{
+<span class="lineNum">    1486 </span>            :       RotateAdd();
+<span class="lineNum">    1487 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1488 </span>            :     }
+<span class="lineNum">    1489 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1490 </span>            :   case 'g':{
+<span class="lineNum">    1491 </span>            :       RotateSubtract();
+<span class="lineNum">    1492 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1493 </span>            :     }
+<span class="lineNum">    1494 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1495 </span>            :   case 'r':{
+<span class="lineNum">    1496 </span>            :       MechTiltAdd();
+<span class="lineNum">    1497 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1498 </span>            :     }
+<span class="lineNum">    1499 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1500 </span>            :   case 'f':{
+<span class="lineNum">    1501 </span>            :       MechTiltSubtract();
+<span class="lineNum">    1502 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1503 </span>            :     }
+<span class="lineNum">    1504 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1505 </span>            :     /* end of torso control functions */
+<span class="lineNum">    1506 </span>            : 
+<span class="lineNum">    1507 </span>            :     /* start of leg control functions */
+<span class="lineNum">    1508 </span>            :   case 'h':{
+<span class="lineNum">    1509 </span>            :       RaiseLeg2Forward();
+<span class="lineNum">    1510 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1511 </span>            :     }
+<span class="lineNum">    1512 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1513 </span>            :   case 'y':{
+<span class="lineNum">    1514 </span>            :       LowerLeg2Backwards();
+<span class="lineNum">    1515 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1516 </span>            :     }
+<span class="lineNum">    1517 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1518 </span>            :   case 'Y':{
+<span class="lineNum">    1519 </span>            :       RaiseLeg2Outwards();
+<span class="lineNum">    1520 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1521 </span>            :     }
+<span class="lineNum">    1522 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1523 </span>            :   case 'H':{
+<span class="lineNum">    1524 </span>            :       LowerLeg2Inwards();
+<span class="lineNum">    1525 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1526 </span>            :     }
+<span class="lineNum">    1527 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1528 </span>            : 
+<span class="lineNum">    1529 </span>            :   case 'j':{
+<span class="lineNum">    1530 </span>            :       RaiseLeg1Forward();
+<span class="lineNum">    1531 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1532 </span>            :     }
+<span class="lineNum">    1533 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1534 </span>            :   case 'u':{
+<span class="lineNum">    1535 </span>            :       LowerLeg1Backwards();
+<span class="lineNum">    1536 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1537 </span>            :     }
+<span class="lineNum">    1538 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1539 </span>            :   case 'U':{
+<span class="lineNum">    1540 </span>            :       RaiseLeg1Outwards();
+<span class="lineNum">    1541 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1542 </span>            :     }
+<span class="lineNum">    1543 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1544 </span>            :   case 'J':{
+<span class="lineNum">    1545 </span>            :       LowerLeg1Inwards();
+<span class="lineNum">    1546 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1547 </span>            :     }
+<span class="lineNum">    1548 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1549 </span>            : 
+<span class="lineNum">    1550 </span>            :   case 'N':{
+<span class="lineNum">    1551 </span>            :       Heel2Add();
+<span class="lineNum">    1552 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1553 </span>            :     }
+<span class="lineNum">    1554 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1555 </span>            :   case 'n':{
+<span class="lineNum">    1556 </span>            :       Heel2Subtract();
+<span class="lineNum">    1557 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1558 </span>            :     }
+<span class="lineNum">    1559 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1560 </span>            :   case 'M':{
+<span class="lineNum">    1561 </span>            :       Heel1Add();
+<span class="lineNum">    1562 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1563 </span>            :     }
+<span class="lineNum">    1564 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1565 </span>            :   case 'm':{
+<span class="lineNum">    1566 </span>            :       Heel1Subtract();
+<span class="lineNum">    1567 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1568 </span>            :     }
+<span class="lineNum">    1569 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1570 </span>            : 
+<span class="lineNum">    1571 </span>            :   case 'k':{
+<span class="lineNum">    1572 </span>            :       Ankle2Add();
+<span class="lineNum">    1573 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1574 </span>            :     }
+<span class="lineNum">    1575 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1576 </span>            :   case 'K':{
+<span class="lineNum">    1577 </span>            :       Ankle2Subtract();
+<span class="lineNum">    1578 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1579 </span>            :     }
+<span class="lineNum">    1580 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1581 </span>            :   case 'l':{
+<span class="lineNum">    1582 </span>            :       Ankle1Add();
+<span class="lineNum">    1583 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1584 </span>            :     }
+<span class="lineNum">    1585 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1586 </span>            :   case 'L':{
+<span class="lineNum">    1587 </span>            :       Ankle1Subtract();
+<span class="lineNum">    1588 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1589 </span>            :     }
+<span class="lineNum">    1590 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1591 </span>            :     /* end of leg control functions */
+<span class="lineNum">    1592 </span>            : 
+<span class="lineNum">    1593 </span>            :     /* start of light source position functions */
+<span class="lineNum">    1594 </span>            :   case 'p':{
+<span class="lineNum">    1595 </span>            :       LightTurnRight();
+<span class="lineNum">    1596 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1597 </span>            :     }
+<span class="lineNum">    1598 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1599 </span>            :   case 'i':{
+<span class="lineNum">    1600 </span>            :       LightTurnLeft();
+<span class="lineNum">    1601 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1602 </span>            :     }
+<span class="lineNum">    1603 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1604 </span>            :   case 'o':{
+<span class="lineNum">    1605 </span>            :       LightForwards();
+<span class="lineNum">    1606 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1607 </span>            :     }
+<span class="lineNum">    1608 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1609 </span>            :   case '9':{
+<span class="lineNum">    1610 </span>            :       LightBackwards();
+<span class="lineNum">    1611 </span><span class="lineNoCov">          0 :       i++;</span>
+<span class="lineNum">    1612 </span>            :     }
+<span class="lineNum">    1613 </span><span class="lineNoCov">          0 :     break;</span>
+<span class="lineNum">    1614 </span>            :     /* end of light source position functions */
+<span class="lineNum">    1615 </span>            : 
+<span class="lineNum">    1616 </span>            :     /* start of misc functions */
+<span class="lineNum">    1617 </span>            :   case 't':
+<span class="lineNum">    1618 </span>            :     Toggle();
+<span class="lineNum">    1619 </span>            :     break;
+<span class="lineNum">    1620 </span>            : 
+<span class="lineNum">    1621 </span>            :   case KEY_LEFT:
+<span class="lineNum">    1622 </span>            :       TurnLeft();
+<span class="lineNum">    1623 </span>            :       break;
+<span class="lineNum">    1624 </span>            :   case KEY_RIGHT:
+<span class="lineNum">    1625 </span>            :       TurnRight();
+<span class="lineNum">    1626 </span>            :       break;
+<span class="lineNum">    1627 </span>            :   case KEY_UP:
+<span class="lineNum">    1628 </span>            :       TurnBackwards();
+<span class="lineNum">    1629 </span>            :       break;
+<span class="lineNum">    1630 </span>            :   case KEY_DOWN:
+<span class="lineNum">    1631 </span>            :       TurnForwards();
+<span class="lineNum">    1632 </span>            :       break;
+<span class="lineNum">    1633 </span>            :       
+<span class="lineNum">    1634 </span>            :   case ' ':
+<span class="lineNum">    1635 </span>            :       FireCannon();
+<span class="lineNum">    1636 </span>            :   }
+<span class="lineNum">    1637 </span><span class="lineNoCov">          0 :   return 0;</span>
+<a name="1638"><span class="lineNum">    1638 </span>            : }</a>
+<span class="lineNum">    1639 </span>            : 
+<span class="lineNum">    1640 </span><span class="lineNoCov">          0 : void printHelp(void)</span>
+<span class="lineNum">    1641 </span>            : {
+<span class="lineNum">    1642 </span><span class="lineNoCov">          0 :   printf(&quot;at the shoulders:&quot;);</span>
+<span class="lineNum">    1643 </span><span class="lineNoCov">          0 :   printf(&quot;forward       : q,w&quot;);</span>
+<span class="lineNum">    1644 </span><span class="lineNoCov">          0 :   printf(&quot;backwards     : a,s&quot;);</span>
+<span class="lineNum">    1645 </span><span class="lineNoCov">          0 :   printf(&quot;outwards      : z,x&quot;);</span>
+<span class="lineNum">    1646 </span><span class="lineNoCov">          0 :   printf(&quot;inwards       : Z,X&quot;);</span>
+<span class="lineNum">    1647 </span>            : #if 0
+<span class="lineNum">    1648 </span>            :   glut_menu[6] = glutCreateMenu(null_select);
+<span class="lineNum">    1649 </span>            :   printf(&quot;upwards       : Q,W\n&quot;);
+<span class="lineNum">    1650 </span>            :   printf(&quot;downwards     : A,S\n&quot;);
+<span class="lineNum">    1651 </span>            :   printf(&quot;outwards      : 1,2\n&quot;);
+<span class="lineNum">    1652 </span>            :   printf(&quot;inwards       : 3,4\n&quot;);
+<span class="lineNum">    1653 </span>            : 
+<span class="lineNum">    1654 </span>            :   glut_menu[1] = glutCreateMenu(null_select);
+<span class="lineNum">    1655 </span>            :   printf(&quot; : Page_up\n&quot;);
+<span class="lineNum">    1656 </span>            : 
+<span class="lineNum">    1657 </span>            :   glut_menu[8] = glutCreateMenu(null_select);
+<span class="lineNum">    1658 </span>            :   printf(&quot;forward       : y,u\n&quot;);
+<span class="lineNum">    1659 </span>            :   printf(&quot;backwards     : h.j\n&quot;);
+<span class="lineNum">    1660 </span>            :   printf(&quot;outwards      : Y,U\n&quot;);
+<span class="lineNum">    1661 </span>            :   printf(&quot;inwards       : H,J\n&quot;);
+<span class="lineNum">    1662 </span>            : 
+<span class="lineNum">    1663 </span>            :   glut_menu[9] = glutCreateMenu(null_select);
+<span class="lineNum">    1664 </span>            :   printf(&quot;forward       : n,m\n&quot;);
+<span class="lineNum">    1665 </span>            :   printf(&quot;backwards     : N,M\n&quot;);
+<span class="lineNum">    1666 </span>            : 
+<span class="lineNum">    1667 </span>            :   glut_menu[9] = glutCreateMenu(null_select);
+<span class="lineNum">    1668 </span>            :   printf(&quot;forward       : n,m\n&quot;);
+<span class="lineNum">    1669 </span>            :   printf(&quot;backwards     : N,M\n&quot;);
+<span class="lineNum">    1670 </span>            : 
+<span class="lineNum">    1671 </span>            :   glut_menu[10] = glutCreateMenu(null_select);
+<span class="lineNum">    1672 </span>            :   printf(&quot;toes up       : K,L\n&quot;);
+<span class="lineNum">    1673 </span>            :   printf(&quot;toes down     : k,l\n&quot;);
+<span class="lineNum">    1674 </span>            : 
+<span class="lineNum">    1675 </span>            :   glut_menu[11] = glutCreateMenu(null_select);
+<span class="lineNum">    1676 </span>            :   printf(&quot;right         : right arrow\n&quot;);
+<span class="lineNum">    1677 </span>            :   printf(&quot;left          : left arrow\n&quot;);
+<span class="lineNum">    1678 </span>            :   printf(&quot;down          : up arrow\n&quot;);
+<span class="lineNum">    1679 </span>            :   printf(&quot;up            : down arrow\n&quot;);
+<span class="lineNum">    1680 </span>            : 
+<span class="lineNum">    1681 </span>            :   glut_menu[12] = glutCreateMenu(null_select);
+<span class="lineNum">    1682 </span>            :   printf(&quot;right         : p\n&quot;);
+<span class="lineNum">    1683 </span>            :   printf(&quot;left          : i\n&quot;);
+<span class="lineNum">    1684 </span>            :   printf(&quot;up            : 9\n&quot;);
+<span class="lineNum">    1685 </span>            :   printf(&quot;down          : o\n&quot;);
+<span class="lineNum">    1686 </span>            : 
+<span class="lineNum">    1687 </span>            :   glut_menu[4] = glutCreateMenu(NULL);
+<span class="lineNum">    1688 </span>            :   glutAddSubMenu(&quot;at the elbows?&quot;, glut_menu[6]);
+<span class="lineNum">    1689 </span>            : 
+<span class="lineNum">    1690 </span>            :   glut_menu[7] = glutCreateMenu(NULL);
+<span class="lineNum">    1691 </span>            :   glutAddSubMenu(&quot;at the hip? &quot;, glut_menu[8]);
+<span class="lineNum">    1692 </span>            :   glutAddSubMenu(&quot;at the knees?&quot;, glut_menu[9]);
+<span class="lineNum">    1693 </span>            :   glutAddSubMenu(&quot;at the ankles? &quot;, glut_menu[10]);
+<span class="lineNum">    1694 </span>            : 
+<span class="lineNum">    1695 </span>            :   printf(&quot;turn left    : d\n&quot;);
+<span class="lineNum">    1696 </span>            :   printf(&quot;turn right    : g\n&quot;);
+<span class="lineNum">    1697 </span>            : 
+<span class="lineNum">    1698 </span>            :   glut_menu[3] = glutCreateMenu(null_select);
+<span class="lineNum">    1699 </span>            :   printf(&quot;tilt backwards : f\n&quot;);
+<span class="lineNum">    1700 </span>            :   printf(&quot;tilt forwards  : r\n&quot;);
+<span class="lineNum">    1701 </span>            : 
+<span class="lineNum">    1702 </span>            :   glut_menu[0] = glutCreateMenu(NULL);
+<span class="lineNum">    1703 </span>            :   glutAddSubMenu(&quot;move the arms.. &quot;, glut_menu[4]);
+<span class="lineNum">    1704 </span>            :   glutAddSubMenu(&quot;fire the vulcan guns?&quot;, glut_menu[1]);
+<span class="lineNum">    1705 </span>            :   glutAddSubMenu(&quot;move the legs.. &quot;, glut_menu[7]);
+<span class="lineNum">    1706 </span>            :   glutAddSubMenu(&quot;move the torso?&quot;, glut_menu[2]);
+<span class="lineNum">    1707 </span>            :   glutAddSubMenu(&quot;move the hip?&quot;, glut_menu[3]);
+<span class="lineNum">    1708 </span>            :   glutAddSubMenu(&quot;rotate the scene..&quot;, glut_menu[11]);
+<span class="lineNum">    1709 </span>            : #ifdef MOVE_LIGHT
+<span class="lineNum">    1710 </span>            :   glutAddSubMenu(&quot;rotate the light source..&quot;, glut_menu[12]);
+<span class="lineNum">    1711 </span>            : #endif
+<span class="lineNum">    1712 </span>            : 
+<span class="lineNum">    1713 </span>            :   glutCreateMenu(menu_select);
+<span class="lineNum">    1714 </span>            : #ifdef ANIMATION
+<span class="lineNum">    1715 </span>            :   printf(&quot;Start Walk&quot;, 1);
+<span class="lineNum">    1716 </span>            :   printf(&quot;Stop Walk&quot;, 2);
+<span class="lineNum">    1717 </span>            : #endif
+<span class="lineNum">    1718 </span>            :   printf(&quot;Toggle Wireframe&quot;, 3);
+<span class="lineNum">    1719 </span>            :   glutAddSubMenu(&quot;How do I ..&quot;, glut_menu[0]);
+<span class="lineNum">    1720 </span>            :   printfy(&quot;Quit&quot;, 4);
+<span class="lineNum">    1721 </span>            :   glutAttachMenu(GLUT_LEFT_BUTTON);
+<span class="lineNum">    1722 </span>            :   glutAttachMenu(GLUT_RIGHT_BUTTON);
+<span class="lineNum">    1723 </span>            : #endif
+<a name="1724"><span class="lineNum">    1724 </span><span class="lineNoCov">          0 : }</span></a>
+<span class="lineNum">    1725 </span>            : 
+<span class="lineNum">    1726 </span><span class="lineCov">        301 : void idle( void )</span>
+<span class="lineNum">    1727 </span>            : {
+<span class="lineNum">    1728 </span>            :     /* animate the mech */
+<span class="lineNum">    1729 </span>            : 
+<span class="lineNum">    1730 </span>            :     animation();
+<span class="lineNum">    1731 </span>            : 
+<span class="lineNum">    1732 </span>            :     /* draw the Mech */
+<span class="lineNum">    1733 </span>            : 
+<span class="lineNum">    1734 </span><span class="lineCov">        301 :     display();</span>
+<span class="lineNum">    1735 </span><span class="lineCov">        300 : }</span>
+<span class="lineNum">    1736 </span>            : 
+<span class="lineNum">    1737 </span>            : /* #define PROFILE */
+<span class="lineNum">    1738 </span>            : 
+<span class="lineNum">    1739 </span>            : #ifdef PROFILE
+<span class="lineNum">    1740 </span>            : extern int count_triangles;
+<span class="lineNum">    1741 </span>            : #endif
+<span class="lineNum">    1742 </span>            : 
+<span class="lineNum">    1743 </span>            : // #define LINUX_TEST_FLOAT
+<span class="lineNum">    1744 </span>            : 
+<span class="lineNum">    1745 </span>            : #ifdef LINUX_TEST_FLOAT
+<span class="lineNum">    1746 </span>            : #include &lt;fpu_control.h&gt;
+<span class="lineNum">    1747 </span>            : #endif
+<a name="1748"><span class="lineNum">    1748 </span>            : </a>
+<span class="lineNum">    1749 </span>            : int
+<span class="lineNum">    1750 </span><span class="lineCov">          1 : main(int argc, char **argv)</span>
+<span class="lineNum">    1751 </span>            : {
+<span class="lineNum">    1752 </span>            : #ifdef LINUX_TEST_FLOAT
+<span class="lineNum">    1753 </span>            :   /* for debuging floating point errors under Linux */
+<span class="lineNum">    1754 </span>            :   __setfpucw ( 0x1372 );
+<span class="lineNum">    1755 </span>            : #endif
+<span class="lineNum">    1756 </span>            : 
+<span class="lineNum">    1757 </span>            :   Toggle();
+<span class="lineNum">    1758 </span>            :   
+<span class="lineNum">    1759 </span><span class="lineCov">          1 :   return ui_loop(argc, argv, &quot;mech&quot;);</span>
+<span class="lineNum">    1760 </span>            : }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
