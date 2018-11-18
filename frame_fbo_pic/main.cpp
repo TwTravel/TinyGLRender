@@ -711,13 +711,40 @@ void displayCB()
         glGenerateMipmap(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, 0);
 
+		//=======================================================================
+		int PBO_COUNT = 1;
+		int DATA_SIZE = 256*256+3;
+		int width=256;
+		int height=256;
+		int OPENGL_FBO_PARALLELNUM=1;
+		int pboIds[1];
 		
+		glGenBuffersARB(PBO_COUNT, pboIds);
+        glBindBufferARB(GL_PIXEL_PACK_BUFFER_ARB, pboIds[0]);
+        glBufferDataARB(GL_PIXEL_PACK_BUFFER_ARB, DATA_SIZE, 0, GL_STREAM_READ_ARB);
+ 
+
+        glBindBufferARB(GL_PIXEL_PACK_BUFFER_ARB, pboIds[0]);
+        // 注意glReadPixels函数的最后一个参数是0
+        glReadPixels(0, 0, width, height * OPENGL_FBO_PARALLELNUM, GL_BGR_EXT, GL_UNSIGNED_BYTE, 0);
+
+         // 异步读取
+         GLubyte* image_src = (GLubyte*)glMapBufferARB(GL_PIXEL_PACK_BUFFER_ARB, GL_READ_ONLY_ARB);
+
+         if (image_src){
+          glUnmapBufferARB(GL_PIXEL_PACK_BUFFER_ARB);
+		  printf("read image ok!\n");
+         }/**/
+		
+		//========================================================================
+		void *ptr = glMapBuffer(GL_TEXTURE_2D, GL_READ_ONLY);
 		C24BitMap CPic;  CPic.FormatF(256, 256);
 	    
-		glReadPixels(0, 0, 256, 256,
+	    /*glReadPixels(0, 0, 256, 256,
         GL_RGB, 
         GL_UNSIGNED_BYTE,
-        CPic.Buffer);
+        CPic.Buffer);*/
+		memcpy(CPic.Buffer,image_src,256*256*3);
 		CPic.Save("out.bmp");
         // back to normal window-system-provided framebuffer
         glBindFramebuffer(GL_FRAMEBUFFER, 0); // unbind

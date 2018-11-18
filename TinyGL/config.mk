@@ -2,8 +2,8 @@
 # C compiler
 
 # linux
-CC= gcc
-CFLAGS= -g -Wall -O2  -fprofile-arcs -ftest-coverage
+CC= gcc -pg
+CFLAGS= -g -Wall -O2  -fprofile-arcs -ftest-coverage -pg
 LFLAGS= -fprofile-arcs -ftest-coverage
 
 # for BeOS PPC
