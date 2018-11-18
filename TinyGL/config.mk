@@ -3,7 +3,7 @@
 
 # linux
 CC= gcc -pg
-CFLAGS= -g -Wall -O2  -fprofile-arcs -ftest-coverage -pg
+CFLAGS= -g -Wall  -fprofile-arcs -ftest-coverage -pg
 LFLAGS= -fprofile-arcs -ftest-coverage
 
 # for BeOS PPC
