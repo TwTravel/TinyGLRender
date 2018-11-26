@@ -102,7 +102,7 @@ void CLoad3DS::ProcessNextChunk(t3DModel *pModel, tChunk *pPreviousChunk)
 			m_CurrentChunk->bytesRead += fread(&version, 1, m_CurrentChunk->length - m_CurrentChunk->bytesRead, m_FilePointer);
 
 			// 如果文件版本号大于3，给出一个警告信息
-			if (version > 0x03)
+			//if (version > 0x03)
 				//MessageBox(NULL, "This 3DS file is over version 3 so it may load incorrectly", "Warning", MB_OK);
 			break;
 
