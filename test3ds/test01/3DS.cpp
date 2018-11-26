@@ -1,6 +1,8 @@
 
-#include "main.h"
-#include "3ds.h"
+//#include "main.h"
+#include <string.h>
+#include <math.h>
+#include "3DS.h"
 
 //  构造函数的功能是初始化tChunk数据
 CLoad3DS::CLoad3DS()
@@ -560,7 +562,7 @@ void CLoad3DS::ComputeNormals(t3DModel *pModel)
 		CVector3 vZero = vSum;
 		int shared=0;
 		// 遍历所有的顶点
-		for (i = 0; i < pObject->numOfVerts; i++)			
+		for (int i = 0; i < pObject->numOfVerts; i++)			
 		{
 			for (int j = 0; j < pObject->numOfFaces; j++)	// 遍历所有的三角形面
 			{												// 判断该点是否与其它的面共享
