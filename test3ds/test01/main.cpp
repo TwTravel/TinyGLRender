@@ -41,7 +41,11 @@ void CreateTexture(UINT textureArray[], char* strFileName, int textureID)
 	glBindTexture(GL_TEXTURE_2D, textureArray[textureID]);
 
 	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, pBitmap.Width, pBitmap.Height, GL_BGR, GL_UNSIGNED_BYTE, pBitmap.Buffer);
+    //   glTexImage2D(GL_TEXTURE_2D,0,3,
+	//	pBitmap.Width, pBitmap.Height,0,
+	//	GL_BGR_EXT,GL_UNSIGNED_BYTE, pBitmap.Buffer);
 
+	
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR_MIPMAP_LINEAR);
 
