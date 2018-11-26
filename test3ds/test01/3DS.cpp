@@ -4,11 +4,15 @@
 #include <math.h>
 #include "3DS.h"
 
+void inline empty_chunk(tChunk* m_CurrentChunk)
+{
+	m_CurrentChunk->ID = m_CurrentChunk->length= m_CurrentChunk->bytesRead = 0;
+}
 //  构造函数的功能是初始化tChunk数据
 CLoad3DS::CLoad3DS()
 {
-	m_CurrentChunk = new tChunk;				// 初始化并为当前的块分配空间
-	m_TempChunk = new tChunk;					// 初始化一个临时块并分配空间
+	m_CurrentChunk = new tChunk;empty_chunk(m_CurrentChunk);				// 初始化并为当前的块分配空间
+	m_TempChunk = new tChunk;	empty_chunk(m_TempChunk);				// 初始化一个临时块并分配空间
 }
 
 //  打开一个3ds文件，读出其中的内容，并释放内存
@@ -75,8 +79,9 @@ void CLoad3DS::ProcessNextChunk(t3DModel *pModel, tChunk *pPreviousChunk)
 	unsigned int version = 0;					// 保存文件版本
 	int buffer[50000] = {0};					// 用来跳过不需要的数据
 
-	m_CurrentChunk = new tChunk;				// 为新的块分配空间		
-
+	m_CurrentChunk = new tChunk;empty_chunk(m_CurrentChunk);				// 为新的块分配空间		
+  
+	m_CurrentChunk->ID = m_CurrentChunk->length= m_CurrentChunk->bytesRead = 0; 
 	//  下面每读一个新块，都要判断一下块的ID，如果该块是需要的读入的，则继续进行
 	//  如果是不需要读入的块，则略过
 
@@ -177,7 +182,7 @@ void CLoad3DS::ProcessNextObjectChunk(t3DModel *pModel, t3DObject *pObject, tChu
 	int buffer[50000] = {0};					// 用于读入不需要的数据
 
 	// 对新的块分配存储空间
-	m_CurrentChunk = new tChunk;
+	m_CurrentChunk = new tChunk; empty_chunk(m_CurrentChunk);
 
 	// 继续读入块的内容直至本子块结束
 	while (pPreviousChunk->bytesRead < pPreviousChunk->length)
@@ -239,7 +244,7 @@ void CLoad3DS::ProcessNextMaterialChunk(t3DModel *pModel, tChunk *pPreviousChunk
 	int buffer[50000] = {0};					// 用于读入不需要的数据
 
 	// 给当前块分配存储空间
-	m_CurrentChunk = new tChunk;
+	m_CurrentChunk = new tChunk; empty_chunk(m_CurrentChunk);
 
 	// 继续读入这些块，知道该子块结束
 	while (pPreviousChunk->bytesRead < pPreviousChunk->length)
