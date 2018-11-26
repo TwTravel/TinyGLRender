@@ -184,6 +184,7 @@ int main(int argc,char* argv[])
 	glutCreateWindow(WindowTitle);	
 	glEnable(GL_DEPTH_TEST);    
 	glEnable(GL_TEXTURE_2D);    // 启用纹理
+	model_init();
 	SizeOpenGLScreen(WindowWidth, WindowHeight);
 	//texGround = load_texture("ground.bmp");  //加载纹理
 	//texWall = load_texture("wall.bmp");
