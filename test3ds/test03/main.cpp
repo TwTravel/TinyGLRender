@@ -79,6 +79,7 @@ void RenderScene()
 	glLoadIdentity();									
 
 	gluLookAt(		0, 1.5f, 8,		0, 0.5f, 0,			0, 1, 0);
+	//gluLookAt(   0, 1.5f, 90,   0, 0.5f, 0,	  0, 1, 0);
 	
 	glRotatef(g_RotateX, 0, 1.0f, 0);
 	g_RotateX += g_RotationSpeed;	
@@ -160,6 +161,7 @@ void SizeOpenGLScreen(int width, int height)
 	glLoadIdentity();						
 	gluPerspective(45.0f,(GLfloat)width/(GLfloat)height, .5f ,150.0f);
 
+	//gluPerspective(45.0f,(GLfloat)width/(GLfloat)height, .5f ,150.0f);
 	glMatrixMode(GL_MODELVIEW);						
 	glLoadIdentity();									
 }
@@ -172,8 +174,8 @@ CLoadMD2 g_Loadmd2;
 
 void model_init()
 {
-     g_Loadmd2.ImportMD2( &g_3DModel, "TRIS.MD2",  "RHINO.BMP");
-	//g_Load3ds.Import3DS(&g_3DModel, FILE_NAME);			// 将3ds文件装入到模型结构体中
+    // g_Loadmd2.ImportMD2( &g_3DModel, "TRIS.MD2",  "RHINO.BMP");
+	g_Load3ds.Import3DS(&g_3DModel, FILE_NAME);			// 将3ds文件装入到模型结构体中
 
 	// 遍历所有的材质
 	for(int i = 0; i < g_3DModel.numOfMaterials; i++)
