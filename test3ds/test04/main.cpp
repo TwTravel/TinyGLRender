@@ -54,12 +54,13 @@ void CreateTexture(UINT textureArray[], char* strFileName, int textureID)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,
 	//	GL_BGR_EXT, GL_UNSIGNED_BYTE, pixels);
 	glTexImage2D(GL_TEXTURE_2D,0,3,
 		pBitmap.Width, pBitmap.Height,0,
-		GL_BGR_EXT,GL_UNSIGNED_BYTE, pBitmap.Buffer);
+		GL_RGB, GL_UNSIGNED_BYTE, pBitmap.Buffer);
+		//GL_BGR_EXT,GL_UNSIGNED_BYTE, pBitmap.Buffer);
 
 	/*if (pBitmap)										// 释放位图占用的资源
 	{
@@ -96,14 +97,14 @@ void RenderScene()
 
 			// 打开纹理映射
 			glEnable(GL_TEXTURE_2D);
-			glColor3ub(255, 255, 255);
+			glColor3f(1.0, 1.0, 1.0);
 			printf("matid:%i\n",pObject->materialID);
 			glBindTexture(GL_TEXTURE_2D, g_Texture[pObject->materialID]);
 		} else {
 
 			// 关闭纹理映射
 			glDisable(GL_TEXTURE_2D);
-			glColor3ub(255, 255, 255);
+			glColor3f(1.0, 1.0, 1.0);
 		}
 		// 开始以g_ViewMode模式绘制
 		glBegin(g_ViewMode);					
@@ -131,7 +132,7 @@ void RenderScene()
 						if(g_3DModel.pMaterials.size() && pObject->materialID >= 0) 
 						{
 							BYTE *pColor = g_3DModel.pMaterials[pObject->materialID].color;
-							glColor3ub(pColor[0], pColor[1], pColor[2]);
+							glColor3f(float(pColor[0])/255.0, float(pColor[1])/255.0, float(pColor[2])/255.0);
 						}
 					}
 					glVertex3f(pObject->pVerts[ index ].x, pObject->pVerts[ index ].y, pObject->pVerts[ index ].z);
@@ -143,10 +144,10 @@ void RenderScene()
 
 	//SwapBuffers(g_hDC);									// 交换缓冲区
 	glFlush();
-    glutSwapBuffers();
+    //glutSwapBuffers();
 }
 
-void SizeOpenGLScreen(int width, int height)		
+void reshape(int width, int height)		
 {
 	if (height==0)										
 	{
@@ -167,7 +168,8 @@ void SizeOpenGLScreen(int width, int height)
 #define WindowHeight 600
 #define WindowTitle  "OpenGL纹理测试"
 
-void model_init()
+//void model_init()
+void init()
 {
 
 	g_Load3ds.Import3DS(&g_3DModel, FILE_NAME);			// 将3ds文件装入到模型结构体中
@@ -191,23 +193,29 @@ void model_init()
 	glEnable(GL_COLOR_MATERIAL);					
 
 }
+int ui_loop(int argc, char **argv, const char *name);
+void tkSwapBuffers(void);
+
 int main(int argc,char* argv[])
 {
+	ui_loop(argc, argv, "models");
   	// GLUT初始化
-	glutInit(&argc, argv);
+	/*glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(WindowWidth, WindowHeight);
-	glutCreateWindow(WindowTitle);	
+	glutCreateWindow(WindowTitle);*/	
 	glEnable(GL_DEPTH_TEST);    
 	glEnable(GL_TEXTURE_2D);    // 启用纹理
-	model_init();
-	SizeOpenGLScreen(WindowWidth, WindowHeight);
+	//model_init();
+	//init();
+	reshape(WindowWidth, WindowHeight);
 	//texGround = load_texture("ground.bmp");  //加载纹理
 	//texWall = load_texture("wall.bmp");
-	glutDisplayFunc(&RenderScene);   //注册函数 
+	//glutDisplayFunc(&RenderScene);   //注册函数 
 	//glutIdleFunc(&myIdle);  
-	glutMainLoop(); //循环调用
-  
+	//glutMainLoop(); //循环调用
+	RenderScene();
+     tkSwapBuffers();
     return 1;
 }
