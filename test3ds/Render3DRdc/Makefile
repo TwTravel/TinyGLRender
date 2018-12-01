@@ -21,7 +21,6 @@ SOURCES = \
     ./TyGL/light.cpp \
     ./TyGL/zdither.cpp \
     ./TyGL/matrix.cpp \
-    ./TyGL/zline.cpp \
     ./TyGL/oscontext.cpp \
     ./TyGL/clear.cpp \
     ./TyGL/clip.cpp \
@@ -52,7 +51,6 @@ OBJ = \
     ./TyGL/light.o \
     ./TyGL/zdither.o \
     ./TyGL/matrix.o \
-    ./TyGL/zline.o \
     ./TyGL/oscontext.o \
     ./TyGL/clear.o \
     ./TyGL/clip.o \
@@ -72,4 +70,4 @@ Decoder: $(OBJ) main.o
 	$(CXX) $(CXXFLAGS) -o Draw3D $(OBJ) $(LDFLAGS)  -ldl -lpthread
 
 clean:
-	-rm Draw3D $(OBJ)
+	-rm Draw3D *.gc*  TyGL/*.gc* $(OBJ)

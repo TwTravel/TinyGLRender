@@ -37,11 +37,11 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-02 01:04:33</td>
+            <td class="headerValue">2018-12-02 06:20:11</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">50</td>
-            <td class="headerCovTableEntry">50</td>
+            <td class="headerCovTableEntry">51</td>
+            <td class="headerCovTableEntry">51</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
@@ -713,8 +713,8 @@
 <span class="lineNum">     651 </span>            :       // [23.2.4.2] capacity
 <a name="652"><span class="lineNum">     652 </span>            :       /**  Returns the number of elements in the %vector.  */</a>
 <span class="lineNum">     653 </span>            :       size_type
-<span class="lineNum">     654 </span><span class="lineCov">         81 :       size() const _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     655 </span><span class="lineCov">         81 :       { return size_type(this-&gt;_M_impl._M_finish - this-&gt;_M_impl._M_start); }</span>
+<span class="lineNum">     654 </span><span class="lineCov">      69533 :       size() const _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     655 </span><span class="lineCov">      69533 :       { return size_type(this-&gt;_M_impl._M_finish - this-&gt;_M_impl._M_start); }</span>
 <span class="lineNum">     656 </span>            : 
 <a name="657"><span class="lineNum">     657 </span>            :       /**  Returns the size() of the largest possible %vector.  */</a>
 <span class="lineNum">     658 </span>            :       size_type
@@ -838,8 +838,8 @@
 <span class="lineNum">     776 </span>            :        *  see at().)
 <a name="777"><span class="lineNum">     777 </span>            :        */</a>
 <span class="lineNum">     778 </span>            :       reference
-<span class="lineNum">     779 </span><span class="lineCov">         13 :       operator[](size_type __n) _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     780 </span><span class="lineCov">         13 :       { return *(this-&gt;_M_impl._M_start + __n); }</span>
+<span class="lineNum">     779 </span><span class="lineCov">    1250131 :       operator[](size_type __n) _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     780 </span><span class="lineCov">    1250131 :       { return *(this-&gt;_M_impl._M_start + __n); }</span>
 <span class="lineNum">     781 </span>            : 
 <span class="lineNum">     782 </span>            :       /**
 <span class="lineNum">     783 </span>            :        *  @brief  Subscript access to the data contained in the %vector.

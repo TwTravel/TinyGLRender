@@ -265,7 +265,7 @@ void StlShape_Render(std::vector<triangle>&facet)
       for(int whichVertex = 0; whichVertex < 3; whichVertex++ )
        {
         // 给出法向量
-      glNormal3f(facet[i].normal.x, facet[i].normal.y, facet[i].normal.z);
+        glNormal3f(facet[i].normal.x, facet[i].normal.y, facet[i].normal.z);
         // 如果对象具有纹理
         glVertex3f( facet[i].point[whichVertex].x , 
 		            facet[i].point[whichVertex].y , 
@@ -283,6 +283,35 @@ void StlShape_Render(std::vector<triangle>&facet)
  //glPopAttrib(); 
 }
 
+void Test_TRIANGLES( )
+{
+  int i;
+   
+  //glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+  glBegin(GL_TRIANGLES);
+  for(int i = 0; i < facet.size(); i++)
+  {
+        // 遍历三角形的所有点
+      for(int whichVertex = 0; whichVertex < 3; whichVertex++ )
+       {
+        // 给出法向量
+        //glNormal3f(facet[i].normal.x, facet[i].normal.y, facet[i].normal.z);
+        // 如果对象具有纹理
+        glVertex3f(-2,0,0); /* */
+		glVertex3f(0,2,0);
+		/*glNormal3f(facet[i].normal.z,facet[i].normal.x, facet[i].normal.y);
+        // 如果对象具有纹理
+        glVertex3f( facet[i].point[whichVertex].z ,
+		            facet[i].point[whichVertex].x , 
+		            facet[i].point[whichVertex].y 
+				     );*/
+       }
+   }
+  glEnd();
+  
+ //glPopAttrib(); 
+}
 void SetCamera()
 {
 	gluPerspective(90.0, 1, 0.01, 50);

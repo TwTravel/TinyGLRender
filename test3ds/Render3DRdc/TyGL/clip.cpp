@@ -50,41 +50,21 @@ void gl_transform_to_viewport(GLContext *c,GLVertex *v)
 
 static void gl_add_select1(GLContext *c,int z1,int z2,int z3)
 {
-  unsigned int min,max;
-  min=max=z1;
-  if (z2<min) min=z2;
-  if (z3<min) min=z3;
-  if (z2>max) max=z2;
-  if (z3>max) max=z3;
-
-  gl_add_select(c,0xffffffff-min,0xffffffff-max);
+  
 }
 
 /* point */
 
 void gl_draw_point(GLContext *c,GLVertex *p0)
 {
-  if (p0->clip_code == 0) {
-    if (c->render_mode == GL_SELECT) {
-      gl_add_select(c,p0->zp.z,p0->zp.z);
-    } else {
-      ZB_plot(c->zb,&p0->zp);
-    }
-  }
+   
 }
 
 /* line */
 
 static inline void interpolate(GLVertex *q,GLVertex *p0,GLVertex *p1,float t)
 {
-  q->pc.X=p0->pc.X+(p1->pc.X-p0->pc.X)*t;
-  q->pc.Y=p0->pc.Y+(p1->pc.Y-p0->pc.Y)*t;
-  q->pc.Z=p0->pc.Z+(p1->pc.Z-p0->pc.Z)*t;
-  q->pc.W=p0->pc.W+(p1->pc.W-p0->pc.W)*t;
-
-  q->color.v[0]=p0->color.v[0] + (p1->color.v[0]-p0->color.v[0])*t;
-  q->color.v[1]=p0->color.v[1] + (p1->color.v[1]-p0->color.v[1])*t;
-  q->color.v[2]=p0->color.v[2] + (p1->color.v[2]-p0->color.v[2])*t;
+  
 }
 
 /*
@@ -95,71 +75,13 @@ static inline void interpolate(GLVertex *q,GLVertex *p0,GLVertex *p1,float t)
    Practice */
 static inline int ClipLine1(float denom,float num,float *tmin,float *tmax)
 {
-  float t;
-	 
-  if (denom>0) {
-    t=num/denom;
-    if (t>*tmax) return 0;
-    if (t>*tmin) *tmin=t;
-  } else if (denom<0) {
-    t=num/denom;
-    if (t<*tmin) return 0;
-    if (t<*tmax) *tmax=t;
-  } else if (num>0) return 0;
+   
   return 1;
 }
 
 void gl_draw_line(GLContext *c,GLVertex *p1,GLVertex *p2)
 {
-  float dx,dy,dz,dw,x1,y1,z1,w1;
-  float tmin,tmax;
-  GLVertex q1,q2;
-  int cc1,cc2;
   
-  cc1=p1->clip_code;
-  cc2=p2->clip_code;
-
-  if ( (cc1 | cc2) == 0) {
-    if (c->render_mode == GL_SELECT) {
-      gl_add_select1(c,p1->zp.z,p2->zp.z,p2->zp.z);
-    } else {
-        if (c->depth_test)
-            ZB_line_z(c->zb,&p1->zp,&p2->zp);
-        else
-            ZB_line(c->zb,&p1->zp,&p2->zp);
-    }
-  } else if ( (cc1&cc2) != 0 ) {
-    return;
-  } else {
-    dx=p2->pc.X-p1->pc.X;
-    dy=p2->pc.Y-p1->pc.Y;
-    dz=p2->pc.Z-p1->pc.Z;
-    dw=p2->pc.W-p1->pc.W;
-    x1=p1->pc.X;
-    y1=p1->pc.Y;
-    z1=p1->pc.Z;
-    w1=p1->pc.W;
-    
-    tmin=0;
-    tmax=1;
-    if (ClipLine1(dx+dw,-x1-w1,&tmin,&tmax) &&
-        ClipLine1(-dx+dw,x1-w1,&tmin,&tmax) &&
-        ClipLine1(dy+dw,-y1-w1,&tmin,&tmax) &&
-        ClipLine1(-dy+dw,y1-w1,&tmin,&tmax) &&
-        ClipLine1(dz+dw,-z1-w1,&tmin,&tmax) && 
-        ClipLine1(-dz+dw,z1-w1,&tmin,&tmax)) {
-
-      interpolate(&q1,p1,p2,tmin);
-      interpolate(&q2,p1,p2,tmax);
-      gl_transform_to_viewport(c,&q1);
-      gl_transform_to_viewport(c,&q2);
-
-      if (c->depth_test)
-          ZB_line_z(c->zb,&q1.zp,&q2.zp);
-      else
-          ZB_line(c->zb,&q1.zp,&q2.zp);
-    }
-  }
 }
 
 	 
@@ -408,9 +330,7 @@ void gl_draw_triangle_fill(GLContext *c,
     ZB_fillTriangleMappingPerspective(c->zb,&p0->zp,&p1->zp,&p2->zp);
   } else if (c->current_shade_model == GL_SMOOTH) {
     ZB_fillTriangleSmooth(c->zb,&p0->zp,&p1->zp,&p2->zp);
-  } else {
-    ZB_fillTriangleFlat(c->zb,&p0->zp,&p1->zp,&p2->zp);
-  }
+  } 
 }
 
 /* Render a clipped triangle in line mode */  
@@ -418,15 +338,7 @@ void gl_draw_triangle_fill(GLContext *c,
 void gl_draw_triangle_line(GLContext *c,
                            GLVertex *p0,GLVertex *p1,GLVertex *p2)
 {
-    if (c->depth_test) {
-        if (p0->edge_flag) ZB_line_z(c->zb,&p0->zp,&p1->zp);
-        if (p1->edge_flag) ZB_line_z(c->zb,&p1->zp,&p2->zp);
-        if (p2->edge_flag) ZB_line_z(c->zb,&p2->zp,&p0->zp);
-    } else {
-        if (p0->edge_flag) ZB_line(c->zb,&p0->zp,&p1->zp);
-        if (p1->edge_flag) ZB_line(c->zb,&p1->zp,&p2->zp);
-        if (p2->edge_flag) ZB_line(c->zb,&p2->zp,&p0->zp);
-    }
+    
 }
 
 
@@ -435,9 +347,7 @@ void gl_draw_triangle_line(GLContext *c,
 void gl_draw_triangle_point(GLContext *c,
                             GLVertex *p0,GLVertex *p1,GLVertex *p2)
 {
-  if (p0->edge_flag) ZB_plot(c->zb,&p0->zp);
-  if (p1->edge_flag) ZB_plot(c->zb,&p1->zp);
-  if (p2->edge_flag) ZB_plot(c->zb,&p2->zp);
+ 
 }
 
 
