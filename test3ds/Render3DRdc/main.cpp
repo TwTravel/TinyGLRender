@@ -290,24 +290,29 @@ void Test_TRIANGLES( )
   //glPushAttrib(GL_ALL_ATTRIB_BITS);
 
   glBegin(GL_TRIANGLES);
-  for(int i = 0; i < facet.size(); i++)
-  {
+ // for(int i = 0; i < facet.size(); i++)
+ // {
         // 遍历三角形的所有点
-      for(int whichVertex = 0; whichVertex < 3; whichVertex++ )
-       {
+  //    for(int whichVertex = 0; whichVertex < 3; whichVertex++ )
+     //  {
         // 给出法向量
         //glNormal3f(facet[i].normal.x, facet[i].normal.y, facet[i].normal.z);
         // 如果对象具有纹理
+		//glNormal3f(1, 1, 1);
         glVertex3f(-2,0,0); /* */
-		glVertex3f(0,2,0);
+		//glNormal3f(1, 1, 1);
+		glVertex3f(1,0,1);
+		//glNormal3f(1, 1, 1);
+		glVertex3f(0,1,0);
+		
 		/*glNormal3f(facet[i].normal.z,facet[i].normal.x, facet[i].normal.y);
         // 如果对象具有纹理
         glVertex3f( facet[i].point[whichVertex].z ,
 		            facet[i].point[whichVertex].x , 
 		            facet[i].point[whichVertex].y 
 				     );*/
-       }
-   }
+       //}
+  // }
   glEnd();
   
  //glPopAttrib(); 
@@ -320,7 +325,7 @@ void SetCamera()
     glLoadIdentity();
     gluLookAt( 0, 1.5f, 4, 0, -1.5f, -4,
 	             0, 1, 0);
-		glEnable(GL_LIGHT0);								
+	glEnable(GL_LIGHT0);								
 	glEnable(GL_LIGHTING);								
 	glEnable(GL_COLOR_MATERIAL);				 
      
@@ -348,7 +353,11 @@ int main(int argc,char* argv[])
 
 	//RenderScene();
 	SetCamera();
-	RenderScene();
+	SurfSetColor(0.0, 1, 0);
+	
+//	RenderScene();
+	
+	
 	
     Position[0] = -1; 
 	Position[1] =1 ;
@@ -436,8 +445,9 @@ int main(int argc,char* argv[])
       //         {100, 0.02, 0.0},{  0,  0.02, 0.0} };
 	   drawPolygon(vz);
    }
-   
+  Test_TRIANGLES( );
   glScalef(5, 5, 5);
+  
   StlShape_Render(bunny_facet);
     tkSwapBuffers();
 	glClose();
