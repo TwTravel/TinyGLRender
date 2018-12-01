@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-01 20:37:28</td>
+            <td class="headerValue">2018-12-01 20:43:11</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -96,45 +96,45 @@
 <span class="lineNum">      34 </span>            : #endif
 <span class="lineNum">      35 </span>            : 
 <span class="lineNum">      36 </span>            :   /* we sort the vertex with increasing y */
-<span class="lineNum">      37 </span><span class="lineCov">       3183 :   if (p1-&gt;y &lt; p0-&gt;y) {</span>
-<span class="lineNum">      38 </span><span class="lineCov">       1447 :     t = p0;</span>
-<span class="lineNum">      39 </span><span class="lineCov">       1447 :     p0 = p1;</span>
-<span class="lineNum">      40 </span><span class="lineCov">       1447 :     p1 = t;</span>
+<span class="lineNum">      37 </span><span class="lineCov">       6366 :   if (p1-&gt;y &lt; p0-&gt;y) {</span>
+<span class="lineNum">      38 </span><span class="lineCov">       2894 :     t = p0;</span>
+<span class="lineNum">      39 </span><span class="lineCov">       2894 :     p0 = p1;</span>
+<span class="lineNum">      40 </span><span class="lineCov">       2894 :     p1 = t;</span>
 <span class="lineNum">      41 </span>            :   }
-<span class="lineNum">      42 </span><span class="lineCov">       3183 :   if (p2-&gt;y &lt; p0-&gt;y) {</span>
-<span class="lineNum">      43 </span><span class="lineCov">       1585 :     t = p2;</span>
-<span class="lineNum">      44 </span><span class="lineCov">       1585 :     p2 = p1;</span>
-<span class="lineNum">      45 </span><span class="lineCov">       1585 :     p1 = p0;</span>
-<span class="lineNum">      46 </span><span class="lineCov">       1585 :     p0 = t;</span>
-<span class="lineNum">      47 </span><span class="lineCov">       1598 :   } else if (p2-&gt;y &lt; p1-&gt;y) {</span>
-<span class="lineNum">      48 </span><span class="lineCov">          1 :     t = p1;</span>
-<span class="lineNum">      49 </span><span class="lineCov">          1 :     p1 = p2;</span>
-<span class="lineNum">      50 </span><span class="lineCov">          1 :     p2 = t;</span>
+<span class="lineNum">      42 </span><span class="lineCov">       6366 :   if (p2-&gt;y &lt; p0-&gt;y) {</span>
+<span class="lineNum">      43 </span><span class="lineCov">       3170 :     t = p2;</span>
+<span class="lineNum">      44 </span><span class="lineCov">       3170 :     p2 = p1;</span>
+<span class="lineNum">      45 </span><span class="lineCov">       3170 :     p1 = p0;</span>
+<span class="lineNum">      46 </span><span class="lineCov">       3170 :     p0 = t;</span>
+<span class="lineNum">      47 </span><span class="lineCov">       3196 :   } else if (p2-&gt;y &lt; p1-&gt;y) {</span>
+<span class="lineNum">      48 </span><span class="lineCov">          2 :     t = p1;</span>
+<span class="lineNum">      49 </span><span class="lineCov">          2 :     p1 = p2;</span>
+<span class="lineNum">      50 </span><span class="lineCov">          2 :     p2 = t;</span>
 <span class="lineNum">      51 </span>            :   }
 <span class="lineNum">      52 </span>            : 
 <span class="lineNum">      53 </span>            :   /* we compute dXdx and dXdy for all interpolated values */
 <span class="lineNum">      54 </span>            :   
-<span class="lineNum">      55 </span><span class="lineCov">       3183 :   fdx1 = p1-&gt;x - p0-&gt;x;</span>
-<span class="lineNum">      56 </span><span class="lineCov">       3183 :   fdy1 = p1-&gt;y - p0-&gt;y;</span>
+<span class="lineNum">      55 </span><span class="lineCov">       6366 :   fdx1 = p1-&gt;x - p0-&gt;x;</span>
+<span class="lineNum">      56 </span><span class="lineCov">       6366 :   fdy1 = p1-&gt;y - p0-&gt;y;</span>
 <span class="lineNum">      57 </span>            : 
-<span class="lineNum">      58 </span><span class="lineCov">       3183 :   fdx2 = p2-&gt;x - p0-&gt;x;</span>
-<span class="lineNum">      59 </span><span class="lineCov">       3183 :   fdy2 = p2-&gt;y - p0-&gt;y;</span>
+<span class="lineNum">      58 </span><span class="lineCov">       6366 :   fdx2 = p2-&gt;x - p0-&gt;x;</span>
+<span class="lineNum">      59 </span><span class="lineCov">       6366 :   fdy2 = p2-&gt;y - p0-&gt;y;</span>
 <span class="lineNum">      60 </span>            : 
-<span class="lineNum">      61 </span><span class="lineCov">       3183 :   fz = fdx1 * fdy2 - fdx2 * fdy1;</span>
-<span class="lineNum">      62 </span><span class="lineCov">       3183 :   if (fz == 0)</span>
+<span class="lineNum">      61 </span><span class="lineCov">       6366 :   fz = fdx1 * fdy2 - fdx2 * fdy1;</span>
+<span class="lineNum">      62 </span><span class="lineCov">       6366 :   if (fz == 0)</span>
 <span class="lineNum">      63 </span><span class="lineNoCov">          0 :     return;</span>
-<span class="lineNum">      64 </span><span class="lineCov">       3183 :   fz = 1.0 / fz;</span>
+<span class="lineNum">      64 </span><span class="lineCov">       6366 :   fz = 1.0 / fz;</span>
 <span class="lineNum">      65 </span>            : 
-<span class="lineNum">      66 </span><span class="lineCov">       3183 :   fdx1 *= fz;</span>
-<span class="lineNum">      67 </span><span class="lineCov">       3183 :   fdy1 *= fz;</span>
-<span class="lineNum">      68 </span><span class="lineCov">       3183 :   fdx2 *= fz;</span>
-<span class="lineNum">      69 </span><span class="lineCov">       3183 :   fdy2 *= fz;</span>
+<span class="lineNum">      66 </span><span class="lineCov">       6366 :   fdx1 *= fz;</span>
+<span class="lineNum">      67 </span><span class="lineCov">       6366 :   fdy1 *= fz;</span>
+<span class="lineNum">      68 </span><span class="lineCov">       6366 :   fdx2 *= fz;</span>
+<span class="lineNum">      69 </span><span class="lineCov">       6366 :   fdy2 *= fz;</span>
 <span class="lineNum">      70 </span>            : 
 <span class="lineNum">      71 </span>            : #ifdef INTERP_Z
-<span class="lineNum">      72 </span><span class="lineCov">       3183 :   d1 = p1-&gt;z - p0-&gt;z;</span>
-<span class="lineNum">      73 </span><span class="lineCov">       3183 :   d2 = p2-&gt;z - p0-&gt;z;</span>
-<span class="lineNum">      74 </span><span class="lineCov">       3183 :   dzdx = (int) (fdy2 * d1 - fdy1 * d2);</span>
-<span class="lineNum">      75 </span><span class="lineCov">       3183 :   dzdy = (int) (fdx1 * d2 - fdx2 * d1);</span>
+<span class="lineNum">      72 </span><span class="lineCov">       6366 :   d1 = p1-&gt;z - p0-&gt;z;</span>
+<span class="lineNum">      73 </span><span class="lineCov">       6366 :   d2 = p2-&gt;z - p0-&gt;z;</span>
+<span class="lineNum">      74 </span><span class="lineCov">       6366 :   dzdx = (int) (fdy2 * d1 - fdy1 * d2);</span>
+<span class="lineNum">      75 </span><span class="lineCov">       6366 :   dzdy = (int) (fdx1 * d2 - fdx2 * d1);</span>
 <span class="lineNum">      76 </span>            : #endif
 <span class="lineNum">      77 </span>            : 
 <span class="lineNum">      78 </span>            : #ifdef INTERP_RGB
@@ -170,88 +170,88 @@
 <span class="lineNum">     108 </span>            : #ifdef INTERP_STZ
 <span class="lineNum">     109 </span>            :   {
 <span class="lineNum">     110 </span>            :     float zz;
-<span class="lineNum">     111 </span><span class="lineCov">       3183 :     zz=(float) p0-&gt;z;</span>
-<span class="lineNum">     112 </span><span class="lineCov">       3183 :     p0-&gt;sz= (float) p0-&gt;s * zz;</span>
-<span class="lineNum">     113 </span><span class="lineCov">       3183 :     p0-&gt;tz= (float) p0-&gt;t * zz;</span>
-<span class="lineNum">     114 </span><span class="lineCov">       3183 :     zz=(float) p1-&gt;z;</span>
-<span class="lineNum">     115 </span><span class="lineCov">       3183 :     p1-&gt;sz= (float) p1-&gt;s * zz;</span>
-<span class="lineNum">     116 </span><span class="lineCov">       3183 :     p1-&gt;tz= (float) p1-&gt;t * zz;</span>
-<span class="lineNum">     117 </span><span class="lineCov">       3183 :     zz=(float) p2-&gt;z;</span>
-<span class="lineNum">     118 </span><span class="lineCov">       3183 :     p2-&gt;sz= (float) p2-&gt;s * zz;</span>
-<span class="lineNum">     119 </span><span class="lineCov">       3183 :     p2-&gt;tz= (float) p2-&gt;t * zz;</span>
+<span class="lineNum">     111 </span><span class="lineCov">       6366 :     zz=(float) p0-&gt;z;</span>
+<span class="lineNum">     112 </span><span class="lineCov">       6366 :     p0-&gt;sz= (float) p0-&gt;s * zz;</span>
+<span class="lineNum">     113 </span><span class="lineCov">       6366 :     p0-&gt;tz= (float) p0-&gt;t * zz;</span>
+<span class="lineNum">     114 </span><span class="lineCov">       6366 :     zz=(float) p1-&gt;z;</span>
+<span class="lineNum">     115 </span><span class="lineCov">       6366 :     p1-&gt;sz= (float) p1-&gt;s * zz;</span>
+<span class="lineNum">     116 </span><span class="lineCov">       6366 :     p1-&gt;tz= (float) p1-&gt;t * zz;</span>
+<span class="lineNum">     117 </span><span class="lineCov">       6366 :     zz=(float) p2-&gt;z;</span>
+<span class="lineNum">     118 </span><span class="lineCov">       6366 :     p2-&gt;sz= (float) p2-&gt;s * zz;</span>
+<span class="lineNum">     119 </span><span class="lineCov">       6366 :     p2-&gt;tz= (float) p2-&gt;t * zz;</span>
 <span class="lineNum">     120 </span>            : 
-<span class="lineNum">     121 </span><span class="lineCov">       3183 :     d1 = p1-&gt;sz - p0-&gt;sz;</span>
-<span class="lineNum">     122 </span><span class="lineCov">       3183 :     d2 = p2-&gt;sz - p0-&gt;sz;</span>
-<span class="lineNum">     123 </span><span class="lineCov">       3183 :     dszdx = (fdy2 * d1 - fdy1 * d2);</span>
-<span class="lineNum">     124 </span><span class="lineCov">       3183 :     dszdy = (fdx1 * d2 - fdx2 * d1);</span>
+<span class="lineNum">     121 </span><span class="lineCov">       6366 :     d1 = p1-&gt;sz - p0-&gt;sz;</span>
+<span class="lineNum">     122 </span><span class="lineCov">       6366 :     d2 = p2-&gt;sz - p0-&gt;sz;</span>
+<span class="lineNum">     123 </span><span class="lineCov">       6366 :     dszdx = (fdy2 * d1 - fdy1 * d2);</span>
+<span class="lineNum">     124 </span><span class="lineCov">       6366 :     dszdy = (fdx1 * d2 - fdx2 * d1);</span>
 <span class="lineNum">     125 </span>            :     
-<span class="lineNum">     126 </span><span class="lineCov">       3183 :     d1 = p1-&gt;tz - p0-&gt;tz;</span>
-<span class="lineNum">     127 </span><span class="lineCov">       3183 :     d2 = p2-&gt;tz - p0-&gt;tz;</span>
-<span class="lineNum">     128 </span><span class="lineCov">       3183 :     dtzdx = (fdy2 * d1 - fdy1 * d2);</span>
-<span class="lineNum">     129 </span><span class="lineCov">       3183 :     dtzdy = (fdx1 * d2 - fdx2 * d1);</span>
+<span class="lineNum">     126 </span><span class="lineCov">       6366 :     d1 = p1-&gt;tz - p0-&gt;tz;</span>
+<span class="lineNum">     127 </span><span class="lineCov">       6366 :     d2 = p2-&gt;tz - p0-&gt;tz;</span>
+<span class="lineNum">     128 </span><span class="lineCov">       6366 :     dtzdx = (fdy2 * d1 - fdy1 * d2);</span>
+<span class="lineNum">     129 </span><span class="lineCov">       6366 :     dtzdy = (fdx1 * d2 - fdx2 * d1);</span>
 <span class="lineNum">     130 </span>            :   }
 <span class="lineNum">     131 </span>            : #endif
 <span class="lineNum">     132 </span>            : 
 <span class="lineNum">     133 </span>            :   /* screen coordinates */
 <span class="lineNum">     134 </span>            : 
-<span class="lineNum">     135 </span><span class="lineCov">       3183 :   pp1 = (PIXEL *) ((char *) zb-&gt;pbuf + zb-&gt;linesize * p0-&gt;y);</span>
-<span class="lineNum">     136 </span><span class="lineCov">       3183 :   pz1 = zb-&gt;zbuf + p0-&gt;y * zb-&gt;xsize;</span>
+<span class="lineNum">     135 </span><span class="lineCov">       6366 :   pp1 = (PIXEL *) ((char *) zb-&gt;pbuf + zb-&gt;linesize * p0-&gt;y);</span>
+<span class="lineNum">     136 </span><span class="lineCov">       6366 :   pz1 = zb-&gt;zbuf + p0-&gt;y * zb-&gt;xsize;</span>
 <span class="lineNum">     137 </span>            : 
-<span class="lineNum">     138 </span><span class="lineCov">       3183 :   DRAW_INIT();</span>
+<span class="lineNum">     138 </span><span class="lineCov">       6366 :   DRAW_INIT();</span>
 <span class="lineNum">     139 </span>            : 
-<span class="lineNum">     140 </span><span class="lineCov">       9549 :   for(part=0;part&lt;2;part++) {</span>
-<span class="lineNum">     141 </span><span class="lineCov">       6366 :     if (part == 0) {</span>
-<span class="lineNum">     142 </span><span class="lineCov">       3183 :       if (fz &gt; 0) {</span>
-<span class="lineNum">     143 </span><span class="lineCov">       1499 :         update_left=1;</span>
-<span class="lineNum">     144 </span><span class="lineCov">       1499 :         update_right=1;</span>
-<span class="lineNum">     145 </span><span class="lineCov">       1499 :         l1=p0;</span>
-<span class="lineNum">     146 </span><span class="lineCov">       1499 :         l2=p2;</span>
-<span class="lineNum">     147 </span><span class="lineCov">       1499 :         pr1=p0;</span>
-<span class="lineNum">     148 </span><span class="lineCov">       1499 :         pr2=p1;</span>
+<span class="lineNum">     140 </span><span class="lineCov">      19098 :   for(part=0;part&lt;2;part++) {</span>
+<span class="lineNum">     141 </span><span class="lineCov">      12732 :     if (part == 0) {</span>
+<span class="lineNum">     142 </span><span class="lineCov">       6366 :       if (fz &gt; 0) {</span>
+<span class="lineNum">     143 </span><span class="lineCov">       2998 :         update_left=1;</span>
+<span class="lineNum">     144 </span><span class="lineCov">       2998 :         update_right=1;</span>
+<span class="lineNum">     145 </span><span class="lineCov">       2998 :         l1=p0;</span>
+<span class="lineNum">     146 </span><span class="lineCov">       2998 :         l2=p2;</span>
+<span class="lineNum">     147 </span><span class="lineCov">       2998 :         pr1=p0;</span>
+<span class="lineNum">     148 </span><span class="lineCov">       2998 :         pr2=p1;</span>
 <span class="lineNum">     149 </span>            :       } else {
-<span class="lineNum">     150 </span><span class="lineCov">       1684 :         update_left=1;</span>
-<span class="lineNum">     151 </span><span class="lineCov">       1684 :         update_right=1;</span>
-<span class="lineNum">     152 </span><span class="lineCov">       1684 :         l1=p0;</span>
-<span class="lineNum">     153 </span><span class="lineCov">       1684 :         l2=p1;</span>
-<span class="lineNum">     154 </span><span class="lineCov">       1684 :         pr1=p0;</span>
-<span class="lineNum">     155 </span><span class="lineCov">       1684 :         pr2=p2;</span>
+<span class="lineNum">     150 </span><span class="lineCov">       3368 :         update_left=1;</span>
+<span class="lineNum">     151 </span><span class="lineCov">       3368 :         update_right=1;</span>
+<span class="lineNum">     152 </span><span class="lineCov">       3368 :         l1=p0;</span>
+<span class="lineNum">     153 </span><span class="lineCov">       3368 :         l2=p1;</span>
+<span class="lineNum">     154 </span><span class="lineCov">       3368 :         pr1=p0;</span>
+<span class="lineNum">     155 </span><span class="lineCov">       3368 :         pr2=p2;</span>
 <span class="lineNum">     156 </span>            :       }
-<span class="lineNum">     157 </span><span class="lineCov">       3183 :       nb_lines = p1-&gt;y - p0-&gt;y;</span>
+<span class="lineNum">     157 </span><span class="lineCov">       6366 :       nb_lines = p1-&gt;y - p0-&gt;y;</span>
 <span class="lineNum">     158 </span>            :     } else {
 <span class="lineNum">     159 </span>            :       /* second part */
-<span class="lineNum">     160 </span><span class="lineCov">       3183 :       if (fz &gt; 0) {</span>
-<span class="lineNum">     161 </span><span class="lineCov">       1499 :         update_left=0;</span>
-<span class="lineNum">     162 </span><span class="lineCov">       1499 :         update_right=1;</span>
-<span class="lineNum">     163 </span><span class="lineCov">       1499 :         pr1=p1;</span>
-<span class="lineNum">     164 </span><span class="lineCov">       1499 :         pr2=p2;</span>
+<span class="lineNum">     160 </span><span class="lineCov">       6366 :       if (fz &gt; 0) {</span>
+<span class="lineNum">     161 </span><span class="lineCov">       2998 :         update_left=0;</span>
+<span class="lineNum">     162 </span><span class="lineCov">       2998 :         update_right=1;</span>
+<span class="lineNum">     163 </span><span class="lineCov">       2998 :         pr1=p1;</span>
+<span class="lineNum">     164 </span><span class="lineCov">       2998 :         pr2=p2;</span>
 <span class="lineNum">     165 </span>            :       } else {
-<span class="lineNum">     166 </span><span class="lineCov">       1684 :         update_left=1;</span>
-<span class="lineNum">     167 </span><span class="lineCov">       1684 :         update_right=0;</span>
-<span class="lineNum">     168 </span><span class="lineCov">       1684 :         l1=p1; </span>
-<span class="lineNum">     169 </span><span class="lineCov">       1684 :         l2=p2;</span>
+<span class="lineNum">     166 </span><span class="lineCov">       3368 :         update_left=1;</span>
+<span class="lineNum">     167 </span><span class="lineCov">       3368 :         update_right=0;</span>
+<span class="lineNum">     168 </span><span class="lineCov">       3368 :         l1=p1; </span>
+<span class="lineNum">     169 </span><span class="lineCov">       3368 :         l2=p2;</span>
 <span class="lineNum">     170 </span>            :       }
-<span class="lineNum">     171 </span><span class="lineCov">       3183 :       nb_lines = p2-&gt;y - p1-&gt;y + 1;</span>
+<span class="lineNum">     171 </span><span class="lineCov">       6366 :       nb_lines = p2-&gt;y - p1-&gt;y + 1;</span>
 <span class="lineNum">     172 </span>            :     }
 <span class="lineNum">     173 </span>            : 
 <span class="lineNum">     174 </span>            :     /* compute the values for the left edge */
 <span class="lineNum">     175 </span>            : 
-<span class="lineNum">     176 </span><span class="lineCov">       6366 :     if (update_left) {</span>
-<span class="lineNum">     177 </span><span class="lineCov">       4867 :       dy1 = l2-&gt;y - l1-&gt;y;</span>
-<span class="lineNum">     178 </span><span class="lineCov">       4867 :       dx1 = l2-&gt;x - l1-&gt;x;</span>
-<span class="lineNum">     179 </span><span class="lineCov">       4867 :       if (dy1 &gt; 0) </span>
-<span class="lineNum">     180 </span><span class="lineCov">       4623 :         tmp = (dx1 &lt;&lt; 16) / dy1;</span>
+<span class="lineNum">     176 </span><span class="lineCov">      12732 :     if (update_left) {</span>
+<span class="lineNum">     177 </span><span class="lineCov">       9734 :       dy1 = l2-&gt;y - l1-&gt;y;</span>
+<span class="lineNum">     178 </span><span class="lineCov">       9734 :       dx1 = l2-&gt;x - l1-&gt;x;</span>
+<span class="lineNum">     179 </span><span class="lineCov">       9734 :       if (dy1 &gt; 0) </span>
+<span class="lineNum">     180 </span><span class="lineCov">       9246 :         tmp = (dx1 &lt;&lt; 16) / dy1;</span>
 <span class="lineNum">     181 </span>            :       else
-<span class="lineNum">     182 </span><span class="lineCov">        244 :         tmp = 0;</span>
-<span class="lineNum">     183 </span><span class="lineCov">       4867 :       x1 = l1-&gt;x;</span>
-<span class="lineNum">     184 </span><span class="lineCov">       4867 :       error = 0;</span>
-<span class="lineNum">     185 </span><span class="lineCov">       4867 :       derror = tmp &amp; 0x0000ffff;</span>
-<span class="lineNum">     186 </span><span class="lineCov">       4867 :       dxdy_min = tmp &gt;&gt; 16;</span>
-<span class="lineNum">     187 </span><span class="lineCov">       4867 :       dxdy_max = dxdy_min + 1;</span>
+<span class="lineNum">     182 </span><span class="lineCov">        488 :         tmp = 0;</span>
+<span class="lineNum">     183 </span><span class="lineCov">       9734 :       x1 = l1-&gt;x;</span>
+<span class="lineNum">     184 </span><span class="lineCov">       9734 :       error = 0;</span>
+<span class="lineNum">     185 </span><span class="lineCov">       9734 :       derror = tmp &amp; 0x0000ffff;</span>
+<span class="lineNum">     186 </span><span class="lineCov">       9734 :       dxdy_min = tmp &gt;&gt; 16;</span>
+<span class="lineNum">     187 </span><span class="lineCov">       9734 :       dxdy_max = dxdy_min + 1;</span>
 <span class="lineNum">     188 </span>            :       
 <span class="lineNum">     189 </span>            : #ifdef INTERP_Z
-<span class="lineNum">     190 </span><span class="lineCov">       4867 :       z1=l1-&gt;z;</span>
-<span class="lineNum">     191 </span><span class="lineCov">       4867 :       dzdl_min=(dzdy + dzdx * dxdy_min); </span>
-<span class="lineNum">     192 </span><span class="lineCov">       4867 :       dzdl_max=dzdl_min + dzdx;</span>
+<span class="lineNum">     190 </span><span class="lineCov">       9734 :       z1=l1-&gt;z;</span>
+<span class="lineNum">     191 </span><span class="lineCov">       9734 :       dzdl_min=(dzdy + dzdx * dxdy_min); </span>
+<span class="lineNum">     192 </span><span class="lineCov">       9734 :       dzdl_max=dzdl_min + dzdx;</span>
 <span class="lineNum">     193 </span>            : #endif
 <span class="lineNum">     194 </span>            : #ifdef INTERP_RGB
 <span class="lineNum">     195 </span><span class="lineNoCov">          0 :       r1=l1-&gt;r;</span>
@@ -276,32 +276,32 @@
 <span class="lineNum">     214 </span><span class="lineNoCov">          0 :       dtdl_max=dtdl_min + dtdx;</span>
 <span class="lineNum">     215 </span>            : #endif
 <span class="lineNum">     216 </span>            : #ifdef INTERP_STZ
-<span class="lineNum">     217 </span><span class="lineCov">       4867 :       sz1=l1-&gt;sz;</span>
-<span class="lineNum">     218 </span><span class="lineCov">       4867 :       dszdl_min=(dszdy + dszdx * dxdy_min);</span>
-<span class="lineNum">     219 </span><span class="lineCov">       4867 :       dszdl_max=dszdl_min + dszdx;</span>
+<span class="lineNum">     217 </span><span class="lineCov">       9734 :       sz1=l1-&gt;sz;</span>
+<span class="lineNum">     218 </span><span class="lineCov">       9734 :       dszdl_min=(dszdy + dszdx * dxdy_min);</span>
+<span class="lineNum">     219 </span><span class="lineCov">       9734 :       dszdl_max=dszdl_min + dszdx;</span>
 <span class="lineNum">     220 </span>            :       
-<span class="lineNum">     221 </span><span class="lineCov">       4867 :       tz1=l1-&gt;tz;</span>
-<span class="lineNum">     222 </span><span class="lineCov">       4867 :       dtzdl_min=(dtzdy + dtzdx * dxdy_min);</span>
-<span class="lineNum">     223 </span><span class="lineCov">       4867 :       dtzdl_max=dtzdl_min + dtzdx;</span>
+<span class="lineNum">     221 </span><span class="lineCov">       9734 :       tz1=l1-&gt;tz;</span>
+<span class="lineNum">     222 </span><span class="lineCov">       9734 :       dtzdl_min=(dtzdy + dtzdx * dxdy_min);</span>
+<span class="lineNum">     223 </span><span class="lineCov">       9734 :       dtzdl_max=dtzdl_min + dtzdx;</span>
 <span class="lineNum">     224 </span>            : #endif
 <span class="lineNum">     225 </span>            :     }
 <span class="lineNum">     226 </span>            : 
 <span class="lineNum">     227 </span>            :     /* compute values for the right edge */
 <span class="lineNum">     228 </span>            : 
-<span class="lineNum">     229 </span><span class="lineCov">       6366 :     if (update_right) {</span>
-<span class="lineNum">     230 </span><span class="lineCov">       4682 :       dx2 = (pr2-&gt;x - pr1-&gt;x);</span>
-<span class="lineNum">     231 </span><span class="lineCov">       4682 :       dy2 = (pr2-&gt;y - pr1-&gt;y);</span>
-<span class="lineNum">     232 </span><span class="lineCov">       4682 :       if (dy2&gt;0) </span>
-<span class="lineNum">     233 </span><span class="lineCov">       4620 :         dx2dy2 = ( dx2 &lt;&lt; 16) / dy2;</span>
+<span class="lineNum">     229 </span><span class="lineCov">      12732 :     if (update_right) {</span>
+<span class="lineNum">     230 </span><span class="lineCov">       9364 :       dx2 = (pr2-&gt;x - pr1-&gt;x);</span>
+<span class="lineNum">     231 </span><span class="lineCov">       9364 :       dy2 = (pr2-&gt;y - pr1-&gt;y);</span>
+<span class="lineNum">     232 </span><span class="lineCov">       9364 :       if (dy2&gt;0) </span>
+<span class="lineNum">     233 </span><span class="lineCov">       9240 :         dx2dy2 = ( dx2 &lt;&lt; 16) / dy2;</span>
 <span class="lineNum">     234 </span>            :       else
-<span class="lineNum">     235 </span><span class="lineCov">         62 :         dx2dy2 = 0;</span>
-<span class="lineNum">     236 </span><span class="lineCov">       4682 :       x2 = pr1-&gt;x &lt;&lt; 16;</span>
+<span class="lineNum">     235 </span><span class="lineCov">        124 :         dx2dy2 = 0;</span>
+<span class="lineNum">     236 </span><span class="lineCov">       9364 :       x2 = pr1-&gt;x &lt;&lt; 16;</span>
 <span class="lineNum">     237 </span>            :     }
 <span class="lineNum">     238 </span>            : 
 <span class="lineNum">     239 </span>            :     /* we draw all the scan line of the part */
 <span class="lineNum">     240 </span>            : 
-<span class="lineNum">     241 </span><span class="lineCov">     141156 :     while (nb_lines&gt;0) {</span>
-<span class="lineNum">     242 </span><span class="lineCov">      67395 :       nb_lines--;</span>
+<span class="lineNum">     241 </span><span class="lineCov">     282312 :     while (nb_lines&gt;0) {</span>
+<span class="lineNum">     242 </span><span class="lineCov">     134790 :       nb_lines--;</span>
 <span class="lineNum">     243 </span>            : #ifndef DRAW_LINE
 <span class="lineNum">     244 </span>            :       /* generic draw line */
 <span class="lineNum">     245 </span>            :       {
@@ -361,16 +361,16 @@
 <span class="lineNum">     299 </span>            :           }
 <span class="lineNum">     300 </span>            :       }
 <span class="lineNum">     301 </span>            : #else
-<span class="lineNum">     302 </span><span class="lineCov">      67395 :       DRAW_LINE();</span>
+<span class="lineNum">     302 </span><span class="lineCov">     134790 :       DRAW_LINE();</span>
 <span class="lineNum">     303 </span>            : #endif
 <span class="lineNum">     304 </span>            :       
 <span class="lineNum">     305 </span>            :       /* left edge */
-<span class="lineNum">     306 </span><span class="lineCov">      67395 :       error+=derror;</span>
-<span class="lineNum">     307 </span><span class="lineCov">      67395 :       if (error &gt; 0) {</span>
-<span class="lineNum">     308 </span><span class="lineCov">      34866 :         error-=0x10000;</span>
-<span class="lineNum">     309 </span><span class="lineCov">      34866 :         x1+=dxdy_max;</span>
+<span class="lineNum">     306 </span><span class="lineCov">     134790 :       error+=derror;</span>
+<span class="lineNum">     307 </span><span class="lineCov">     134790 :       if (error &gt; 0) {</span>
+<span class="lineNum">     308 </span><span class="lineCov">      69732 :         error-=0x10000;</span>
+<span class="lineNum">     309 </span><span class="lineCov">      69732 :         x1+=dxdy_max;</span>
 <span class="lineNum">     310 </span>            : #ifdef INTERP_Z
-<span class="lineNum">     311 </span><span class="lineCov">      34866 :         z1+=dzdl_max;</span>
+<span class="lineNum">     311 </span><span class="lineCov">      69732 :         z1+=dzdl_max;</span>
 <span class="lineNum">     312 </span>            : #endif      
 <span class="lineNum">     313 </span>            : #ifdef INTERP_RGB
 <span class="lineNum">     314 </span><span class="lineNoCov">          0 :         r1+=drdl_max;</span>
@@ -382,13 +382,13 @@
 <span class="lineNum">     320 </span><span class="lineNoCov">          0 :         t1+=dtdl_max;</span>
 <span class="lineNum">     321 </span>            : #endif
 <span class="lineNum">     322 </span>            : #ifdef INTERP_STZ
-<span class="lineNum">     323 </span><span class="lineCov">      34866 :         sz1+=dszdl_max;</span>
-<span class="lineNum">     324 </span><span class="lineCov">      34866 :         tz1+=dtzdl_max;</span>
+<span class="lineNum">     323 </span><span class="lineCov">      69732 :         sz1+=dszdl_max;</span>
+<span class="lineNum">     324 </span><span class="lineCov">      69732 :         tz1+=dtzdl_max;</span>
 <span class="lineNum">     325 </span>            : #endif
 <span class="lineNum">     326 </span>            :       } else {
-<span class="lineNum">     327 </span><span class="lineCov">      32529 :         x1+=dxdy_min;</span>
+<span class="lineNum">     327 </span><span class="lineCov">      65058 :         x1+=dxdy_min;</span>
 <span class="lineNum">     328 </span>            : #ifdef INTERP_Z
-<span class="lineNum">     329 </span><span class="lineCov">      32529 :         z1+=dzdl_min;</span>
+<span class="lineNum">     329 </span><span class="lineCov">      65058 :         z1+=dzdl_min;</span>
 <span class="lineNum">     330 </span>            : #endif      
 <span class="lineNum">     331 </span>            : #ifdef INTERP_RGB
 <span class="lineNum">     332 </span><span class="lineNoCov">          0 :         r1+=drdl_min;</span>
@@ -400,17 +400,17 @@
 <span class="lineNum">     338 </span><span class="lineNoCov">          0 :         t1+=dtdl_min;</span>
 <span class="lineNum">     339 </span>            : #endif
 <span class="lineNum">     340 </span>            : #ifdef INTERP_STZ
-<span class="lineNum">     341 </span><span class="lineCov">      32529 :         sz1+=dszdl_min;</span>
-<span class="lineNum">     342 </span><span class="lineCov">      32529 :         tz1+=dtzdl_min;</span>
+<span class="lineNum">     341 </span><span class="lineCov">      65058 :         sz1+=dszdl_min;</span>
+<span class="lineNum">     342 </span><span class="lineCov">      65058 :         tz1+=dtzdl_min;</span>
 <span class="lineNum">     343 </span>            : #endif
 <span class="lineNum">     344 </span>            :       } 
 <span class="lineNum">     345 </span>            :       
 <span class="lineNum">     346 </span>            :       /* right edge */
-<span class="lineNum">     347 </span><span class="lineCov">      67395 :       x2+=dx2dy2;</span>
+<span class="lineNum">     347 </span><span class="lineCov">     134790 :       x2+=dx2dy2;</span>
 <span class="lineNum">     348 </span>            : 
 <span class="lineNum">     349 </span>            :       /* screen coordinates */
-<span class="lineNum">     350 </span><span class="lineCov">      67395 :       pp1=(PIXEL *)((char *)pp1 + zb-&gt;linesize);</span>
-<span class="lineNum">     351 </span><span class="lineCov">      67395 :       pz1+=zb-&gt;xsize;</span>
+<span class="lineNum">     350 </span><span class="lineCov">     134790 :       pp1=(PIXEL *)((char *)pp1 + zb-&gt;linesize);</span>
+<span class="lineNum">     351 </span><span class="lineCov">     134790 :       pz1+=zb-&gt;xsize;</span>
 <span class="lineNum">     352 </span>            :     }
 <span class="lineNum">     353 </span>            :   }
 <span class="lineNum">     354 </span>            : }

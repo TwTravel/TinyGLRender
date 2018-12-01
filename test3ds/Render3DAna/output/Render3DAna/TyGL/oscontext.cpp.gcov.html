@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - Render3DAna/TyGL/oscontext.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">Render3DAna/TyGL</a> - oscontext.cpp<span style="font-size: 80%;"> (source / <a href="oscontext.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">39</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-01 21:04:28</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include  &quot;oscontext.h&quot;</a>
+<span class="lineNum">       2 </span>            : #include  &quot;zbuffer.h&quot;
+<span class="lineNum">       3 </span>            : #include  &quot;zgl.h&quot;
+<span class="lineNum">       4 </span>            : #include &lt;stdlib.h&gt;
+<span class="lineNum">       5 </span>            : #include &lt;assert.h&gt;
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : static int buffercnt = 0;
+<a name="8"><span class="lineNum">       8 </span>            : </a>
+<span class="lineNum">       9 </span>            : ostgl_context *
+<span class="lineNum">      10 </span><span class="lineNoCov">          0 : ostgl_create_context(const int xsize,</span>
+<span class="lineNum">      11 </span>            :                      const int ysize,
+<span class="lineNum">      12 </span>            :                      const int depth,
+<span class="lineNum">      13 </span>            :                      void **framebuffers,
+<span class="lineNum">      14 </span>            :                      const int numbuffers)
+<span class="lineNum">      15 </span>            : {
+<span class="lineNum">      16 </span>            :   ostgl_context *context;
+<span class="lineNum">      17 </span>            :   int i;
+<span class="lineNum">      18 </span>            :   ZBuffer *zb;
+<span class="lineNum">      19 </span>            :    
+<span class="lineNum">      20 </span><span class="lineNoCov">          0 :   assert(depth == 16); /* support for other depths must include bpp </span>
+<span class="lineNum">      21 </span>            :                           convertion */
+<span class="lineNum">      22 </span><span class="lineNoCov">          0 :   assert(numbuffers &gt;= 1);</span>
+<span class="lineNum">      23 </span>            :   
+<span class="lineNum">      24 </span><span class="lineNoCov">          0 :   context = gl_malloc(sizeof(ostgl_context));</span>
+<span class="lineNum">      25 </span><span class="lineNoCov">          0 :   assert(context);</span>
+<span class="lineNum">      26 </span><span class="lineNoCov">          0 :   context-&gt;zbs = gl_malloc(sizeof(void*)*numbuffers);</span>
+<span class="lineNum">      27 </span><span class="lineNoCov">          0 :   context-&gt;framebuffers = gl_malloc(sizeof(void*)*numbuffers);</span>
+<span class="lineNum">      28 </span>            :   
+<span class="lineNum">      29 </span><span class="lineNoCov">          0 :   assert(context-&gt;zbs != NULL &amp;&amp; context-&gt;framebuffers != NULL);</span>
+<span class="lineNum">      30 </span>            :   
+<span class="lineNum">      31 </span><span class="lineNoCov">          0 :   for (i = 0; i &lt; numbuffers; i++) {</span>
+<span class="lineNum">      32 </span><span class="lineNoCov">          0 :     context-&gt;framebuffers[i] = framebuffers[i];</span>
+<span class="lineNum">      33 </span><span class="lineNoCov">          0 :     zb = ZB_open(xsize, ysize, ZB_MODE_5R6G5B, 0, NULL, NULL, framebuffers[i]);</span>
+<span class="lineNum">      34 </span><span class="lineNoCov">          0 :     if (zb == NULL) {</span>
+<span class="lineNum">      35 </span><span class="lineNoCov">          0 :       fprintf(stderr, &quot;Error while initializing Z buffer\n&quot;);</span>
+<span class="lineNum">      36 </span><span class="lineNoCov">          0 :       exit(1);</span>
+<span class="lineNum">      37 </span>            :     }
+<span class="lineNum">      38 </span><span class="lineNoCov">          0 :     context-&gt;zbs[i] = zb;</span>
+<span class="lineNum">      39 </span>            :   }
+<span class="lineNum">      40 </span><span class="lineNoCov">          0 :   if (++buffercnt == 1) {</span>
+<span class="lineNum">      41 </span><span class="lineNoCov">          0 :     glInit(context-&gt;zbs[0]);</span>
+<span class="lineNum">      42 </span>            :   }
+<span class="lineNum">      43 </span><span class="lineNoCov">          0 :   context-&gt;xsize = xsize;</span>
+<span class="lineNum">      44 </span><span class="lineNoCov">          0 :   context-&gt;ysize = ysize;</span>
+<span class="lineNum">      45 </span><span class="lineNoCov">          0 :   context-&gt;numbuffers = numbuffers;</span>
+<span class="lineNum">      46 </span><span class="lineNoCov">          0 :   return context;</span>
+<span class="lineNum">      47 </span>            : }
+<a name="48"><span class="lineNum">      48 </span>            : </a>
+<span class="lineNum">      49 </span>            : void
+<span class="lineNum">      50 </span><span class="lineNoCov">          0 : ostgl_delete_context(ostgl_context *context)</span>
+<span class="lineNum">      51 </span>            : {
+<span class="lineNum">      52 </span>            :   int i;
+<span class="lineNum">      53 </span><span class="lineNoCov">          0 :   for (i = 0; i &lt; context-&gt;numbuffers; i++) {</span>
+<span class="lineNum">      54 </span><span class="lineNoCov">          0 :     ZB_close(context-&gt;zbs[i]);</span>
+<span class="lineNum">      55 </span>            :   }
+<span class="lineNum">      56 </span><span class="lineNoCov">          0 :   gl_free(context-&gt;zbs);</span>
+<span class="lineNum">      57 </span><span class="lineNoCov">          0 :   gl_free(context-&gt;framebuffers);</span>
+<span class="lineNum">      58 </span><span class="lineNoCov">          0 :   gl_free(context);</span>
+<span class="lineNum">      59 </span>            :   
+<span class="lineNum">      60 </span><span class="lineNoCov">          0 :   if (--buffercnt == 0) {</span>
+<span class="lineNum">      61 </span><span class="lineNoCov">          0 :     glClose();</span>
+<span class="lineNum">      62 </span>            :   }
+<span class="lineNum">      63 </span><span class="lineNoCov">          0 : }</span>
+<a name="64"><span class="lineNum">      64 </span>            : </a>
+<span class="lineNum">      65 </span>            : void
+<span class="lineNum">      66 </span><span class="lineNoCov">          0 : ostgl_make_current(ostgl_context *oscontext, const int idx)</span>
+<span class="lineNum">      67 </span>            : {
+<span class="lineNum">      68 </span><span class="lineNoCov">          0 :   GLContext *context = gl_get_context();</span>
+<span class="lineNum">      69 </span><span class="lineNoCov">          0 :   assert(idx &lt; oscontext-&gt;numbuffers);</span>
+<span class="lineNum">      70 </span><span class="lineNoCov">          0 :   context-&gt;zb = oscontext-&gt;zbs[idx];</span>
+<span class="lineNum">      71 </span><span class="lineNoCov">          0 : }</span>
+<a name="72"><span class="lineNum">      72 </span>            : </a>
+<span class="lineNum">      73 </span>            : void
+<span class="lineNum">      74 </span><span class="lineNoCov">          0 : ostgl_resize(ostgl_context *context,</span>
+<span class="lineNum">      75 </span>            :              const int xsize,
+<span class="lineNum">      76 </span>            :              const int ysize,
+<span class="lineNum">      77 </span>            :              void **framebuffers)
+<span class="lineNum">      78 </span>            : {
+<span class="lineNum">      79 </span>            :   int i;
+<span class="lineNum">      80 </span><span class="lineNoCov">          0 :   for (i = 0; i &lt; context-&gt;numbuffers; i++) {</span>
+<span class="lineNum">      81 </span><span class="lineNoCov">          0 :     ZB_resize(context-&gt;zbs[i], framebuffers[i], xsize, ysize);</span>
+<span class="lineNum">      82 </span>            :   }
+<span class="lineNum">      83 </span><span class="lineNoCov">          0 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

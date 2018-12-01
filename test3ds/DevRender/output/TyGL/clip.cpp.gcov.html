@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-01 20:37:28</td>
+            <td class="headerValue">2018-12-01 20:43:11</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -72,26 +72,26 @@
 <span class="lineNum">      10 </span>            : #define CLIP_ZMIN   (1&lt;&lt;4)
 <a name="11"><span class="lineNum">      11 </span>            : #define CLIP_ZMAX   (1&lt;&lt;5)</a>
 <span class="lineNum">      12 </span>            : 
-<span class="lineNum">      13 </span><span class="lineCov">       9558 : void gl_transform_to_viewport(GLContext *c,GLVertex *v)</span>
+<span class="lineNum">      13 </span><span class="lineCov">      19116 : void gl_transform_to_viewport(GLContext *c,GLVertex *v)</span>
 <span class="lineNum">      14 </span>            : {
 <span class="lineNum">      15 </span>            :   float winv;
 <span class="lineNum">      16 </span>            : 
 <span class="lineNum">      17 </span>            :   /* coordinates */
-<span class="lineNum">      18 </span><span class="lineCov">       9558 :   winv=1.0/v-&gt;pc.W;</span>
-<span class="lineNum">      19 </span><span class="lineCov">       9558 :   v-&gt;zp.x= (int) ( v-&gt;pc.X * winv * c-&gt;viewport.scale.X </span>
-<span class="lineNum">      20 </span><span class="lineCov">       9558 :                    + c-&gt;viewport.trans.X );</span>
-<span class="lineNum">      21 </span><span class="lineCov">       9558 :   v-&gt;zp.y= (int) ( v-&gt;pc.Y * winv * c-&gt;viewport.scale.Y </span>
-<span class="lineNum">      22 </span><span class="lineCov">       9558 :                    + c-&gt;viewport.trans.Y );</span>
-<span class="lineNum">      23 </span><span class="lineCov">       9558 :   v-&gt;zp.z= (int) ( v-&gt;pc.Z * winv * c-&gt;viewport.scale.Z </span>
-<span class="lineNum">      24 </span><span class="lineCov">       9558 :                    + c-&gt;viewport.trans.Z );</span>
+<span class="lineNum">      18 </span><span class="lineCov">      19116 :   winv=1.0/v-&gt;pc.W;</span>
+<span class="lineNum">      19 </span><span class="lineCov">      19116 :   v-&gt;zp.x= (int) ( v-&gt;pc.X * winv * c-&gt;viewport.scale.X </span>
+<span class="lineNum">      20 </span><span class="lineCov">      19116 :                    + c-&gt;viewport.trans.X );</span>
+<span class="lineNum">      21 </span><span class="lineCov">      19116 :   v-&gt;zp.y= (int) ( v-&gt;pc.Y * winv * c-&gt;viewport.scale.Y </span>
+<span class="lineNum">      22 </span><span class="lineCov">      19116 :                    + c-&gt;viewport.trans.Y );</span>
+<span class="lineNum">      23 </span><span class="lineCov">      19116 :   v-&gt;zp.z= (int) ( v-&gt;pc.Z * winv * c-&gt;viewport.scale.Z </span>
+<span class="lineNum">      24 </span><span class="lineCov">      19116 :                    + c-&gt;viewport.trans.Z );</span>
 <span class="lineNum">      25 </span>            :   /* color */
-<span class="lineNum">      26 </span><span class="lineCov">       9558 :   if (c-&gt;lighting_enabled) {</span>
-<span class="lineNum">      27 </span><span class="lineCov">       9558 :       v-&gt;zp.r=(int)(v-&gt;color.v[0] * (ZB_POINT_RED_MAX - ZB_POINT_RED_MIN) </span>
-<span class="lineNum">      28 </span><span class="lineCov">       9558 :                     + ZB_POINT_RED_MIN);</span>
-<span class="lineNum">      29 </span><span class="lineCov">       9558 :       v-&gt;zp.g=(int)(v-&gt;color.v[1] * (ZB_POINT_GREEN_MAX - ZB_POINT_GREEN_MIN) </span>
-<span class="lineNum">      30 </span><span class="lineCov">       9558 :                     + ZB_POINT_GREEN_MIN);</span>
-<span class="lineNum">      31 </span><span class="lineCov">       9558 :       v-&gt;zp.b=(int)(v-&gt;color.v[2] * (ZB_POINT_BLUE_MAX - ZB_POINT_BLUE_MIN) </span>
-<span class="lineNum">      32 </span><span class="lineCov">       9558 :                     + ZB_POINT_BLUE_MIN);</span>
+<span class="lineNum">      26 </span><span class="lineCov">      19116 :   if (c-&gt;lighting_enabled) {</span>
+<span class="lineNum">      27 </span><span class="lineCov">      19116 :       v-&gt;zp.r=(int)(v-&gt;color.v[0] * (ZB_POINT_RED_MAX - ZB_POINT_RED_MIN) </span>
+<span class="lineNum">      28 </span><span class="lineCov">      19116 :                     + ZB_POINT_RED_MIN);</span>
+<span class="lineNum">      29 </span><span class="lineCov">      19116 :       v-&gt;zp.g=(int)(v-&gt;color.v[1] * (ZB_POINT_GREEN_MAX - ZB_POINT_GREEN_MIN) </span>
+<span class="lineNum">      30 </span><span class="lineCov">      19116 :                     + ZB_POINT_GREEN_MIN);</span>
+<span class="lineNum">      31 </span><span class="lineCov">      19116 :       v-&gt;zp.b=(int)(v-&gt;color.v[2] * (ZB_POINT_BLUE_MAX - ZB_POINT_BLUE_MIN) </span>
+<span class="lineNum">      32 </span><span class="lineCov">      19116 :                     + ZB_POINT_BLUE_MIN);</span>
 <span class="lineNum">      33 </span>            :   } else {
 <span class="lineNum">      34 </span>            :       /* no need to convert to integer if no lighting : take current color */
 <span class="lineNum">      35 </span><span class="lineNoCov">          0 :       v-&gt;zp.r = c-&gt;longcurrent_color[0];</span>
@@ -101,13 +101,13 @@
 <span class="lineNum">      39 </span>            :   
 <span class="lineNum">      40 </span>            :   /* texture */
 <span class="lineNum">      41 </span>            : 
-<span class="lineNum">      42 </span><span class="lineCov">       9558 :   if (c-&gt;texture_2d_enabled) {</span>
-<span class="lineNum">      43 </span><span class="lineCov">       9558 :     v-&gt;zp.s=(int)(v-&gt;tex_coord.X * (ZB_POINT_S_MAX - ZB_POINT_S_MIN) </span>
-<span class="lineNum">      44 </span><span class="lineCov">       9558 :                   + ZB_POINT_S_MIN);</span>
-<span class="lineNum">      45 </span><span class="lineCov">       9558 :     v-&gt;zp.t=(int)(v-&gt;tex_coord.Y * (ZB_POINT_T_MAX - ZB_POINT_T_MIN) </span>
-<span class="lineNum">      46 </span><span class="lineCov">       9558 :                   + ZB_POINT_T_MIN);</span>
+<span class="lineNum">      42 </span><span class="lineCov">      19116 :   if (c-&gt;texture_2d_enabled) {</span>
+<span class="lineNum">      43 </span><span class="lineCov">      19116 :     v-&gt;zp.s=(int)(v-&gt;tex_coord.X * (ZB_POINT_S_MAX - ZB_POINT_S_MIN) </span>
+<span class="lineNum">      44 </span><span class="lineCov">      19116 :                   + ZB_POINT_S_MIN);</span>
+<span class="lineNum">      45 </span><span class="lineCov">      19116 :     v-&gt;zp.t=(int)(v-&gt;tex_coord.Y * (ZB_POINT_T_MAX - ZB_POINT_T_MIN) </span>
+<span class="lineNum">      46 </span><span class="lineCov">      19116 :                   + ZB_POINT_T_MIN);</span>
 <span class="lineNum">      47 </span>            :   }
-<span class="lineNum">      48 </span><span class="lineCov">       9558 : }</span>
+<span class="lineNum">      48 </span><span class="lineCov">      19116 : }</span>
 <a name="49"><span class="lineNum">      49 </span>            : </a>
 <span class="lineNum">      50 </span>            : 
 <span class="lineNum">      51 </span><span class="lineNoCov">          0 : static void gl_add_select1(GLContext *c,int z1,int z2,int z3)</span>
@@ -300,31 +300,31 @@
 <span class="lineNum">     238 </span>            : static void gl_draw_triangle_clip(GLContext *c,
 <a name="239"><span class="lineNum">     239 </span>            :                                   GLVertex *p0,GLVertex *p1,GLVertex *p2,int clip_bit);</a>
 <span class="lineNum">     240 </span>            : 
-<span class="lineNum">     241 </span><span class="lineCov">       3186 : void gl_draw_triangle(GLContext *c,</span>
+<span class="lineNum">     241 </span><span class="lineCov">       6372 : void gl_draw_triangle(GLContext *c,</span>
 <span class="lineNum">     242 </span>            :                       GLVertex *p0,GLVertex *p1,GLVertex *p2)
 <span class="lineNum">     243 </span>            : {
 <span class="lineNum">     244 </span>            :   int co,c_and,cc[3],front;
 <span class="lineNum">     245 </span>            :   float norm;
 <span class="lineNum">     246 </span>            :   
-<span class="lineNum">     247 </span><span class="lineCov">       3186 :   cc[0]=p0-&gt;clip_code;</span>
-<span class="lineNum">     248 </span><span class="lineCov">       3186 :   cc[1]=p1-&gt;clip_code;</span>
-<span class="lineNum">     249 </span><span class="lineCov">       3186 :   cc[2]=p2-&gt;clip_code;</span>
+<span class="lineNum">     247 </span><span class="lineCov">       6372 :   cc[0]=p0-&gt;clip_code;</span>
+<span class="lineNum">     248 </span><span class="lineCov">       6372 :   cc[1]=p1-&gt;clip_code;</span>
+<span class="lineNum">     249 </span><span class="lineCov">       6372 :   cc[2]=p2-&gt;clip_code;</span>
 <span class="lineNum">     250 </span>            :   
-<span class="lineNum">     251 </span><span class="lineCov">       3186 :   co=cc[0] | cc[1] | cc[2];</span>
+<span class="lineNum">     251 </span><span class="lineCov">       6372 :   co=cc[0] | cc[1] | cc[2];</span>
 <span class="lineNum">     252 </span>            : 
 <span class="lineNum">     253 </span>            :   /* we handle the non clipped case here to go faster */
-<span class="lineNum">     254 </span><span class="lineCov">       3186 :   if (co==0) {</span>
+<span class="lineNum">     254 </span><span class="lineCov">       6372 :   if (co==0) {</span>
 <span class="lineNum">     255 </span>            :     
-<span class="lineNum">     256 </span><span class="lineCov">       3186 :       norm=(float)(p1-&gt;zp.x-p0-&gt;zp.x)*(float)(p2-&gt;zp.y-p0-&gt;zp.y)-</span>
-<span class="lineNum">     257 </span><span class="lineCov">       3186 :         (float)(p2-&gt;zp.x-p0-&gt;zp.x)*(float)(p1-&gt;zp.y-p0-&gt;zp.y);</span>
+<span class="lineNum">     256 </span><span class="lineCov">       6372 :       norm=(float)(p1-&gt;zp.x-p0-&gt;zp.x)*(float)(p2-&gt;zp.y-p0-&gt;zp.y)-</span>
+<span class="lineNum">     257 </span><span class="lineCov">       6372 :         (float)(p2-&gt;zp.x-p0-&gt;zp.x)*(float)(p1-&gt;zp.y-p0-&gt;zp.y);</span>
 <span class="lineNum">     258 </span>            :       
-<span class="lineNum">     259 </span><span class="lineCov">       3189 :       if (norm == 0) return;</span>
+<span class="lineNum">     259 </span><span class="lineCov">       6378 :       if (norm == 0) return;</span>
 <span class="lineNum">     260 </span>            : 
-<span class="lineNum">     261 </span><span class="lineCov">       3183 :       front = norm &lt; 0.0;</span>
-<span class="lineNum">     262 </span><span class="lineCov">       3183 :       front = front ^ c-&gt;current_front_face;</span>
+<span class="lineNum">     261 </span><span class="lineCov">       6366 :       front = norm &lt; 0.0;</span>
+<span class="lineNum">     262 </span><span class="lineCov">       6366 :       front = front ^ c-&gt;current_front_face;</span>
 <span class="lineNum">     263 </span>            :   
 <span class="lineNum">     264 </span>            :       /* back face culling */
-<span class="lineNum">     265 </span><span class="lineCov">       3183 :       if (c-&gt;cull_face_enabled) {</span>
+<span class="lineNum">     265 </span><span class="lineCov">       6366 :       if (c-&gt;cull_face_enabled) {</span>
 <span class="lineNum">     266 </span>            :         /* most used case first */
 <span class="lineNum">     267 </span><span class="lineNoCov">          0 :         if (c-&gt;current_cull_face == GL_BACK) {</span>
 <span class="lineNum">     268 </span><span class="lineNoCov">          0 :           if (front == 0) return;</span>
@@ -337,10 +337,10 @@
 <span class="lineNum">     275 </span>            :         }
 <span class="lineNum">     276 </span>            :       } else {
 <span class="lineNum">     277 </span>            :         /* no culling */
-<span class="lineNum">     278 </span><span class="lineCov">       3183 :         if (front) {</span>
-<span class="lineNum">     279 </span><span class="lineCov">       2594 :           c-&gt;draw_triangle_front(c,p0,p1,p2);</span>
+<span class="lineNum">     278 </span><span class="lineCov">       6366 :         if (front) {</span>
+<span class="lineNum">     279 </span><span class="lineCov">       5188 :           c-&gt;draw_triangle_front(c,p0,p1,p2);</span>
 <span class="lineNum">     280 </span>            :         } else {
-<span class="lineNum">     281 </span><span class="lineCov">        589 :           c-&gt;draw_triangle_back(c,p0,p1,p2);</span>
+<span class="lineNum">     281 </span><span class="lineCov">       1178 :           c-&gt;draw_triangle_back(c,p0,p1,p2);</span>
 <span class="lineNum">     282 </span>            :         }
 <span class="lineNum">     283 </span>            :       }
 <span class="lineNum">     284 </span>            :   } else {
@@ -442,7 +442,7 @@
 <span class="lineNum">     380 </span>            : int count_triangles,count_triangles_textured,count_pixels;
 <a name="381"><span class="lineNum">     381 </span>            : #endif</a>
 <span class="lineNum">     382 </span>            : 
-<span class="lineNum">     383 </span><span class="lineCov">       3183 : void gl_draw_triangle_fill(GLContext *c,</span>
+<span class="lineNum">     383 </span><span class="lineCov">       6366 : void gl_draw_triangle_fill(GLContext *c,</span>
 <span class="lineNum">     384 </span>            :                            GLVertex *p0,GLVertex *p1,GLVertex *p2)
 <span class="lineNum">     385 </span>            : {
 <span class="lineNum">     386 </span>            : #ifdef PROFILE
@@ -462,18 +462,18 @@
 <span class="lineNum">     400 </span>            :   }
 <span class="lineNum">     401 </span>            : #endif
 <span class="lineNum">     402 </span>            :     
-<span class="lineNum">     403 </span><span class="lineCov">       3183 :   if (c-&gt;texture_2d_enabled) {</span>
+<span class="lineNum">     403 </span><span class="lineCov">       6366 :   if (c-&gt;texture_2d_enabled) {</span>
 <span class="lineNum">     404 </span>            : #ifdef PROFILE
 <span class="lineNum">     405 </span>            :     count_triangles_textured++;
 <span class="lineNum">     406 </span>            : #endif
-<span class="lineNum">     407 </span><span class="lineCov">       3183 :     ZB_setTexture(c-&gt;zb,c-&gt;current_texture-&gt;images[0].pixmap);</span>
-<span class="lineNum">     408 </span><span class="lineCov">       3183 :     ZB_fillTriangleMappingPerspective(c-&gt;zb,&amp;p0-&gt;zp,&amp;p1-&gt;zp,&amp;p2-&gt;zp);</span>
+<span class="lineNum">     407 </span><span class="lineCov">       6366 :     ZB_setTexture(c-&gt;zb,c-&gt;current_texture-&gt;images[0].pixmap);</span>
+<span class="lineNum">     408 </span><span class="lineCov">       6366 :     ZB_fillTriangleMappingPerspective(c-&gt;zb,&amp;p0-&gt;zp,&amp;p1-&gt;zp,&amp;p2-&gt;zp);</span>
 <span class="lineNum">     409 </span><span class="lineNoCov">          0 :   } else if (c-&gt;current_shade_model == GL_SMOOTH) {</span>
 <span class="lineNum">     410 </span><span class="lineNoCov">          0 :     ZB_fillTriangleSmooth(c-&gt;zb,&amp;p0-&gt;zp,&amp;p1-&gt;zp,&amp;p2-&gt;zp);</span>
 <span class="lineNum">     411 </span>            :   } else {
 <span class="lineNum">     412 </span><span class="lineNoCov">          0 :     ZB_fillTriangleFlat(c-&gt;zb,&amp;p0-&gt;zp,&amp;p1-&gt;zp,&amp;p2-&gt;zp);</span>
 <span class="lineNum">     413 </span>            :   }
-<span class="lineNum">     414 </span><span class="lineCov">       3183 : }</span>
+<span class="lineNum">     414 </span><span class="lineCov">       6366 : }</span>
 <span class="lineNum">     415 </span>            : 
 <a name="416"><span class="lineNum">     416 </span>            : /* Render a clipped triangle in line mode */  </a>
 <span class="lineNum">     417 </span>            : 

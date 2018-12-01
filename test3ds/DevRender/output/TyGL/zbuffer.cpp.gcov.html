@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-01 20:37:28</td>
+            <td class="headerValue">2018-12-01 20:43:11</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -71,7 +71,7 @@
 <span class="lineNum">       9 </span>            : #include &lt;string.h&gt;
 <a name="10"><span class="lineNum">      10 </span>            : #include &quot;zbuffer.h&quot;</a>
 <span class="lineNum">      11 </span>            : 
-<span class="lineNum">      12 </span><span class="lineCov">          1 : ZBuffer *ZB_open(int xsize, int ysize, int mode,</span>
+<span class="lineNum">      12 </span><span class="lineCov">          2 : ZBuffer *ZB_open(int xsize, int ysize, int mode,</span>
 <span class="lineNum">      13 </span>            :                  int nb_colors,
 <span class="lineNum">      14 </span>            :                  unsigned char *color_indexes,
 <span class="lineNum">      15 </span>            :                  int *color_table,
@@ -80,16 +80,16 @@
 <span class="lineNum">      18 </span>            :     ZBuffer *zb;
 <span class="lineNum">      19 </span>            :     int size;
 <span class="lineNum">      20 </span>            : 
-<span class="lineNum">      21 </span><span class="lineCov">          1 :     zb = gl_malloc(sizeof(ZBuffer));</span>
-<span class="lineNum">      22 </span><span class="lineCov">          1 :     if (zb == NULL)</span>
+<span class="lineNum">      21 </span><span class="lineCov">          2 :     zb = gl_malloc(sizeof(ZBuffer));</span>
+<span class="lineNum">      22 </span><span class="lineCov">          2 :     if (zb == NULL)</span>
 <span class="lineNum">      23 </span><span class="lineNoCov">          0 :         return NULL;</span>
 <span class="lineNum">      24 </span>            : 
-<span class="lineNum">      25 </span><span class="lineCov">          1 :     zb-&gt;xsize = xsize;</span>
-<span class="lineNum">      26 </span><span class="lineCov">          1 :     zb-&gt;ysize = ysize;</span>
-<span class="lineNum">      27 </span><span class="lineCov">          1 :     zb-&gt;mode = mode;</span>
-<span class="lineNum">      28 </span><span class="lineCov">          1 :     zb-&gt;linesize = (xsize * PSZB + 3) &amp; ~3;</span>
+<span class="lineNum">      25 </span><span class="lineCov">          2 :     zb-&gt;xsize = xsize;</span>
+<span class="lineNum">      26 </span><span class="lineCov">          2 :     zb-&gt;ysize = ysize;</span>
+<span class="lineNum">      27 </span><span class="lineCov">          2 :     zb-&gt;mode = mode;</span>
+<span class="lineNum">      28 </span><span class="lineCov">          2 :     zb-&gt;linesize = (xsize * PSZB + 3) &amp; ~3;</span>
 <span class="lineNum">      29 </span>            : 
-<span class="lineNum">      30 </span><span class="lineCov">          1 :     switch (mode) {</span>
+<span class="lineNum">      30 </span><span class="lineCov">          2 :     switch (mode) {</span>
 <span class="lineNum">      31 </span>            : #ifdef TGL_FEATURE_8_BITS
 <span class="lineNum">      32 </span>            :     case ZB_MODE_INDEX:
 <span class="lineNum">      33 </span><span class="lineNoCov">          0 :         ZB_initDither(zb, nb_colors, color_indexes, color_table);</span>
@@ -102,33 +102,33 @@
 <span class="lineNum">      40 </span>            :     case ZB_MODE_RGB24:
 <span class="lineNum">      41 </span>            : #endif
 <span class="lineNum">      42 </span>            :     case ZB_MODE_5R6G5B:
-<span class="lineNum">      43 </span><span class="lineCov">          1 :         zb-&gt;nb_colors = 0;</span>
-<span class="lineNum">      44 </span><span class="lineCov">          1 :         break;</span>
+<span class="lineNum">      43 </span><span class="lineCov">          2 :         zb-&gt;nb_colors = 0;</span>
+<span class="lineNum">      44 </span><span class="lineCov">          2 :         break;</span>
 <span class="lineNum">      45 </span>            :     default:
 <span class="lineNum">      46 </span><span class="lineNoCov">          0 :         goto error;</span>
 <span class="lineNum">      47 </span>            :     }
 <span class="lineNum">      48 </span>            : 
-<span class="lineNum">      49 </span><span class="lineCov">          1 :     size = zb-&gt;xsize * zb-&gt;ysize * sizeof(unsigned short);</span>
+<span class="lineNum">      49 </span><span class="lineCov">          2 :     size = zb-&gt;xsize * zb-&gt;ysize * sizeof(unsigned short);</span>
 <span class="lineNum">      50 </span>            : 
-<span class="lineNum">      51 </span><span class="lineCov">          1 :     zb-&gt;zbuf = gl_malloc(size);</span>
-<span class="lineNum">      52 </span><span class="lineCov">          1 :     if (zb-&gt;zbuf == NULL)</span>
+<span class="lineNum">      51 </span><span class="lineCov">          2 :     zb-&gt;zbuf = gl_malloc(size);</span>
+<span class="lineNum">      52 </span><span class="lineCov">          2 :     if (zb-&gt;zbuf == NULL)</span>
 <span class="lineNum">      53 </span><span class="lineNoCov">          0 :         goto error;</span>
 <span class="lineNum">      54 </span>            : 
-<span class="lineNum">      55 </span><span class="lineCov">          1 :     if (frame_buffer == NULL) {</span>
-<span class="lineNum">      56 </span><span class="lineCov">          1 :         zb-&gt;pbuf = gl_malloc(zb-&gt;ysize * zb-&gt;linesize);</span>
-<span class="lineNum">      57 </span><span class="lineCov">          1 :         if (zb-&gt;pbuf == NULL) {</span>
+<span class="lineNum">      55 </span><span class="lineCov">          2 :     if (frame_buffer == NULL) {</span>
+<span class="lineNum">      56 </span><span class="lineCov">          2 :         zb-&gt;pbuf = gl_malloc(zb-&gt;ysize * zb-&gt;linesize);</span>
+<span class="lineNum">      57 </span><span class="lineCov">          2 :         if (zb-&gt;pbuf == NULL) {</span>
 <span class="lineNum">      58 </span><span class="lineNoCov">          0 :             gl_free(zb-&gt;zbuf);</span>
 <span class="lineNum">      59 </span><span class="lineNoCov">          0 :             goto error;</span>
 <span class="lineNum">      60 </span>            :         }
-<span class="lineNum">      61 </span><span class="lineCov">          1 :         zb-&gt;frame_buffer_allocated = 1;</span>
+<span class="lineNum">      61 </span><span class="lineCov">          2 :         zb-&gt;frame_buffer_allocated = 1;</span>
 <span class="lineNum">      62 </span>            :     } else {
 <span class="lineNum">      63 </span><span class="lineNoCov">          0 :         zb-&gt;frame_buffer_allocated = 0;</span>
 <span class="lineNum">      64 </span><span class="lineNoCov">          0 :         zb-&gt;pbuf = frame_buffer;</span>
 <span class="lineNum">      65 </span>            :     }
 <span class="lineNum">      66 </span>            : 
-<span class="lineNum">      67 </span><span class="lineCov">          1 :     zb-&gt;current_texture = NULL;</span>
+<span class="lineNum">      67 </span><span class="lineCov">          2 :     zb-&gt;current_texture = NULL;</span>
 <span class="lineNum">      68 </span>            : 
-<span class="lineNum">      69 </span><span class="lineCov">          1 :     return zb;</span>
+<span class="lineNum">      69 </span><span class="lineCov">          2 :     return zb;</span>
 <span class="lineNum">      70 </span>            :   error:
 <span class="lineNum">      71 </span><span class="lineNoCov">          0 :     gl_free(zb);</span>
 <span class="lineNum">      72 </span><span class="lineNoCov">          0 :     return NULL;</span>
@@ -472,29 +472,29 @@
 <span class="lineNum">     410 </span>            : /*
 <a name="411"><span class="lineNum">     411 </span>            :  * adr must be aligned on an 'int'</a>
 <span class="lineNum">     412 </span>            :  */
-<span class="lineNum">     413 </span><span class="lineCov">          1 : void memset_s(void *adr, int val, int count)</span>
+<span class="lineNum">     413 </span><span class="lineCov">          2 : void memset_s(void *adr, int val, int count)</span>
 <span class="lineNum">     414 </span>            : {
 <span class="lineNum">     415 </span>            :     int i, n, v;
 <span class="lineNum">     416 </span>            :     unsigned int *p;
 <span class="lineNum">     417 </span>            :     unsigned short *q;
 <span class="lineNum">     418 </span>            : 
-<span class="lineNum">     419 </span><span class="lineCov">          1 :     p = adr;</span>
-<span class="lineNum">     420 </span><span class="lineCov">          1 :     v = val | (val &lt;&lt; 16);</span>
+<span class="lineNum">     419 </span><span class="lineCov">          2 :     p = adr;</span>
+<span class="lineNum">     420 </span><span class="lineCov">          2 :     v = val | (val &lt;&lt; 16);</span>
 <span class="lineNum">     421 </span>            : 
-<span class="lineNum">     422 </span><span class="lineCov">          1 :     n = count &gt;&gt; 3;</span>
-<span class="lineNum">     423 </span><span class="lineCov">     320001 :     for (i = 0; i &lt; n; i++) {</span>
-<span class="lineNum">     424 </span><span class="lineCov">     320000 :         p[0] = v;</span>
-<span class="lineNum">     425 </span><span class="lineCov">     320000 :         p[1] = v;</span>
-<span class="lineNum">     426 </span><span class="lineCov">     320000 :         p[2] = v;</span>
-<span class="lineNum">     427 </span><span class="lineCov">     320000 :         p[3] = v;</span>
-<span class="lineNum">     428 </span><span class="lineCov">     320000 :         p += 4;</span>
+<span class="lineNum">     422 </span><span class="lineCov">          2 :     n = count &gt;&gt; 3;</span>
+<span class="lineNum">     423 </span><span class="lineCov">     640002 :     for (i = 0; i &lt; n; i++) {</span>
+<span class="lineNum">     424 </span><span class="lineCov">     640000 :         p[0] = v;</span>
+<span class="lineNum">     425 </span><span class="lineCov">     640000 :         p[1] = v;</span>
+<span class="lineNum">     426 </span><span class="lineCov">     640000 :         p[2] = v;</span>
+<span class="lineNum">     427 </span><span class="lineCov">     640000 :         p[3] = v;</span>
+<span class="lineNum">     428 </span><span class="lineCov">     640000 :         p += 4;</span>
 <span class="lineNum">     429 </span>            :     }
 <span class="lineNum">     430 </span>            : 
-<span class="lineNum">     431 </span><span class="lineCov">          1 :     q = (unsigned short *) p;</span>
-<span class="lineNum">     432 </span><span class="lineCov">          1 :     n = count &amp; 7;</span>
-<span class="lineNum">     433 </span><span class="lineCov">          1 :     for (i = 0; i &lt; n; i++)</span>
+<span class="lineNum">     431 </span><span class="lineCov">          2 :     q = (unsigned short *) p;</span>
+<span class="lineNum">     432 </span><span class="lineCov">          2 :     n = count &amp; 7;</span>
+<span class="lineNum">     433 </span><span class="lineCov">          2 :     for (i = 0; i &lt; n; i++)</span>
 <span class="lineNum">     434 </span><span class="lineNoCov">          0 :         *q++ = val;</span>
-<a name="435"><span class="lineNum">     435 </span><span class="lineCov">          1 : }</span></a>
+<a name="435"><span class="lineNum">     435 </span><span class="lineCov">          2 : }</span></a>
 <span class="lineNum">     436 </span>            : 
 <span class="lineNum">     437 </span><span class="lineNoCov">          0 : void memset_l(void *adr, int val, int count)</span>
 <span class="lineNum">     438 </span>            : {
@@ -518,23 +518,23 @@
 <span class="lineNum">     456 </span><span class="lineNoCov">          0 : }</span>
 <a name="457"><span class="lineNum">     457 </span>            : </a>
 <span class="lineNum">     458 </span>            : /* count must be a multiple of 4 and &gt;= 4 */
-<span class="lineNum">     459 </span><span class="lineCov">       1600 : void memset_RGB24(void *adr,int r, int v, int b,long count)</span>
+<span class="lineNum">     459 </span><span class="lineCov">       3200 : void memset_RGB24(void *adr,int r, int v, int b,long count)</span>
 <span class="lineNum">     460 </span>            : {
 <span class="lineNum">     461 </span>            :     long i, n;
-<span class="lineNum">     462 </span><span class="lineCov">       1600 :     register long v1,v2,v3,*pt=(long *)(adr);</span>
-<span class="lineNum">     463 </span><span class="lineCov">       1600 :     unsigned char *p,R=(unsigned char)r,V=(unsigned char)v,B=(unsigned char)b;</span>
+<span class="lineNum">     462 </span><span class="lineCov">       3200 :     register long v1,v2,v3,*pt=(long *)(adr);</span>
+<span class="lineNum">     463 </span><span class="lineCov">       3200 :     unsigned char *p,R=(unsigned char)r,V=(unsigned char)v,B=(unsigned char)b;</span>
 <span class="lineNum">     464 </span>            : 
-<span class="lineNum">     465 </span><span class="lineCov">       1600 :     p=(unsigned char *)adr;</span>
+<span class="lineNum">     465 </span><span class="lineCov">       3200 :     p=(unsigned char *)adr;</span>
 <span class="lineNum">     466 </span>            :         
 <span class="lineNum">     467 </span>            :         char RR,GG,BB;
-<span class="lineNum">     468 </span><span class="lineCov">       1600 :         RR = r ;</span>
-<span class="lineNum">     469 </span><span class="lineCov">       1600 :         GG = v ;</span>
-<span class="lineNum">     470 </span><span class="lineCov">       1600 :         BB = b ;</span>
-<span class="lineNum">     471 </span><span class="lineCov">    2560000 :          for(i=1;i&lt;count;i++)</span>
+<span class="lineNum">     468 </span><span class="lineCov">       3200 :         RR = r ;</span>
+<span class="lineNum">     469 </span><span class="lineCov">       3200 :         GG = v ;</span>
+<span class="lineNum">     470 </span><span class="lineCov">       3200 :         BB = b ;</span>
+<span class="lineNum">     471 </span><span class="lineCov">    5120000 :          for(i=1;i&lt;count;i++)</span>
 <span class="lineNum">     472 </span>            :          {
-<span class="lineNum">     473 </span><span class="lineCov">    2558400 :                 *p = RR; p++;</span>
-<span class="lineNum">     474 </span><span class="lineCov">    2558400 :                 *p = GG; p++;</span>
-<span class="lineNum">     475 </span><span class="lineCov">    2558400 :                 *p = BB; p++;</span>
+<span class="lineNum">     473 </span><span class="lineCov">    5116800 :                 *p = RR; p++;</span>
+<span class="lineNum">     474 </span><span class="lineCov">    5116800 :                 *p = GG; p++;</span>
+<span class="lineNum">     475 </span><span class="lineCov">    5116800 :                 *p = BB; p++;</span>
 <span class="lineNum">     476 </span>            :          }
 <span class="lineNum">     477 </span>            :    /* *p++=R;
 <span class="lineNum">     478 </span>            :     *p++=V;
@@ -557,9 +557,9 @@
 <span class="lineNum">     495 </span>            :         *pt++=v2;
 <span class="lineNum">     496 </span>            :         *pt++=v3;
 <span class="lineNum">     497 </span>            :     }*/
-<a name="498"><span class="lineNum">     498 </span><span class="lineCov">       1600 : }</span></a>
+<a name="498"><span class="lineNum">     498 </span><span class="lineCov">       3200 : }</span></a>
 <span class="lineNum">     499 </span>            : 
-<span class="lineNum">     500 </span><span class="lineCov">          1 : void ZB_clear(ZBuffer * zb, int clear_z, int z,</span>
+<span class="lineNum">     500 </span><span class="lineCov">          2 : void ZB_clear(ZBuffer * zb, int clear_z, int z,</span>
 <span class="lineNum">     501 </span>            :               int clear_color, int r, int g, int b)
 <span class="lineNum">     502 </span>            : {
 <span class="lineNum">     503 </span>            : #if TGL_FEATURE_RENDER_BITS != 24
@@ -568,12 +568,12 @@
 <span class="lineNum">     506 </span>            :     int y;
 <span class="lineNum">     507 </span>            :     PIXEL *pp;
 <span class="lineNum">     508 </span>            : 
-<span class="lineNum">     509 </span><span class="lineCov">          1 :     if (clear_z) {</span>
-<span class="lineNum">     510 </span><span class="lineCov">          1 :         memset_s(zb-&gt;zbuf, z, zb-&gt;xsize * zb-&gt;ysize);</span>
+<span class="lineNum">     509 </span><span class="lineCov">          2 :     if (clear_z) {</span>
+<span class="lineNum">     510 </span><span class="lineCov">          2 :         memset_s(zb-&gt;zbuf, z, zb-&gt;xsize * zb-&gt;ysize);</span>
 <span class="lineNum">     511 </span>            :     }
-<span class="lineNum">     512 </span><span class="lineCov">          1 :     if (clear_color) {</span>
-<span class="lineNum">     513 </span><span class="lineCov">          1 :         pp = zb-&gt;pbuf;</span>
-<span class="lineNum">     514 </span><span class="lineCov">       1601 :         for (y = 0; y &lt; zb-&gt;ysize; y++) {</span>
+<span class="lineNum">     512 </span><span class="lineCov">          2 :     if (clear_color) {</span>
+<span class="lineNum">     513 </span><span class="lineCov">          2 :         pp = zb-&gt;pbuf;</span>
+<span class="lineNum">     514 </span><span class="lineCov">       3202 :         for (y = 0; y &lt; zb-&gt;ysize; y++) {</span>
 <span class="lineNum">     515 </span>            : #if TGL_FEATURE_RENDER_BITS == 15 || TGL_FEATURE_RENDER_BITS == 16
 <span class="lineNum">     516 </span>            :             color = RGB_TO_PIXEL(r, g, b);
 <span class="lineNum">     517 </span>            :             memset_s(pp, color, zb-&gt;xsize);
@@ -581,14 +581,14 @@
 <span class="lineNum">     519 </span>            :             color = RGB_TO_PIXEL(r, g, b);
 <span class="lineNum">     520 </span>            :             memset_l(pp, color, zb-&gt;xsize);
 <span class="lineNum">     521 </span>            : #elif TGL_FEATURE_RENDER_BITS == 24 
-<span class="lineNum">     522 </span><span class="lineCov">       1600 :             memset_RGB24(pp,r&gt;&gt;8,g&gt;&gt;8,b&gt;&gt;8,zb-&gt;xsize);</span>
+<span class="lineNum">     522 </span><span class="lineCov">       3200 :             memset_RGB24(pp,r&gt;&gt;8,g&gt;&gt;8,b&gt;&gt;8,zb-&gt;xsize);</span>
 <span class="lineNum">     523 </span>            : #else
 <span class="lineNum">     524 </span>            : #error TODO
 <span class="lineNum">     525 </span>            : #endif
-<span class="lineNum">     526 </span><span class="lineCov">       1600 :             pp = (PIXEL *) ((char *) pp + zb-&gt;linesize);</span>
+<span class="lineNum">     526 </span><span class="lineCov">       3200 :             pp = (PIXEL *) ((char *) pp + zb-&gt;linesize);</span>
 <span class="lineNum">     527 </span>            :         }
 <span class="lineNum">     528 </span>            :     }
-<span class="lineNum">     529 </span><span class="lineCov">          1 : }</span>
+<span class="lineNum">     529 </span><span class="lineCov">          2 : }</span>
 </pre>
       </td>
     </tr>

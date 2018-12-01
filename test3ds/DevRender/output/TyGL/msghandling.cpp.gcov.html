@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-01 20:37:28</td>
+            <td class="headerValue">2018-12-01 20:43:11</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -87,7 +87,7 @@
 <span class="lineNum">      25 </span>            : 
 <a name="26"><span class="lineNum">      26 </span>            : /* This function should be used for debug output only. */</a>
 <span class="lineNum">      27 </span>            : void
-<span class="lineNum">      28 </span><span class="lineCov">          1 : tgl_trace(const char *format, ...)</span>
+<span class="lineNum">      28 </span><span class="lineCov">          2 : tgl_trace(const char *format, ...)</span>
 <span class="lineNum">      29 </span>            : {
 <span class="lineNum">      30 </span>            : #ifndef NO_DEBUG_OUTPUT
 <span class="lineNum">      31 </span>            :   va_list args;
@@ -96,7 +96,7 @@
 <span class="lineNum">      34 </span>            :   vfprintf(stderr, format, args);
 <span class="lineNum">      35 </span>            :   va_end(args);
 <span class="lineNum">      36 </span>            : #endif /* !NO_DEBUG_OUTPUT */
-<span class="lineNum">      37 </span><span class="lineCov">          1 : }</span>
+<span class="lineNum">      37 </span><span class="lineCov">          2 : }</span>
 <span class="lineNum">      38 </span>            : 
 <span class="lineNum">      39 </span>            : /* Use this function to output info about things in the code which
 <span class="lineNum">      40 </span>            :    should be fixed (missing handling of special cases, important
