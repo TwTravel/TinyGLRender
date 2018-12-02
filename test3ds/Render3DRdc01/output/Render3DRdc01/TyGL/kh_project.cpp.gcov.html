@@ -1,0 +1,449 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - Render3DRdc01/TyGL/kh_project.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">Render3DRdc01/TyGL</a> - kh_project.cpp<span style="font-size: 80%;"> (source / <a href="kh_project.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">44</td>
+            <td class="headerCovTableEntry">181</td>
+            <td class="headerCovTableEntryLo">24.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-02 16:32:11</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntryLo">33.3 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            :  </a>
+<span class="lineNum">       2 </span>            : #include &lt;math.h&gt;
+<span class="lineNum">       3 </span>            : #include &quot;gl.h&quot;
+<span class="lineNum">       4 </span>            : #include &quot;glu.h&quot;
+<span class="lineNum">       5 </span>            : //#include &quot;gluint.h&quot;
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : //typedef GLInt  int;
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : void glMultMatrixf(const float *m);
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : /*
+<a name="12"><span class="lineNum">      12 </span>            : ** Make m an identity matrix</a>
+<span class="lineNum">      13 </span>            : */
+<span class="lineNum">      14 </span><span class="lineNoCov">          0 : static void __gluMakeIdentityd(GLdouble m[16])</span>
+<span class="lineNum">      15 </span>            : {
+<span class="lineNum">      16 </span><span class="lineNoCov">          0 :     m[0+4*0] = 1; m[0+4*1] = 0; m[0+4*2] = 0; m[0+4*3] = 0;</span>
+<span class="lineNum">      17 </span><span class="lineNoCov">          0 :     m[1+4*0] = 0; m[1+4*1] = 1; m[1+4*2] = 0; m[1+4*3] = 0;</span>
+<span class="lineNum">      18 </span><span class="lineNoCov">          0 :     m[2+4*0] = 0; m[2+4*1] = 0; m[2+4*2] = 1; m[2+4*3] = 0;</span>
+<span class="lineNum">      19 </span><span class="lineNoCov">          0 :     m[3+4*0] = 0; m[3+4*1] = 0; m[3+4*2] = 0; m[3+4*3] = 1;</span>
+<a name="20"><span class="lineNum">      20 </span><span class="lineNoCov">          0 : }</span></a>
+<span class="lineNum">      21 </span>            : 
+<span class="lineNum">      22 </span><span class="lineCov">          1 : static void __gluMakeIdentityf(GLfloat m[16])</span>
+<span class="lineNum">      23 </span>            : {
+<span class="lineNum">      24 </span><span class="lineCov">          1 :     m[0+4*0] = 1; m[0+4*1] = 0; m[0+4*2] = 0; m[0+4*3] = 0;</span>
+<span class="lineNum">      25 </span><span class="lineCov">          1 :     m[1+4*0] = 0; m[1+4*1] = 1; m[1+4*2] = 0; m[1+4*3] = 0;</span>
+<span class="lineNum">      26 </span><span class="lineCov">          1 :     m[2+4*0] = 0; m[2+4*1] = 0; m[2+4*2] = 1; m[2+4*3] = 0;</span>
+<span class="lineNum">      27 </span><span class="lineCov">          1 :     m[3+4*0] = 0; m[3+4*1] = 0; m[3+4*2] = 0; m[3+4*3] = 1;</span>
+<span class="lineNum">      28 </span><span class="lineCov">          1 : }</span>
+<a name="29"><span class="lineNum">      29 </span>            : </a>
+<span class="lineNum">      30 </span>            : void  
+<span class="lineNum">      31 </span><span class="lineNoCov">          0 : gluOrtho2D(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top)</span>
+<span class="lineNum">      32 </span>            : {
+<span class="lineNum">      33 </span>            :  //kh_test   glOrtho(left, right, bottom, top, -1, 1);
+<span class="lineNum">      34 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      35 </span>            : 
+<span class="lineNum">      36 </span>            : #define __glPi 3.14159265358979323846
+<a name="37"><span class="lineNum">      37 </span>            : </a>
+<span class="lineNum">      38 </span>            : 
+<span class="lineNum">      39 </span><span class="lineNoCov">          0 : void  glMultMatrixd( const GLdouble *m )</span>
+<span class="lineNum">      40 </span>            : {
+<span class="lineNum">      41 </span>            :    GLint i;
+<span class="lineNum">      42 </span>            :    GLfloat f[16];
+<span class="lineNum">      43 </span><span class="lineNoCov">          0 :    if (!m) return;</span>
+<span class="lineNum">      44 </span><span class="lineNoCov">          0 :    for (i = 0; i &lt; 16; i++)</span>
+<span class="lineNum">      45 </span><span class="lineNoCov">          0 :       f[i] = (GLfloat) m[i];</span>
+<span class="lineNum">      46 </span><span class="lineNoCov">          0 :     glMultMatrixf( (const float *)f );</span>
+<span class="lineNum">      47 </span>            : }
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            : //void  
+<span class="lineNum">      50 </span>            : //gluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+<span class="lineNum">      51 </span>            : /*
+<span class="lineNum">      52 </span>            : void  
+<span class="lineNum">      53 </span>            : gluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)
+<span class="lineNum">      54 </span>            : {
+<span class="lineNum">      55 </span>            :     GLdouble m[4][4];
+<span class="lineNum">      56 </span>            :     double sine, cotangent, deltaZ;
+<span class="lineNum">      57 </span>            :     double radians = fovy / 2 * __glPi / 180;
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            :     deltaZ = zFar - zNear;
+<span class="lineNum">      60 </span>            :     sine = sin(radians);
+<span class="lineNum">      61 </span>            :     if ((deltaZ == 0) || (sine == 0) || (aspect == 0)) {
+<span class="lineNum">      62 </span>            :         return;
+<span class="lineNum">      63 </span>            :     }
+<span class="lineNum">      64 </span>            :     //cotangent = COS(radians) / sine;
+<span class="lineNum">      65 </span>            : 
+<span class="lineNum">      66 </span>            :     cotangent = cos(radians) / sine;
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            :     __gluMakeIdentityd(&amp;m[0][0]);
+<span class="lineNum">      69 </span>            :     m[0][0] = cotangent / aspect;
+<span class="lineNum">      70 </span>            :     m[1][1] = cotangent;
+<span class="lineNum">      71 </span>            :     m[2][2] = -(zFar + zNear) / deltaZ;
+<span class="lineNum">      72 </span>            :     m[2][3] = -1;
+<span class="lineNum">      73 </span>            :     m[3][2] = -2 * zNear * zFar / deltaZ;
+<span class="lineNum">      74 </span>            :     m[3][3] = 0;
+<span class="lineNum">      75 </span>            :     glMultMatrixd(&amp;m[0][0]);
+<span class="lineNum">      76 </span>            : }
+<a name="77"><span class="lineNum">      77 </span>            : */</a>
+<span class="lineNum">      78 </span>            : 
+<span class="lineNum">      79 </span><span class="lineCov">          2 : static void normalize(float v[3])</span>
+<span class="lineNum">      80 </span>            : {
+<span class="lineNum">      81 </span>            :     float r;
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span><span class="lineCov">          2 :     r = sqrt( v[0]*v[0] + v[1]*v[1] + v[2]*v[2] );</span>
+<span class="lineNum">      84 </span><span class="lineCov">          2 :     if (r == 0.0) return;</span>
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span><span class="lineCov">          2 :     v[0] /= r;</span>
+<span class="lineNum">      87 </span><span class="lineCov">          2 :     v[1] /= r;</span>
+<span class="lineNum">      88 </span><span class="lineCov">          2 :     v[2] /= r;</span>
+<a name="89"><span class="lineNum">      89 </span>            : }</a>
+<span class="lineNum">      90 </span>            : 
+<span class="lineNum">      91 </span><span class="lineCov">          2 : static void cross(float v1[3], float v2[3], float result[3])</span>
+<span class="lineNum">      92 </span>            : {
+<span class="lineNum">      93 </span><span class="lineCov">          2 :     result[0] = v1[1]*v2[2] - v1[2]*v2[1];</span>
+<span class="lineNum">      94 </span><span class="lineCov">          2 :     result[1] = v1[2]*v2[0] - v1[0]*v2[2];</span>
+<span class="lineNum">      95 </span><span class="lineCov">          2 :     result[2] = v1[0]*v2[1] - v1[1]*v2[0];</span>
+<span class="lineNum">      96 </span><span class="lineCov">          2 : }</span>
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span>            : /*void glTranslatef(float x,float y,float z)
+<span class="lineNum">      99 </span>            : {
+<span class="lineNum">     100 </span>            :   GLParam p[4];
+<span class="lineNum">     101 </span>            : 
+<span class="lineNum">     102 </span>            :   p[0].op=OP_Translate;
+<span class="lineNum">     103 </span>            :   p[1].f=x;
+<span class="lineNum">     104 </span>            :   p[2].f=y;
+<span class="lineNum">     105 </span>            :   p[3].f=z;
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span>            :   gl_add_op(p);
+<span class="lineNum">     108 </span>            : }*/
+<a name="109"><span class="lineNum">     109 </span>            : </a>
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span><span class="lineCov">          1 : void glTranslated( GLdouble x, GLdouble y, GLdouble z )</span>
+<span class="lineNum">     112 </span>            : {
+<span class="lineNum">     113 </span>            :    //Translatef((GLfloat) x, (GLfloat) y, (GLfloat) z);
+<span class="lineNum">     114 </span><span class="lineCov">          1 :    glTranslatef((GLfloat) x, (GLfloat) y, (GLfloat) z);</span>
+<span class="lineNum">     115 </span><span class="lineCov">          1 : }</span>
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span>            : 
+<a name="118"><span class="lineNum">     118 </span>            : </a>
+<span class="lineNum">     119 </span>            : void  
+<span class="lineNum">     120 </span><span class="lineCov">          1 : gluLookAt(GLdouble eyex, GLdouble eyey, GLdouble eyez, GLdouble centerx,</span>
+<span class="lineNum">     121 </span>            :           GLdouble centery, GLdouble centerz, GLdouble upx, GLdouble upy,
+<span class="lineNum">     122 </span>            :           GLdouble upz)
+<span class="lineNum">     123 </span>            : {
+<span class="lineNum">     124 </span>            :     float forward[3], side[3], up[3];
+<span class="lineNum">     125 </span>            :     GLfloat m[4][4];
+<span class="lineNum">     126 </span>            : 
+<span class="lineNum">     127 </span><span class="lineCov">          1 :     forward[0] = centerx - eyex;</span>
+<span class="lineNum">     128 </span><span class="lineCov">          1 :     forward[1] = centery - eyey;</span>
+<span class="lineNum">     129 </span><span class="lineCov">          1 :     forward[2] = centerz - eyez;</span>
+<span class="lineNum">     130 </span>            : 
+<span class="lineNum">     131 </span><span class="lineCov">          1 :     up[0] = upx;</span>
+<span class="lineNum">     132 </span><span class="lineCov">          1 :     up[1] = upy;</span>
+<span class="lineNum">     133 </span><span class="lineCov">          1 :     up[2] = upz;</span>
+<span class="lineNum">     134 </span>            : 
+<span class="lineNum">     135 </span><span class="lineCov">          1 :     normalize(forward);</span>
+<span class="lineNum">     136 </span>            : 
+<span class="lineNum">     137 </span>            :     /* Side = forward x up */
+<span class="lineNum">     138 </span><span class="lineCov">          1 :     cross(forward, up, side);</span>
+<span class="lineNum">     139 </span><span class="lineCov">          1 :     normalize(side);</span>
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            :     /* Recompute up as: up = side x forward */
+<span class="lineNum">     142 </span><span class="lineCov">          1 :     cross(side, forward, up);</span>
+<span class="lineNum">     143 </span>            : 
+<span class="lineNum">     144 </span><span class="lineCov">          1 :     __gluMakeIdentityf(&amp;m[0][0]);</span>
+<span class="lineNum">     145 </span><span class="lineCov">          1 :     m[0][0] = side[0];</span>
+<span class="lineNum">     146 </span><span class="lineCov">          1 :     m[1][0] = side[1];</span>
+<span class="lineNum">     147 </span><span class="lineCov">          1 :     m[2][0] = side[2];</span>
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span><span class="lineCov">          1 :     m[0][1] = up[0];</span>
+<span class="lineNum">     150 </span><span class="lineCov">          1 :     m[1][1] = up[1];</span>
+<span class="lineNum">     151 </span><span class="lineCov">          1 :     m[2][1] = up[2];</span>
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span><span class="lineCov">          1 :     m[0][2] = -forward[0];</span>
+<span class="lineNum">     154 </span><span class="lineCov">          1 :     m[1][2] = -forward[1];</span>
+<span class="lineNum">     155 </span><span class="lineCov">          1 :     m[2][2] = -forward[2];</span>
+<span class="lineNum">     156 </span>            : 
+<span class="lineNum">     157 </span><span class="lineCov">          1 :     glMultMatrixf((const float *)&amp;m[0][0]);</span>
+<span class="lineNum">     158 </span><span class="lineCov">          1 :     glTranslated(-eyex, -eyey, -eyez);</span>
+<a name="159"><span class="lineNum">     159 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     160 </span>            : 
+<span class="lineNum">     161 </span><span class="lineNoCov">          0 : static void __gluMultMatrixVecd(const GLdouble matrix[16], const GLdouble in[4],</span>
+<span class="lineNum">     162 </span>            :                       GLdouble out[4])
+<span class="lineNum">     163 </span>            : {
+<span class="lineNum">     164 </span>            :     int i;
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span><span class="lineNoCov">          0 :     for (i=0; i&lt;4; i++) {</span>
+<span class="lineNum">     167 </span><span class="lineNoCov">          0 :         out[i] = </span>
+<span class="lineNum">     168 </span><span class="lineNoCov">          0 :             in[0] * matrix[0*4+i] +</span>
+<span class="lineNum">     169 </span><span class="lineNoCov">          0 :             in[1] * matrix[1*4+i] +</span>
+<span class="lineNum">     170 </span><span class="lineNoCov">          0 :             in[2] * matrix[2*4+i] +</span>
+<span class="lineNum">     171 </span><span class="lineNoCov">          0 :             in[3] * matrix[3*4+i];</span>
+<span class="lineNum">     172 </span>            :     }
+<span class="lineNum">     173 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     174 </span>            : 
+<span class="lineNum">     175 </span>            : /*
+<span class="lineNum">     176 </span>            : ** Invert 4x4 matrix.
+<a name="177"><span class="lineNum">     177 </span>            : ** Contributed by David Moore (See Mesa bug #6748)</a>
+<span class="lineNum">     178 </span>            : */
+<span class="lineNum">     179 </span><span class="lineNoCov">          0 : static int __gluInvertMatrixd(const GLdouble m[16], GLdouble invOut[16])</span>
+<span class="lineNum">     180 </span>            : {
+<span class="lineNum">     181 </span>            :     double inv[16], det;
+<span class="lineNum">     182 </span>            :     int i;
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span><span class="lineNoCov">          0 :     inv[0] =   m[5]*m[10]*m[15] - m[5]*m[11]*m[14] - m[9]*m[6]*m[15]</span>
+<span class="lineNum">     185 </span><span class="lineNoCov">          0 :              + m[9]*m[7]*m[14] + m[13]*m[6]*m[11] - m[13]*m[7]*m[10];</span>
+<span class="lineNum">     186 </span><span class="lineNoCov">          0 :     inv[4] =  -m[4]*m[10]*m[15] + m[4]*m[11]*m[14] + m[8]*m[6]*m[15]</span>
+<span class="lineNum">     187 </span><span class="lineNoCov">          0 :              - m[8]*m[7]*m[14] - m[12]*m[6]*m[11] + m[12]*m[7]*m[10];</span>
+<span class="lineNum">     188 </span><span class="lineNoCov">          0 :     inv[8] =   m[4]*m[9]*m[15] - m[4]*m[11]*m[13] - m[8]*m[5]*m[15]</span>
+<span class="lineNum">     189 </span><span class="lineNoCov">          0 :              + m[8]*m[7]*m[13] + m[12]*m[5]*m[11] - m[12]*m[7]*m[9];</span>
+<span class="lineNum">     190 </span><span class="lineNoCov">          0 :     inv[12] = -m[4]*m[9]*m[14] + m[4]*m[10]*m[13] + m[8]*m[5]*m[14]</span>
+<span class="lineNum">     191 </span><span class="lineNoCov">          0 :              - m[8]*m[6]*m[13] - m[12]*m[5]*m[10] + m[12]*m[6]*m[9];</span>
+<span class="lineNum">     192 </span><span class="lineNoCov">          0 :     inv[1] =  -m[1]*m[10]*m[15] + m[1]*m[11]*m[14] + m[9]*m[2]*m[15]</span>
+<span class="lineNum">     193 </span><span class="lineNoCov">          0 :              - m[9]*m[3]*m[14] - m[13]*m[2]*m[11] + m[13]*m[3]*m[10];</span>
+<span class="lineNum">     194 </span><span class="lineNoCov">          0 :     inv[5] =   m[0]*m[10]*m[15] - m[0]*m[11]*m[14] - m[8]*m[2]*m[15]</span>
+<span class="lineNum">     195 </span><span class="lineNoCov">          0 :              + m[8]*m[3]*m[14] + m[12]*m[2]*m[11] - m[12]*m[3]*m[10];</span>
+<span class="lineNum">     196 </span><span class="lineNoCov">          0 :     inv[9] =  -m[0]*m[9]*m[15] + m[0]*m[11]*m[13] + m[8]*m[1]*m[15]</span>
+<span class="lineNum">     197 </span><span class="lineNoCov">          0 :              - m[8]*m[3]*m[13] - m[12]*m[1]*m[11] + m[12]*m[3]*m[9];</span>
+<span class="lineNum">     198 </span><span class="lineNoCov">          0 :     inv[13] =  m[0]*m[9]*m[14] - m[0]*m[10]*m[13] - m[8]*m[1]*m[14]</span>
+<span class="lineNum">     199 </span><span class="lineNoCov">          0 :              + m[8]*m[2]*m[13] + m[12]*m[1]*m[10] - m[12]*m[2]*m[9];</span>
+<span class="lineNum">     200 </span><span class="lineNoCov">          0 :     inv[2] =   m[1]*m[6]*m[15] - m[1]*m[7]*m[14] - m[5]*m[2]*m[15]</span>
+<span class="lineNum">     201 </span><span class="lineNoCov">          0 :              + m[5]*m[3]*m[14] + m[13]*m[2]*m[7] - m[13]*m[3]*m[6];</span>
+<span class="lineNum">     202 </span><span class="lineNoCov">          0 :     inv[6] =  -m[0]*m[6]*m[15] + m[0]*m[7]*m[14] + m[4]*m[2]*m[15]</span>
+<span class="lineNum">     203 </span><span class="lineNoCov">          0 :              - m[4]*m[3]*m[14] - m[12]*m[2]*m[7] + m[12]*m[3]*m[6];</span>
+<span class="lineNum">     204 </span><span class="lineNoCov">          0 :     inv[10] =  m[0]*m[5]*m[15] - m[0]*m[7]*m[13] - m[4]*m[1]*m[15]</span>
+<span class="lineNum">     205 </span><span class="lineNoCov">          0 :              + m[4]*m[3]*m[13] + m[12]*m[1]*m[7] - m[12]*m[3]*m[5];</span>
+<span class="lineNum">     206 </span><span class="lineNoCov">          0 :     inv[14] = -m[0]*m[5]*m[14] + m[0]*m[6]*m[13] + m[4]*m[1]*m[14]</span>
+<span class="lineNum">     207 </span><span class="lineNoCov">          0 :              - m[4]*m[2]*m[13] - m[12]*m[1]*m[6] + m[12]*m[2]*m[5];</span>
+<span class="lineNum">     208 </span><span class="lineNoCov">          0 :     inv[3] =  -m[1]*m[6]*m[11] + m[1]*m[7]*m[10] + m[5]*m[2]*m[11]</span>
+<span class="lineNum">     209 </span><span class="lineNoCov">          0 :              - m[5]*m[3]*m[10] - m[9]*m[2]*m[7] + m[9]*m[3]*m[6];</span>
+<span class="lineNum">     210 </span><span class="lineNoCov">          0 :     inv[7] =   m[0]*m[6]*m[11] - m[0]*m[7]*m[10] - m[4]*m[2]*m[11]</span>
+<span class="lineNum">     211 </span><span class="lineNoCov">          0 :              + m[4]*m[3]*m[10] + m[8]*m[2]*m[7] - m[8]*m[3]*m[6];</span>
+<span class="lineNum">     212 </span><span class="lineNoCov">          0 :     inv[11] = -m[0]*m[5]*m[11] + m[0]*m[7]*m[9] + m[4]*m[1]*m[11]</span>
+<span class="lineNum">     213 </span><span class="lineNoCov">          0 :              - m[4]*m[3]*m[9] - m[8]*m[1]*m[7] + m[8]*m[3]*m[5];</span>
+<span class="lineNum">     214 </span><span class="lineNoCov">          0 :     inv[15] =  m[0]*m[5]*m[10] - m[0]*m[6]*m[9] - m[4]*m[1]*m[10]</span>
+<span class="lineNum">     215 </span><span class="lineNoCov">          0 :              + m[4]*m[2]*m[9] + m[8]*m[1]*m[6] - m[8]*m[2]*m[5];</span>
+<span class="lineNum">     216 </span>            : 
+<span class="lineNum">     217 </span><span class="lineNoCov">          0 :     det = m[0]*inv[0] + m[1]*inv[4] + m[2]*inv[8] + m[3]*inv[12];</span>
+<span class="lineNum">     218 </span><span class="lineNoCov">          0 :     if (det == 0)</span>
+<span class="lineNum">     219 </span><span class="lineNoCov">          0 :         return GL_FALSE;</span>
+<span class="lineNum">     220 </span>            : 
+<span class="lineNum">     221 </span><span class="lineNoCov">          0 :     det = 1.0 / det;</span>
+<span class="lineNum">     222 </span>            : 
+<span class="lineNum">     223 </span><span class="lineNoCov">          0 :     for (i = 0; i &lt; 16; i++)</span>
+<span class="lineNum">     224 </span><span class="lineNoCov">          0 :         invOut[i] = inv[i] * det;</span>
+<span class="lineNum">     225 </span>            : 
+<span class="lineNum">     226 </span><span class="lineNoCov">          0 :     return GL_TRUE;</span>
+<a name="227"><span class="lineNum">     227 </span>            : }</a>
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span><span class="lineNoCov">          0 : static void __gluMultMatricesd(const GLdouble a[16], const GLdouble b[16],</span>
+<span class="lineNum">     230 </span>            :                                 GLdouble r[16])
+<span class="lineNum">     231 </span>            : {
+<span class="lineNum">     232 </span>            :     int i, j;
+<span class="lineNum">     233 </span>            : 
+<span class="lineNum">     234 </span><span class="lineNoCov">          0 :     for (i = 0; i &lt; 4; i++) {</span>
+<span class="lineNum">     235 </span><span class="lineNoCov">          0 :         for (j = 0; j &lt; 4; j++) {</span>
+<span class="lineNum">     236 </span><span class="lineNoCov">          0 :             r[i*4+j] = </span>
+<span class="lineNum">     237 </span><span class="lineNoCov">          0 :                 a[i*4+0]*b[0*4+j] +</span>
+<span class="lineNum">     238 </span><span class="lineNoCov">          0 :                 a[i*4+1]*b[1*4+j] +</span>
+<span class="lineNum">     239 </span><span class="lineNoCov">          0 :                 a[i*4+2]*b[2*4+j] +</span>
+<span class="lineNum">     240 </span><span class="lineNoCov">          0 :                 a[i*4+3]*b[3*4+j];</span>
+<span class="lineNum">     241 </span>            :         }
+<span class="lineNum">     242 </span>            :     }
+<span class="lineNum">     243 </span><span class="lineNoCov">          0 : }</span>
+<a name="244"><span class="lineNum">     244 </span>            : </a>
+<span class="lineNum">     245 </span>            : GLint  
+<span class="lineNum">     246 </span><span class="lineNoCov">          0 : gluProject(GLdouble objx, GLdouble objy, GLdouble objz, </span>
+<span class="lineNum">     247 </span>            :               const GLdouble modelMatrix[16], 
+<span class="lineNum">     248 </span>            :               const GLdouble projMatrix[16],
+<span class="lineNum">     249 </span>            :               const GLint viewport[4],
+<span class="lineNum">     250 </span>            :               GLdouble *winx, GLdouble *winy, GLdouble *winz)
+<span class="lineNum">     251 </span>            : {
+<span class="lineNum">     252 </span>            :     double in[4];
+<span class="lineNum">     253 </span>            :     double out[4];
+<span class="lineNum">     254 </span>            : 
+<span class="lineNum">     255 </span><span class="lineNoCov">          0 :     in[0]=objx;</span>
+<span class="lineNum">     256 </span><span class="lineNoCov">          0 :     in[1]=objy;</span>
+<span class="lineNum">     257 </span><span class="lineNoCov">          0 :     in[2]=objz;</span>
+<span class="lineNum">     258 </span><span class="lineNoCov">          0 :     in[3]=1.0;</span>
+<span class="lineNum">     259 </span><span class="lineNoCov">          0 :     __gluMultMatrixVecd(modelMatrix, in, out);</span>
+<span class="lineNum">     260 </span><span class="lineNoCov">          0 :     __gluMultMatrixVecd(projMatrix, out, in);</span>
+<span class="lineNum">     261 </span><span class="lineNoCov">          0 :     if (in[3] == 0.0) return(GL_FALSE);</span>
+<span class="lineNum">     262 </span><span class="lineNoCov">          0 :     in[0] /= in[3];</span>
+<span class="lineNum">     263 </span><span class="lineNoCov">          0 :     in[1] /= in[3];</span>
+<span class="lineNum">     264 </span><span class="lineNoCov">          0 :     in[2] /= in[3];</span>
+<span class="lineNum">     265 </span>            :     /* Map x, y and z to range 0-1 */
+<span class="lineNum">     266 </span><span class="lineNoCov">          0 :     in[0] = in[0] * 0.5 + 0.5;</span>
+<span class="lineNum">     267 </span><span class="lineNoCov">          0 :     in[1] = in[1] * 0.5 + 0.5;</span>
+<span class="lineNum">     268 </span><span class="lineNoCov">          0 :     in[2] = in[2] * 0.5 + 0.5;</span>
+<span class="lineNum">     269 </span>            : 
+<span class="lineNum">     270 </span>            :     /* Map x,y to viewport */
+<span class="lineNum">     271 </span><span class="lineNoCov">          0 :     in[0] = in[0] * viewport[2] + viewport[0];</span>
+<span class="lineNum">     272 </span><span class="lineNoCov">          0 :     in[1] = in[1] * viewport[3] + viewport[1];</span>
+<span class="lineNum">     273 </span>            : 
+<span class="lineNum">     274 </span><span class="lineNoCov">          0 :     *winx=in[0];</span>
+<span class="lineNum">     275 </span><span class="lineNoCov">          0 :     *winy=in[1];</span>
+<span class="lineNum">     276 </span><span class="lineNoCov">          0 :     *winz=in[2];</span>
+<span class="lineNum">     277 </span><span class="lineNoCov">          0 :     return(GL_TRUE);</span>
+<span class="lineNum">     278 </span>            : }
+<a name="279"><span class="lineNum">     279 </span>            : </a>
+<span class="lineNum">     280 </span>            : GLint  
+<span class="lineNum">     281 </span><span class="lineNoCov">          0 : gluUnProject(GLdouble winx, GLdouble winy, GLdouble winz,</span>
+<span class="lineNum">     282 </span>            :                 const GLdouble modelMatrix[16], 
+<span class="lineNum">     283 </span>            :                 const GLdouble projMatrix[16],
+<span class="lineNum">     284 </span>            :                 const GLint viewport[4],
+<span class="lineNum">     285 </span>            :                 GLdouble *objx, GLdouble *objy, GLdouble *objz)
+<span class="lineNum">     286 </span>            : {
+<span class="lineNum">     287 </span>            :     double finalMatrix[16];
+<span class="lineNum">     288 </span>            :     double in[4];
+<span class="lineNum">     289 </span>            :     double out[4];
+<span class="lineNum">     290 </span>            : 
+<span class="lineNum">     291 </span><span class="lineNoCov">          0 :     __gluMultMatricesd(modelMatrix, projMatrix, finalMatrix);</span>
+<span class="lineNum">     292 </span><span class="lineNoCov">          0 :     if (!__gluInvertMatrixd(finalMatrix, finalMatrix)) return(GL_FALSE);</span>
+<span class="lineNum">     293 </span>            : 
+<span class="lineNum">     294 </span><span class="lineNoCov">          0 :     in[0]=winx;</span>
+<span class="lineNum">     295 </span><span class="lineNoCov">          0 :     in[1]=winy;</span>
+<span class="lineNum">     296 </span><span class="lineNoCov">          0 :     in[2]=winz;</span>
+<span class="lineNum">     297 </span><span class="lineNoCov">          0 :     in[3]=1.0;</span>
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span>            :     /* Map x and y from window coordinates */
+<span class="lineNum">     300 </span><span class="lineNoCov">          0 :     in[0] = (in[0] - viewport[0]) / viewport[2];</span>
+<span class="lineNum">     301 </span><span class="lineNoCov">          0 :     in[1] = (in[1] - viewport[1]) / viewport[3];</span>
+<span class="lineNum">     302 </span>            : 
+<span class="lineNum">     303 </span>            :     /* Map to range -1 to 1 */
+<span class="lineNum">     304 </span><span class="lineNoCov">          0 :     in[0] = in[0] * 2 - 1;</span>
+<span class="lineNum">     305 </span><span class="lineNoCov">          0 :     in[1] = in[1] * 2 - 1;</span>
+<span class="lineNum">     306 </span><span class="lineNoCov">          0 :     in[2] = in[2] * 2 - 1;</span>
+<span class="lineNum">     307 </span>            : 
+<span class="lineNum">     308 </span><span class="lineNoCov">          0 :     __gluMultMatrixVecd(finalMatrix, in, out);</span>
+<span class="lineNum">     309 </span><span class="lineNoCov">          0 :     if (out[3] == 0.0) return(GL_FALSE);</span>
+<span class="lineNum">     310 </span><span class="lineNoCov">          0 :     out[0] /= out[3];</span>
+<span class="lineNum">     311 </span><span class="lineNoCov">          0 :     out[1] /= out[3];</span>
+<span class="lineNum">     312 </span><span class="lineNoCov">          0 :     out[2] /= out[3];</span>
+<span class="lineNum">     313 </span><span class="lineNoCov">          0 :     *objx = out[0];</span>
+<span class="lineNum">     314 </span><span class="lineNoCov">          0 :     *objy = out[1];</span>
+<span class="lineNum">     315 </span><span class="lineNoCov">          0 :     *objz = out[2];</span>
+<span class="lineNum">     316 </span><span class="lineNoCov">          0 :     return(GL_TRUE);</span>
+<span class="lineNum">     317 </span>            : }
+<span class="lineNum">     318 </span>            : 
+<span class="lineNum">     319 </span>            : typedef double GLclampd;
+<a name="320"><span class="lineNum">     320 </span>            : </a>
+<span class="lineNum">     321 </span>            : GLint  
+<span class="lineNum">     322 </span><span class="lineNoCov">          0 : gluUnProject4(GLdouble winx, GLdouble winy, GLdouble winz, GLdouble clipw,</span>
+<span class="lineNum">     323 </span>            :               const GLdouble modelMatrix[16], 
+<span class="lineNum">     324 </span>            :               const GLdouble projMatrix[16],
+<span class="lineNum">     325 </span>            :               const GLint viewport[4],
+<span class="lineNum">     326 </span>            :               GLclampd nearVal, GLclampd farVal,                    
+<span class="lineNum">     327 </span>            :               GLdouble *objx, GLdouble *objy, GLdouble *objz,
+<span class="lineNum">     328 </span>            :               GLdouble *objw)
+<span class="lineNum">     329 </span>            : {
+<span class="lineNum">     330 </span>            :     double finalMatrix[16];
+<span class="lineNum">     331 </span>            :     double in[4];
+<span class="lineNum">     332 </span>            :     double out[4];
+<span class="lineNum">     333 </span>            : 
+<span class="lineNum">     334 </span><span class="lineNoCov">          0 :     __gluMultMatricesd(modelMatrix, projMatrix, finalMatrix);</span>
+<span class="lineNum">     335 </span><span class="lineNoCov">          0 :     if (!__gluInvertMatrixd(finalMatrix, finalMatrix)) return(GL_FALSE);</span>
+<span class="lineNum">     336 </span>            : 
+<span class="lineNum">     337 </span><span class="lineNoCov">          0 :     in[0]=winx;</span>
+<span class="lineNum">     338 </span><span class="lineNoCov">          0 :     in[1]=winy;</span>
+<span class="lineNum">     339 </span><span class="lineNoCov">          0 :     in[2]=winz;</span>
+<span class="lineNum">     340 </span><span class="lineNoCov">          0 :     in[3]=clipw;</span>
+<span class="lineNum">     341 </span>            : 
+<span class="lineNum">     342 </span>            :     /* Map x and y from window coordinates */
+<span class="lineNum">     343 </span><span class="lineNoCov">          0 :     in[0] = (in[0] - viewport[0]) / viewport[2];</span>
+<span class="lineNum">     344 </span><span class="lineNoCov">          0 :     in[1] = (in[1] - viewport[1]) / viewport[3];</span>
+<span class="lineNum">     345 </span><span class="lineNoCov">          0 :     in[2] = (in[2] - nearVal) / (farVal - nearVal);</span>
+<span class="lineNum">     346 </span>            : 
+<span class="lineNum">     347 </span>            :     /* Map to range -1 to 1 */
+<span class="lineNum">     348 </span><span class="lineNoCov">          0 :     in[0] = in[0] * 2 - 1;</span>
+<span class="lineNum">     349 </span><span class="lineNoCov">          0 :     in[1] = in[1] * 2 - 1;</span>
+<span class="lineNum">     350 </span><span class="lineNoCov">          0 :     in[2] = in[2] * 2 - 1;</span>
+<span class="lineNum">     351 </span>            : 
+<span class="lineNum">     352 </span><span class="lineNoCov">          0 :     __gluMultMatrixVecd(finalMatrix, in, out);</span>
+<span class="lineNum">     353 </span><span class="lineNoCov">          0 :     if (out[3] == 0.0) return(GL_FALSE);</span>
+<span class="lineNum">     354 </span><span class="lineNoCov">          0 :     *objx = out[0];</span>
+<span class="lineNum">     355 </span><span class="lineNoCov">          0 :     *objy = out[1];</span>
+<span class="lineNum">     356 </span><span class="lineNoCov">          0 :     *objz = out[2];</span>
+<span class="lineNum">     357 </span><span class="lineNoCov">          0 :     *objw = out[3];</span>
+<span class="lineNum">     358 </span><span class="lineNoCov">          0 :     return(GL_TRUE);</span>
+<span class="lineNum">     359 </span>            : }
+<a name="360"><span class="lineNum">     360 </span>            : </a>
+<span class="lineNum">     361 </span>            : void  
+<span class="lineNum">     362 </span><span class="lineNoCov">          0 : gluPickMatrix(GLdouble x, GLdouble y, GLdouble deltax, GLdouble deltay,</span>
+<span class="lineNum">     363 </span>            :                   GLint viewport[4])
+<span class="lineNum">     364 </span>            : {
+<span class="lineNum">     365 </span><span class="lineNoCov">          0 :     if (deltax &lt;= 0 || deltay &lt;= 0) { </span>
+<span class="lineNum">     366 </span><span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">     367 </span>            :     }
+<span class="lineNum">     368 </span>            : 
+<span class="lineNum">     369 </span>            :     /* Translate and scale the picked region to the entire window */
+<span class="lineNum">     370 </span><span class="lineNoCov">          0 :     glTranslatef((viewport[2] - 2 * (x - viewport[0])) / deltax,</span>
+<span class="lineNum">     371 </span><span class="lineNoCov">          0 :             (viewport[3] - 2 * (y - viewport[1])) / deltay, 0);</span>
+<span class="lineNum">     372 </span><span class="lineNoCov">          0 :     glScalef(viewport[2] / deltax, viewport[3] / deltay, 1.0);</span>
+<span class="lineNum">     373 </span>            : }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
